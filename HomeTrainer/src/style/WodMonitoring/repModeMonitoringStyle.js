@@ -1,14 +1,14 @@
 export function getStyle() {
-  return wodMonitoringStyle;
+  return repModeMonitoringStyle;
 }
 
-const wodMonitoringStyle = {
+const repModeMonitoringStyle = {
   globalView: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center",
-    margin: 30,
+    margin: 10,
   },
   type: {
     flex: 1,
@@ -33,7 +33,7 @@ const wodMonitoringStyle = {
     fontWeight: "bold",
     fontSize: 30,
   },
-  leftTime: {
+  numberRep: {
     flex: 1,
     fontWeight: "bold",
     fontSize: 60,
@@ -42,17 +42,27 @@ const wodMonitoringStyle = {
     flex: 1,
     marginTop: 10,
     fontWeight: "bold",
+    fontStyle: "italic",
     fontSize: 30,
   },
   endWod: {
     flex: 1,
+    marginTop: 10,
+    padding: 10,
     color: "#119944",
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: "bold",
   },
   buttons: {
     flex: 1,
-    margin: 10,
+    margin: 0,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  buttonsChange: {
+    flex: 1,
+    margin: 0,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -62,8 +72,8 @@ const wodMonitoringStyle = {
     color: "#FFF",
   },
   button: {
+    flex: 1,
     backgroundColor: "#34A853",
-    height: 60,
     borderRadius: 10,
     marginTop: 10,
     marginLeft: 5,

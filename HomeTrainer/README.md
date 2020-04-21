@@ -4,30 +4,66 @@ This **React-native** project is my second mobile application project. First tim
 
 Here I learnt how to use React Native with an OpenClassroom training.
 
+## Get started
+
+Run the following lines to install the packages and run the application.
+
+```
+npm install
+npm start
+```
+
 ## Description
 
 This application allows every athlete, particularly crossfit athletes, a sport that I am fond of, to program and follow his training and monitor his performances.
 
+## Data Storage
+
+Stored data are :
+
+- the user performances
+- the training added by player
+
+Different keys are used, reached with Async Storage package, with key "@MySuperStore:key".
+
+### Training storage
+
+The key _*trainings*_ is used to store the new training.
+
+```
+"@MySuperStore:trainings"
+```
+
+It includes every training, which are separated with the separator : "\*-\*".
+
+For example the workout "CHAD", is stored as follow :
+
+and the informations, separated with the sign "\*;\*", are stored as follow : type, number rounds, time 1, time 2, exercise 1, exercise 2.
+
+### Performances storage
+
+...
+
 ## TO-DO
+
+Faire une page avec la liste des exercices et leur description et une barre de recherche pour y accéder
 
 Wod Monitoring
 
-- faire un wod monitoring par type d'entrainement (voir si possible)
+-faire un component d'erreur pour prévenir des erreurs de saisie et autres, mettre un props warning ou alert pour la couleur
 
-- afficher l'ensemble des exos et mettre entre lumiere celui sur lequel on se situe
-
-* page affichant le temps et les exerices a faire, a laquel on accède depuis les menus des WOD, et affichant le temps restant par exos, et l'exerice à faire, avec le nombre à faire pour rester dans les temps - faire un son / signe sur la page pour indiquer le changement d'exercice - faire un component adapter aux différents types - relier le component au bouton de la page du wod - si wod terminé desactiver le bouton start et stop
-
-- prevoir un mode avec des seances timées, et afficher en temps réel l'exo à faire
+- mettre un boutton a la fin du wod pour permettre d'enregistrer son temps
 
 MEILLEUR TEMPS
 
-- permettre un historique perso permettant de renseigner ses temps, et affichés le meilleur temps si il y en a un pour un wod données
-- affiché un temps uniquement pour les forTime
-- sauvegarder le resultat et l'affiché si il est sauvegardé en mémoire
+- permettre a l'utilisateur d'avoir un historique de ses performances et d'observer sont évolutions (un graphique par exemple) -> renseigner la date quand il enregistre son temps
 
-PAGE DE GESTION DES WODS
+AJOUT D'UN NOUVEAU WOD
+Styliser l'appli
 
-- comencer par choisir le type d'entrainement (classic pour commencer)
-- choisir le nombre de round
-- permettre d'ajouter un a un les exercices en choissant, le nom de l'exerice, le temps de l'exercice/ nombre de repetition
+PRESENTATION DE LA LISTE DES WODS
+Styliser l'appli
+
+BUG :
+
+- le compteur continue de tourner quand l'appli est en fond de tache mais pas les objets sur l'ecran (left time et training)

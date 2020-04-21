@@ -16,9 +16,5 @@ const emomStyle = {
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  numberRounds: {
-    flex: 0.1,
-    fontSize: 16,
-    fontStyle: "italic",
-  },
+  wodView: { flex: 1 },
 };

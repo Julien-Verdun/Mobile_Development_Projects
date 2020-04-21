@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { getStyle } from "../../style/Home/homeStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
+import { getAllKeys, removeData, fetchData } from "../../utils/dataStorage.js";
 import Button from "../Other/Button.js";
 
 class Home extends React.Component {
@@ -49,27 +50,23 @@ class Home extends React.Component {
             }}
             onPress={() => this.props.navigation.navigate("About")}
           />
-          {/* supprimer ce bouton */}
           <Button
-            title="WodMonitoring"
+            title="Delete data"
             styles={{
               button: this.homeStyle.primaryButton,
               title: this.homeStyle.buttonWhiteText,
             }}
-            onPress={() =>
-              this.props.navigation.navigate("WodMonitoring", {
-                type: "Classic",
-                numberRounds: 3,
-                listTrainings: [
-                  "Plank",
-                  "Side Plank Left",
-                  "Hollow",
-                  "Side Plank Right",
-                ],
-                listReps: [0.1, 0.1, 0.1, 0.1],
-                timeCap: null,
-              })
-            }
+            onPress={() => {
+              getAllKeys().then((keys) => {
+                console.log(keys);
+                removeData(keys).then(() => {
+                  console.log("Data removed");
+                  fetchData(keys).then((data) => {
+                    console.log(data);
+                  });
+                });
+              });
+            }}
           />
         </View>
       </View>

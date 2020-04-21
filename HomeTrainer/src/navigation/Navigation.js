@@ -8,7 +8,8 @@ import Clock from "./../view/Clock/Clock.js";
 import ListWod from "./../view/ListWod/ListWod.js";
 import WodDetails from "./../view/ListWod/WodDetails.js";
 import TrainingCreator from "./../view/TrainingCreator/TrainingCreator.js";
-import WodMonitoring from "./../view/WodMonitoring/WodMonitoring.js";
+import TimeModeMonitoring from "./../view/WodMonitoring/TimeModeMonitoring.js";
+import RepModeMonitoring from "./../view/WodMonitoring/RepModeMonitoring.js";
 import NavigationBar from "./NavigationBar.js";
 
 class Navigation extends React.Component {
@@ -70,8 +71,21 @@ class Navigation extends React.Component {
             })}
           />
           <Stack.Screen
-            name="WodMonitoring"
-            component={WodMonitoring}
+            name="TimeModeMonitoring"
+            component={TimeModeMonitoring}
+            options={({ navigation }) => ({
+              headerTitle: (props) => (
+                <NavigationBar
+                  {...props}
+                  title={"Work"}
+                  navigation={navigation}
+                />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="RepModeMonitoring"
+            component={RepModeMonitoring}
             options={({ navigation }) => ({
               headerTitle: (props) => (
                 <NavigationBar

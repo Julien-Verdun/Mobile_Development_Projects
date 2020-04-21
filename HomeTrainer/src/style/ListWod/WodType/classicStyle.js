@@ -21,11 +21,5 @@ const classicStyle = {
     fontSize: 16,
     fontStyle: "italic",
   },
-  textView: {
-    flex: 0.5,
-  },
-  listTrainings: {
-    flex: 1,
-    fontSize: 14,
-  },
+  wodView: { flex: 1 },
 };

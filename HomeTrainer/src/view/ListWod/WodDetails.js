@@ -1,71 +1,73 @@
 import React from "react";
-import { Text, View, TextInput } from "react-native";
+import { Text, View } from "react-native";
 import { getStyle } from "../../style/ListWod/wodDetailsStyle.js";
-import { buildStyleSheet, isNormalInteger } from "../../utils/functions.js";
+import { buildStyleSheet } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
+import ModalBestTime from "./../Modal/ModalBestTime.js";
 
 import ForTime from "./WodType/ForTime.js";
 import Amrap from "./WodType/Amrap.js";
 import Emom from "./WodType/Emom.js";
 import Classic from "./WodType/Classic.js";
 
+import { storeData, fetchData } from "./../../utils/dataStorage.js";
+
 class WodDetails extends React.Component {
   constructor(props) {
     super(props);
     this.wodDetailsStyle = buildStyleSheet(getStyle());
-    this.bestTime = undefined;
     this.state = {
-      bestTimePanel: undefined,
+      modalVisible: false,
+      bestTime: null,
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.checkFormatBestTime = this.checkFormatBestTime.bind(this);
+    this.handleBestTime = this.handleBestTime.bind(this);
+    this.handleModalVsible = this.handleModalVsible.bind(this);
   }
 
-  handleChange(text) {
-    this.bestTime = text;
+  handleModalVsible(modalVisible) {
+    this.setState({ modalVisible });
   }
 
-  handleSubmit() {
-    //verification du format du temps renseigné
-    if (this.checkFormatBestTime()) {
-      this.setState({
-        bestTimePanel: <Text>Meilleur temps : {this.bestTime} </Text>,
-      });
-    } else {
-      //mauvais format renseigné
-      this.setState({
-        bestTimePanel: (
-          <Text style={{ color: "red" }}>
-            Erreur : {this.bestTime} n'est pas un temps valide{" "}
-          </Text>
-        ),
-      });
-      console.log("mauvais format renseigné");
-    }
+  handleBestTime(bestTime) {
+    this.setState({ bestTime });
+    storeData("@MySuperStore:bestTime", bestTime).then(
+      console.log("Best time registered")
+    );
   }
 
-  checkFormatBestTime() {
-    // verification du format du temps hh:mm:ss avec des minutse et secondes < 60
-    if (!this.bestTime.includes(":")) {
-      return false;
-    }
-    let testFormat = true;
-    this.bestTime.split(":").forEach((elt, index) => {
-      if (!isNormalInteger(elt) || elt.length !== 2 || parseInt(elt) >= 60) {
-        testFormat = false;
-      }
+  componentDidMount() {
+    fetchData("@MySuperStore:bestTime").then((bestTime) => {
+      this.setState({ bestTime });
     });
-    return testFormat;
   }
-
-  componentDidMount(prevProps, prevState) {}
 
   render() {
     let params = this.props.route.params;
     // faire un render par type et uniquement renvoyer le bon component
     let wodPanel;
-    let buttonPanel;
+    let buttonPanel = (
+      <Button
+        title="Start the WOD"
+        styles={{
+          button: this.wodDetailsStyle.primaryButton,
+          title: this.wodDetailsStyle.buttonWhiteText,
+        }}
+        onPress={() => {
+          this.props.navigation.navigate(
+            params.type === "Classic"
+              ? "TimeModeMonitoring"
+              : "RepModeMonitoring",
+            {
+              type: params.type,
+              numberRounds: params.numberRounds,
+              listTrainings: params.listTrainings,
+              listReps: params.listReps,
+              timeCap: params.timeCap,
+            }
+          );
+        }}
+      />
+    );
     if (params.type == "For Time") {
       wodPanel = (
         <ForTime
@@ -75,24 +77,6 @@ class WodDetails extends React.Component {
           listTrainings={params.listTrainings}
           listReps={params.listReps}
           timeCap={params.timeCap}
-        />
-      );
-      buttonPanel = (
-        <Button
-          title="Start the WOD"
-          styles={{
-            button: this.wodDetailsStyle.primaryButton,
-            title: this.wodDetailsStyle.buttonWhiteText,
-          }}
-          onPress={() =>
-            this.props.navigation.navigate("WodMonitoring", {
-              type: params.type,
-              numberRounds: params.numberRounds,
-              listTrainings: params.listTrainings,
-              listReps: params.listReps,
-              timeCap: params.timeCap,
-            })
-          }
         />
       );
     } else if (params.type == "AMRAP") {
@@ -106,24 +90,6 @@ class WodDetails extends React.Component {
           timeCap={params.timeCap}
         />
       );
-      buttonPanel = (
-        <Button
-          title="Start the WOD"
-          styles={{
-            button: this.wodDetailsStyle.primaryButton,
-            title: this.wodDetailsStyle.buttonWhiteText,
-          }}
-          onPress={() =>
-            this.props.navigation.navigate("WodMonitoring", {
-              type: params.type,
-              numberRounds: params.numberRounds,
-              listTrainings: params.listTrainings,
-              listReps: params.listReps,
-              timeCap: params.timeCap,
-            })
-          }
-        />
-      );
     } else if (params.type == "EMOM") {
       wodPanel = (
         <Emom
@@ -133,24 +99,6 @@ class WodDetails extends React.Component {
           listTrainings={params.listTrainings}
           listReps={params.listReps}
           timeCap={params.timeCap}
-        />
-      );
-      buttonPanel = (
-        <Button
-          title="Start the WOD"
-          styles={{
-            button: this.wodDetailsStyle.primaryButton,
-            title: this.wodDetailsStyle.buttonWhiteText,
-          }}
-          onPress={() =>
-            this.props.navigation.navigate("WodMonitoring", {
-              type: params.type,
-              numberRounds: params.numberRounds,
-              listTrainings: params.listTrainings,
-              listReps: params.listReps,
-              timeCap: params.timeCap,
-            })
-          }
         />
       );
     } else if (params.type == "Classic") {
@@ -164,63 +112,49 @@ class WodDetails extends React.Component {
           timeCap={params.timeCap}
         />
       );
-      buttonPanel = (
-        <Button
-          title="Start the WOD"
-          styles={{
-            button: this.wodDetailsStyle.primaryButton,
-            title: this.wodDetailsStyle.buttonWhiteText,
-          }}
-          onPress={() =>
-            this.props.navigation.navigate("WodMonitoring", {
-              type: params.type,
-              numberRounds: params.numberRounds,
-              listTrainings: params.listTrainings,
-              listReps: params.listReps,
-              timeCap: params.timeCap,
-            })
-          }
-        />
-      );
     } else {
       wodPanel = null;
       buttonPanel = null;
     }
-    let bestTimePanel = null;
+    let modalBestTime = null,
+      bestTimeForm = null;
     if (params.type === "For Time") {
-      bestTimePanel = (
-        <View style={this.wodDetailsStyle.bestTimeForm}>
+      // composant contenant le modal affiché pour renseigner le score
+      modalBestTime = (
+        <ModalBestTime
+          modalVisible={this.state.modalVisible}
+          onSubmitBestTime={this.handleBestTime}
+          onCancelModal={this.handleModalVsible}
+        ></ModalBestTime>
+      );
+      //component contenant le meilleur temps et le bouton pour meilleure temps
+      bestTimeForm = (
+        <View style={this.wodDetailsStyle.bestTime}>
           <Text style={this.wodDetailsStyle.bestTimeLabel}>
-            Best time (format hh:mm:ss)
+            {this.state.bestTime !== null
+              ? "Best time : " + this.state.bestTime
+              : ""}
           </Text>
-          <View style={this.wodDetailsStyle.bestTimeView}>
-            <TextInput
-              style={this.wodDetailsStyle.bestTimeInput}
-              ref={this.bestTimeInput}
-              onChangeText={(text) => this.handleChange(text)}
-              onSubmitEditing={this.handleSubmit}
-              placeholder="hh:mm:ss"
-              keyboardType="numeric"
-            ></TextInput>
-            <Button
-              title="Submit"
-              styles={{
-                button: this.wodDetailsStyle.bestTimeButton,
-                title: this.wodDetailsStyle.buttonWhiteText,
-              }}
-              onPress={this.handleSubmit}
-            />
-          </View>
-          {this.state.bestTimePanel}
+          <Button
+            title="Add my score"
+            styles={{
+              button: this.wodDetailsStyle.bestTimeButton,
+              title: this.wodDetailsStyle.buttonWhiteText,
+            }}
+            onPress={() => {
+              this.setState({ modalVisible: true });
+            }}
+          />
         </View>
       );
     }
 
     return (
       <View style={this.wodDetailsStyle.globalView}>
+        {modalBestTime}
         <Text style={this.wodDetailsStyle.type}>{params.type}</Text>
         {wodPanel}
-        {bestTimePanel}
+        {bestTimeForm}
         {buttonPanel}
       </View>
     );

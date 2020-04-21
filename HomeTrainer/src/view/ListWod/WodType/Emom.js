@@ -1,16 +1,14 @@
 import React from "react";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, SafeAreaView, FlatList } from "react-native";
 import { getStyle } from "../../../style/ListWod/WodType/emomStyle.js";
 import { buildStyleSheet } from "../../../utils/functions.js";
+import Exercise from "./../Exercise.js";
 
 class Emom extends React.Component {
   constructor(props) {
     super(props);
     this.emomStyle = buildStyleSheet(getStyle());
-    this.state = {};
   }
-
-  componentDidMount(prevProps, prevState) {}
 
   render() {
     return (
@@ -19,11 +17,22 @@ class Emom extends React.Component {
           <Text style={this.emomStyle.numberRounds}>
             During {this.props.numberRounds} minutes, every minutes :
           </Text>
-          <Text style={this.emomStyle.numberRounds}>
-            {this.props.listTrainings.map((training, index) => {
-              return this.props.listReps[index] + " reps : " + training + "\n";
-            })}
-          </Text>
+
+          <SafeAreaView style={this.emomStyle.wodView}>
+            <FlatList
+              data={this.props.listTrainings}
+              renderItem={({ item, index }) => (
+                <Exercise
+                  type={this.props.type}
+                  numberRep={this.props.listReps[index]}
+                  exerciceName={item}
+                ></Exercise>
+              )}
+              keyExtractor={(item) =>
+                this.props.listTrainings.indexOf(item).toString()
+              }
+            />
+          </SafeAreaView>
         </View>
       </View>
     );

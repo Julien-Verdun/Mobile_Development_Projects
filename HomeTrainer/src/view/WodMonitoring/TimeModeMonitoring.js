@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { getStyle } from "../../style/WodMonitoring/wodMonitoringStyle.js";
+import { getStyle } from "../../style/WodMonitoring/timeModeMonitoringStyle.js";
 import {
   buildStyleSheet,
   sum,
@@ -8,7 +8,7 @@ import {
   secToTime,
 } from "../../utils/functions.js";
 import Button from "../Other/Button.js";
-// import { Audio } from "expo-av";
+import { Audio } from "expo-av";
 
 /*
 Ce component est la page permettant de suivre un WOD choisi ou créé 
@@ -18,7 +18,7 @@ et de suivre sa progression en temps réel
 class WodMonitoring extends React.Component {
   constructor(props) {
     super(props);
-    this.wodMonitoringStyle = buildStyleSheet(getStyle());
+    this.timeModeMonitoringStyle = buildStyleSheet(getStyle());
     this.timer = undefined;
     this.ring = "./../../../assets/Sound/ring.mp3";
     this.sound = undefined;
@@ -41,26 +41,26 @@ class WodMonitoring extends React.Component {
     this.changeTraining = this.changeTraining.bind(this);
     this.changeColorBackground = this.changeColorBackground.bind(this);
 
-    // this.playSound = this.playSound.bind(this);
+    this.playSound = this.playSound.bind(this);
   }
 
-  // async playSound() {
-  //   if (this.sound === undefined) {
-  //     this.sound = new Audio.Sound();
-  //     try {
-  //       await this.sound.loadAsync(require("./../../../assets/Sound/ring.mp3"));
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   try {
-  //     console.log(this.sound.getStatusAsync);
-  //     await this.sound.playFromPositionAsync(0);
-  //     // Your sound is playing!
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  async playSound() {
+    if (this.sound === undefined) {
+      this.sound = new Audio.Sound();
+      try {
+        await this.sound.loadAsync(require("./../../../assets/Sound/ring.mp3"));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    try {
+      console.log(this.sound.getStatusAsync);
+      await this.sound.playFromPositionAsync(0);
+      // Your sound is playing!
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   increaseTime() {
     // mise a jour du temps affiche et du temps restant
@@ -144,7 +144,7 @@ class WodMonitoring extends React.Component {
           ? 0
           : (this.state.indexTraining += 1);
       // et on ring
-      // this.playSound().then(console.log("Sound played !"));
+      this.playSound().then(console.log("Sound played !"));
       // si debut d'un nouveau round
       if (nextIndexTraining === 0) {
         let nextRound,
@@ -156,7 +156,7 @@ class WodMonitoring extends React.Component {
           isEndWod = true;
           trainingLeftTime = "-";
           endWodPanel = (
-            <Text style={this.wodMonitoringStyle.endWod}>FIN DU WOD</Text>
+            <Text style={this.timeModeMonitoringStyle.endWod}>FIN DU WOD</Text>
           );
           this.stop();
           // sinon on reprend au debut du round
@@ -197,34 +197,34 @@ class WodMonitoring extends React.Component {
     return (
       <View
         style={[
-          this.wodMonitoringStyle.globalView,
+          this.timeModeMonitoringStyle.globalView,
           { backgroundColor: this.backgroundColorChgt },
         ]}
       >
-        <Text style={this.wodMonitoringStyle.type}>{params.type}</Text>
+        <Text style={this.timeModeMonitoringStyle.type}>{params.type}</Text>
 
-        <Text style={this.wodMonitoringStyle.round}>
+        <Text style={this.timeModeMonitoringStyle.round}>
           Round : {this.state.round}
         </Text>
 
-        <Text style={this.wodMonitoringStyle.time}>
+        <Text style={this.timeModeMonitoringStyle.time}>
           {this.state.displayTime}
         </Text>
 
-        <Text style={this.wodMonitoringStyle.leftTime}>
+        <Text style={this.timeModeMonitoringStyle.leftTime}>
           {this.state.trainingLeftTime}
         </Text>
         {this.state.endWodPanel}
-        <Text style={this.wodMonitoringStyle.training}>
+        <Text style={this.timeModeMonitoringStyle.training}>
           {params.listTrainings[this.state.indexTraining]}
         </Text>
 
-        <View style={this.wodMonitoringStyle.buttons}>
+        <View style={this.timeModeMonitoringStyle.buttons}>
           <Button
             title="Start"
             styles={{
               button: [
-                this.wodMonitoringStyle.button,
+                this.timeModeMonitoringStyle.button,
                 {
                   backgroundColor:
                     this.state.isStarted || this.state.isEndWod
@@ -232,7 +232,7 @@ class WodMonitoring extends React.Component {
                       : "#34A853",
                 },
               ],
-              title: this.wodMonitoringStyle.buttonWhiteText,
+              title: this.timeModeMonitoringStyle.buttonWhiteText,
             }}
             onPress={this.start}
           />
@@ -240,12 +240,12 @@ class WodMonitoring extends React.Component {
             title="Stop"
             styles={{
               button: [
-                this.wodMonitoringStyle.button,
+                this.timeModeMonitoringStyle.button,
                 {
                   backgroundColor: this.state.isStarted ? "#dc3545" : "#6c757d",
                 },
               ],
-              title: this.wodMonitoringStyle.buttonWhiteText,
+              title: this.timeModeMonitoringStyle.buttonWhiteText,
             }}
             onPress={this.stop}
           />
@@ -253,12 +253,12 @@ class WodMonitoring extends React.Component {
             title="Reload"
             styles={{
               button: [
-                this.wodMonitoringStyle.button,
+                this.timeModeMonitoringStyle.button,
                 {
                   backgroundColor: "#007bff",
                 },
               ],
-              title: this.wodMonitoringStyle.buttonWhiteText,
+              title: this.timeModeMonitoringStyle.buttonWhiteText,
             }}
             onPress={this.reload}
           />

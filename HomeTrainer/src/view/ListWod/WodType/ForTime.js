@@ -1,16 +1,14 @@
 import React from "react";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, SafeAreaView, FlatList } from "react-native";
 import { getStyle } from "../../../style/ListWod/WodType/forTimeStyle.js";
 import { buildStyleSheet } from "../../../utils/functions.js";
+import Exercise from "./../Exercise.js";
 
 class WodDetails extends React.Component {
   constructor(props) {
     super(props);
     this.forTimeStyle = buildStyleSheet(getStyle());
-    this.state = {};
   }
-
-  componentDidMount(prevProps, prevState) {}
 
   render() {
     return (
@@ -21,13 +19,22 @@ class WodDetails extends React.Component {
         <Text style={this.forTimeStyle.timeCap}>
           Time Cap : {this.props.timeCap}
         </Text>
-        <ScrollView style={this.forTimeStyle.textView}>
-          <Text style={this.forTimeStyle.listTrainings}>
-            {this.props.listTrainings.map((training, index) => {
-              return this.props.listReps[index] + " reps : " + training + "\n";
-            })}
-          </Text>
-        </ScrollView>
+
+        <SafeAreaView style={this.forTimeStyle.wodView}>
+          <FlatList
+            data={this.props.listTrainings}
+            renderItem={({ item, index }) => (
+              <Exercise
+                type={this.props.type}
+                numberRep={this.props.listReps[index]}
+                exerciceName={item}
+              ></Exercise>
+            )}
+            keyExtractor={(item) =>
+              this.props.listTrainings.indexOf(item).toString()
+            }
+          />
+        </SafeAreaView>
       </View>
     );
   }

@@ -1,5 +1,35 @@
+import { fetchData } from "./../src/utils/dataStorage.js";
+
 export function getTraining() {
-  return Training;
+  let data = Training;
+  fetchData("@MySuperStore:trainings").then((result) => {
+    data.concat(processStoredTraining(result));
+  });
+  return data;
+}
+
+function processStoredTraining(data) {
+  //data : "For Time;4;Squat,Pushup;20,300"
+  let training = [];
+  if (data !== null) {
+    let wod;
+    data.split("*-*").forEach((datum) => {
+      wod = datum.split("*;*");
+      if (wod.length === 4) {
+        training.push({
+          type: wod[0],
+          numberRounds: parseInt(wod[1]),
+          listTrainings: wod[2].split(","),
+          listReps: wod[3].split(",").map((elt) => {
+            return parseInt(elt);
+          }),
+        });
+      } else {
+        console.log("Error in data processing");
+      }
+    });
+  }
+  return training;
 }
 
 const Training = [

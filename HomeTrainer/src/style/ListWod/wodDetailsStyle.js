@@ -25,7 +25,14 @@ const wodDetailsStyle = {
     borderWidth: 2,
     borderRadius: 10,
   },
-
+  bestTimeButton: {
+    height: 40,
+    backgroundColor: "#007bff",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginLeft: 5,
+    marginRight: 5,
+  },
   buttonWhiteText: {
     fontSize: 16,
     color: "#FFF",
@@ -36,41 +43,26 @@ const wodDetailsStyle = {
     borderWidth: 2,
     borderRadius: 10,
   },
-  bestTimeForm: {
+
+  bestTime: {
     flex: 0.3,
-    marginTop: 20,
-    marginBottom: 30,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    marginTop: 10,
+    marginBottom: 20,
   },
-  bestTimeView: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
+
   bestTimeLabel: {
     flex: 1,
     paddingLeft: 10,
     fontSize: 15,
   },
-  bestTimeInput: {
-    flex: 1,
-    borderColor: "#000000",
-    borderWidth: 1,
-    borderRadius: 5,
-    height: 40,
-    padding: 10,
-    marginLeft: 5,
-    marginRight: 5,
+
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
-  bestTimeButton: {
-    height: 40,
-    backgroundColor: "#007bff",
-    borderWidth: 1,
-    borderRadius: 10,
-    marginLeft: 5,
-    marginRight: 5,
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 };

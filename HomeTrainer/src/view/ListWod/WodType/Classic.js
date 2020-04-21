@@ -1,16 +1,14 @@
 import React from "react";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, SafeAreaView, FlatList } from "react-native";
 import { getStyle } from "../../../style/ListWod/WodType/classicStyle.js";
 import { buildStyleSheet } from "../../../utils/functions.js";
+import Exercise from "./../Exercise.js";
 
 class Classic extends React.Component {
   constructor(props) {
     super(props);
     this.classicStyle = buildStyleSheet(getStyle());
-    this.state = {};
   }
-
-  componentDidMount(prevProps, prevState) {}
 
   render() {
     return (
@@ -21,18 +19,22 @@ class Classic extends React.Component {
               (this.props.numberRounds === 1 ? " round " : " rounds ")}
             of :
           </Text>
-          <ScrollView style={this.classicStyle.textView}>
-            <Text style={this.classicStyle.listTrainings}>
-              {this.props.listTrainings.map((training, index) => {
-                return (
-                  parseInt(this.props.listReps[index] * 60) +
-                  " sec : " +
-                  training +
-                  "\n"
-                );
-              })}
-            </Text>
-          </ScrollView>
+
+          <SafeAreaView style={this.classicStyle.wodView}>
+            <FlatList
+              data={this.props.listTrainings}
+              renderItem={({ item, index }) => (
+                <Exercise
+                  type={this.props.type}
+                  numberRep={this.props.listReps[index]}
+                  exerciceName={item}
+                ></Exercise>
+              )}
+              keyExtractor={(item) =>
+                this.props.listTrainings.indexOf(item).toString()
+              }
+            />
+          </SafeAreaView>
         </View>
       </View>
     );
