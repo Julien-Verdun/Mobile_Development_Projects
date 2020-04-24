@@ -5,7 +5,8 @@ export function getStyle() {
 const wodPanelStyle = {
   globalView: {
     flex: 1,
-    margin: 10,
+    marginTop: 10,
+    marginBottom: 10,
     padding: 10,
     flexDirection: "column",
     justifyContent: "center",

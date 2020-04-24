@@ -32,8 +32,12 @@ const modalExerciseStyle = {
     marginTop: 10,
     fontWeight: "bold",
   },
-  scrollDescription: { flex: 0.5 },
+  scrollDescription: { flex: 0.4 },
   modalDescription: { fontSize: 15, marginTop: 10 },
+  imageExercise: {
+    margin: 20,
+    flex: 0.5,
+  },
   cancelButton: {
     height: 40,
     backgroundColor: "#33ff73",

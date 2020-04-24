@@ -6,6 +6,7 @@ import About from "./../view/About/About.js";
 import Login from "./../view/Login/Login.js";
 import Clock from "./../view/Clock/Clock.js";
 import ListWod from "./../view/ListWod/ListWod.js";
+import ExerciseInformations from "./../view/ExerciseInformations/ExerciseInformations.js";
 import WodDetails from "./../view/ListWod/WodDetails.js";
 import TrainingCreator from "./../view/TrainingCreator/TrainingCreator.js";
 import TimeModeMonitoring from "./../view/WodMonitoring/TimeModeMonitoring.js";
@@ -91,6 +92,19 @@ class Navigation extends React.Component {
                 <NavigationBar
                   {...props}
                   title={"Work"}
+                  navigation={navigation}
+                />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="ExerciseInformations"
+            component={ExerciseInformations}
+            options={({ navigation }) => ({
+              headerTitle: (props) => (
+                <NavigationBar
+                  {...props}
+                  title={"Exercises"}
                   navigation={navigation}
                 />
               ),

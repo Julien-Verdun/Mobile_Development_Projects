@@ -16,7 +16,7 @@ class About extends React.Component {
     return (
       <View style={this.aboutStyle.globalView}>
         <Text style={this.aboutStyle.title}>
-          HomeTrainer, you're fitness application
+          HomeTrainer, your fitness application
         </Text>
         <Image
           style={this.aboutStyle.logo}

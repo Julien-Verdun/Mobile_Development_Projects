@@ -6,12 +6,14 @@ const homeStyle = {
   globalView: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    justifyContent: "space-evenly",
+    alignItems: "stretch",
     margin: 15,
   },
   title: {
     flex: 0.2,
+    marginLeft: "auto",
+    marginRight: "auto",
     marginTop: 30,
     fontWeight: "bold",
     fontSize: 30,
@@ -28,8 +30,7 @@ const homeStyle = {
     color: "#FFF",
   },
   primaryButton: {
-    height: 60,
-    width: 150,
+    height: 40,
     backgroundColor: "#0078bf",
     borderRadius: 10,
     margin: 10,

@@ -31,8 +31,6 @@ class WodDetails extends React.Component {
             }
           />
         </SafeAreaView>
-
-        <Text style={this.amrapStyle.timeCap}>{this.props.listReps}</Text>
       </View>
     );
   }

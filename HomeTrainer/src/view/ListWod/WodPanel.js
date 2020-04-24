@@ -9,11 +9,11 @@ class WodPanel extends React.Component {
     this.wodPanelStyle = buildStyleSheet(getStyle());
     this.backgroundColorPanel;
     if (this.props.type === "For Time") {
-      this.backgroundColorPanel = "#f02a99";
+      this.backgroundColorPanel = "#ffff00";
     } else if (this.props.type === "EMOM") {
       this.backgroundColorPanel = "#43f30a";
     } else if (this.props.type === "AMRAP") {
-      this.backgroundColorPanel = "#a34f0a";
+      this.backgroundColorPanel = "#99bbff";
     } else if (this.props.type === "Classic") {
       this.backgroundColorPanel = "#0044ff";
     } else {

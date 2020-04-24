@@ -70,24 +70,34 @@ class WodMonitoring extends React.Component {
       timeToSec(this.state.displayTime) !==
       this.state.storeTime + parseInt((currentTime - this.state.time) / 1000)
     ) {
-      // changement d'entrainement si besoin
-      this.changeTraining();
-      let trainingLeftTime =
-        this.state.trainingLeftTime === 0
-          ? parseInt(
-              this.props.route.params.listReps[this.state.indexTraining] * 60
-            ) - 1
-          : this.state.trainingLeftTime - 1;
+      let passTime =
+        this.state.storeTime + parseInt(currentTime - this.state.time) / 1000;
+      // mise à jour du temps restant affiché (calcul du temps restant dans l'exercice en cours, i-e
+      // nombre de secondes total jusqu'à la fin de l'exercise en cours moins nombre total de secondes écoulées de puis le début)
+      let trainingLeftTime = Math.round(
+        this.state.round * sum(this.props.route.params.listReps) * 60 +
+          sum(
+            this.props.route.params.listReps.slice(
+              0,
+              this.state.indexTraining + 1
+            )
+          ) *
+            60 -
+          passTime
+      );
+      // changement de couleur du fond au passage à un autre exo
       if (trainingLeftTime === 0) {
         this.changeColorBackground();
       }
+      //mise a jour du temps affiché
+      let displayTime = secToTime(passTime);
 
       this.setState({
-        displayTime: secToTime(
-          this.state.storeTime + parseInt(currentTime - this.state.time) / 1000
-        ),
+        displayTime,
         trainingLeftTime,
       });
+      // changement d'entrainement si besoin
+      this.changeTraining();
     }
   }
 
@@ -102,7 +112,7 @@ class WodMonitoring extends React.Component {
   start() {
     // si le chrono n'est pas deja en route
     if (!this.state.isStarted && !this.state.isEndWod) {
-      this.timer = setInterval(this.increaseTime, 250);
+      this.timer = setInterval(this.increaseTime, 100);
       this.setState({ isStarted: true, time: new Date() });
     }
   }
@@ -116,6 +126,7 @@ class WodMonitoring extends React.Component {
       storeTime: 0,
       indexTraining: 0,
       endWodPanel: null,
+      round: 0,
       trainingLeftTime: parseInt(this.props.route.params.listReps[0] * 60),
     });
   }
@@ -175,15 +186,6 @@ class WodMonitoring extends React.Component {
         });
       }
     }
-  }
-
-  componentDidMount(prevProps, prevState) {
-    // chose à faire au chargement de la page
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    //chose à faire à la modification du state
-    // faire attention a bien comparé les elements du state que l'on souhaite
   }
 
   componentWillUnmount() {

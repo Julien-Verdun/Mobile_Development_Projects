@@ -5,6 +5,9 @@ export function buildStyleSheet(objectStyleSheet) {
 }
 
 export function sum(list) {
+  if (!Array.isArray(list) || list.length === 0) {
+    return 0;
+  }
   return list.reduce((prev, next) => {
     return prev + next;
   });

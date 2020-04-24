@@ -10,11 +10,22 @@ class ListWod extends React.Component {
   constructor(props) {
     super(props);
     this.listWodStyle = buildStyleSheet(getStyle());
-    this.trainings = getTraining();
-    this.listWod = (
+    this.state = {
+      trainings: [],
+    };
+  }
+
+  componentDidMount() {
+    getTraining().then((trainings) => {
+      this.setState({ trainings });
+    });
+  }
+
+  render() {
+    let listWod = (
       <SafeAreaView style={this.listWodStyle.listWod}>
         <FlatList
-          data={this.trainings}
+          data={this.state.trainings}
           renderItem={({ item }) => (
             <WodPanel
               navigation={this.props.navigation}
@@ -25,20 +36,14 @@ class ListWod extends React.Component {
               timeCap={item.timeCap}
             ></WodPanel>
           )}
-          keyExtractor={(item) => this.trainings.indexOf(item).toString()}
+          keyExtractor={(item) => this.state.trainings.indexOf(item).toString()}
         />
       </SafeAreaView>
     );
-    this.state = {};
-  }
-
-  componentDidMount(prevProps, prevState) {}
-
-  render() {
     return (
       <View style={this.listWodStyle.globalView}>
         <Text style={this.listWodStyle.title}>Choisis ton WOD !</Text>
-        {this.listWod}
+        {listWod}
         <Button
           title="Create my training"
           styles={{

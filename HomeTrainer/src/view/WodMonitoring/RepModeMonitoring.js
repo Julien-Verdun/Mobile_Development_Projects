@@ -75,6 +75,7 @@ class WodMonitoring extends React.Component {
       storeTime: 0,
       indexTraining: 0,
       endWodPanel: null,
+      round: 0,
     });
   }
 

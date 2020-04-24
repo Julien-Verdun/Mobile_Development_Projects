@@ -12,6 +12,7 @@ import { buildStyleSheet, isNormalInteger } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
 import { storeData, fetchData } from "./../../utils/dataStorage.js";
 import ModalNewTraining from "./../Modal/ModalNewTraining.js";
+import Error from "./../Error/Error.js";
 
 class TrainingCreator extends React.Component {
   constructor(props) {
@@ -23,6 +24,8 @@ class TrainingCreator extends React.Component {
       listTrainings: [],
       listReps: [],
       modalVisible: false,
+      errorTextTraining: "",
+      errorTextRound: "",
     };
     this.checkTraining = this.checkTraining.bind(this);
     this.createTheTraining = this.createTheTraining.bind(this);
@@ -42,11 +45,16 @@ class TrainingCreator extends React.Component {
       this.round > 0 &&
       this.state.listTrainings.length > 0
     ) {
-      console.log("Entrainement valide");
+      this.setState({
+        errorTextTraining: "",
+      });
       return true;
+    } else {
+      this.setState({
+        errorTextTraining: "- Training doesn't respect the rules",
+      });
+      return false;
     }
-    console.log("Entrainement invalide");
-    return false;
   }
 
   createTheTraining() {
@@ -60,28 +68,31 @@ class TrainingCreator extends React.Component {
         this.state.listTrainings.toString() +
         "*;*" +
         this.state.listReps.toString();
+      console.log("Creation de l'entrainement : ", trainingToString);
       fetchData("@MySuperStore:trainings").then((historicTrainings) => {
         storeData(
           "@MySuperStore:trainings",
           historicTrainings + "*-*" + trainingToString
         ).then(console.log("Entrainement registered"));
       });
+      this.props.navigation.navigate("ListWod");
     }
   }
 
   handleChangeRound(round) {
     if (isNormalInteger(round)) {
       this.round = round;
+      this.setState({
+        errorTextRound: "",
+      });
     } else {
-      console.log("Round n'est pas un nombre entier");
-      /*
-      prevenir de l'erreur
-      */
+      this.setState({
+        errorTextRound: "- Round n'est pas un nombre entier",
+      });
     }
   }
 
   addExercise(training, rep) {
-    console.log(this.state);
     this.setState({
       listTrainings: this.state.listTrainings.concat(training),
       listReps: this.state.listReps.concat(rep),
@@ -89,29 +100,41 @@ class TrainingCreator extends React.Component {
   }
 
   render() {
+    let errorPanel =
+      this.state.errorTextRound !== "" ||
+      this.state.errorTextTraining !== "" ? (
+        <Error
+          typeError={"Warning"}
+          errorText={
+            this.state.errorTextRound +
+            (this.state.errorTextRound === "" ? "" : "\n") +
+            this.state.errorTextTraining
+          }
+        ></Error>
+      ) : null;
     return (
       <View style={this.trainingCreatorStyle.globalView}>
         <ModalNewTraining
           modalVisible={this.state.modalVisible}
           onSelectTraining={this.addExercise}
           onCancelModal={this.handleModalVsible}
+          type={this.state.type}
         ></ModalNewTraining>
 
         <Text style={this.trainingCreatorStyle.title}>
-          Quel WOD vas-te faire perler aujourd'hui ?
+          Create your own training !
         </Text>
+        {errorPanel}
         <View style={this.trainingCreatorStyle.typeChoice}>
           <Text style={this.trainingCreatorStyle.textTypeChoice}>
-            Choix du type
+            Training type
           </Text>
           <Picker
             selectedValue={this.state.type}
             style={this.trainingCreatorStyle.pickerTypeChoice}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({ type: itemValue })
-            }
+            onValueChange={(itemValue) => this.setState({ type: itemValue })}
           >
-            <Picker.Item label="Classic" value="Clasic" />
+            <Picker.Item label="Classic" value="Classic" />
             <Picker.Item label="For Time" value="For Time" />
             <Picker.Item label="AMRAP" value="AMRAP" />
             <Picker.Item label="EMOM" value="EMOM" />
@@ -119,7 +142,7 @@ class TrainingCreator extends React.Component {
         </View>
         <View style={this.trainingCreatorStyle.roundChoice}>
           <Text style={this.trainingCreatorStyle.textRoundChoice}>
-            Nombre de round
+            Nummber of rounds
           </Text>
           <TextInput
             style={this.trainingCreatorStyle.roundInput}
@@ -131,35 +154,37 @@ class TrainingCreator extends React.Component {
         </View>
         <View style={this.trainingCreatorStyle.listTraining}>
           <Text style={this.trainingCreatorStyle.listTrainingTitle}>
-            Liste des exos:
+            Exercises list :
           </Text>
-          <Text>
-            Ajouter un exercice (nom de l'exercice, temps, nombre de rep)
+          <Text style={this.trainingCreatorStyle.listTrainingPrecision}>
+            Add the exercices one by one (exercise name and time or repetition
+            number)
           </Text>
 
           <SafeAreaView style={this.trainingCreatorStyle.listExercises}>
             <FlatList
               data={this.state.listTrainings}
               renderItem={({ item, index }) => (
-                <Text>{this.state.listReps[index] + " : " + item} </Text>
+                <Text>
+                  {parseInt(this.state.listReps[index] * 60) + " : " + item}{" "}
+                </Text>
               )}
               keyExtractor={(item) =>
                 this.state.listTrainings.indexOf(item).toString()
               }
             />
           </SafeAreaView>
-
-          <Button
-            title="Add an exercise"
-            styles={{
-              button: this.trainingCreatorStyle.addExerciseButton,
-              title: this.trainingCreatorStyle.buttonWhiteText,
-            }}
-            onPress={() => {
-              this.setState({ modalVisible: true });
-            }}
-          />
         </View>
+        <Button
+          title="Add an exercise"
+          styles={{
+            button: this.trainingCreatorStyle.addExerciseButton,
+            title: this.trainingCreatorStyle.buttonWhiteText,
+          }}
+          onPress={() => {
+            this.setState({ modalVisible: true });
+          }}
+        />
         <Button
           title="Create the training"
           styles={{

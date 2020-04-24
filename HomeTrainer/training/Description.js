@@ -1,3 +1,9 @@
+/*
+This file includes the Description variable, which is an object where keys are the exercise'names and values the exercise's descriptions.
+*/
+
+// this function returns the description of the given exercise exerciseName
+// or a defined text if no description is available
 export function getDescription(exerciseName) {
   if (
     Object.keys(Description).includes(exerciseName) &&
@@ -16,7 +22,21 @@ export function getDescription(exerciseName) {
   return "No description available for this exercise, you can check on the internet :)";
 }
 
-const Description = {
+export function getImage(exerciseName) {
+  if (Object.keys(Image).includes(exerciseName) && Image[exerciseName] !== "") {
+    return Image[exerciseName];
+  } else if (
+    exerciseName[exerciseName.length] === "s" &&
+    Object.keys(Image).includes(
+      exerciseName.slice(0, exerciseName - 1) && Image[exerciseName] !== ""
+    )
+  ) {
+    return Image[exerciseName.slice(0, exerciseName - 1)];
+  }
+  return require("./../assets/Exercises/nothing.png");
+}
+
+export const Description = {
   Burpees:
     'The burpee, or squat thrust,[citation needed] is a full body exercise used in strength training and as an aerobic exercise. The basic movement is performed in four steps and known as a "four-count burpee". Begin in a standing position. Move into a squat position with your hands on the ground. Kick your feet back into a plank position, while keeping your arms extended. Immediately return your feet into squat position. Stand up from the squat position.',
   "American Swing": "",
@@ -42,4 +62,20 @@ const Description = {
     "Running is a method of terrestrial locomotion allowing humans and other animals to move rapidly on foot. Running is a type of gait characterized by an aerial phase in which all feet are above the ground (though there are exceptions). This is in contrast to walking, where one foot is always in contact with the ground, the legs are kept mostly straight and the center of gravity vaults over the stance leg or legs in an inverted pendulum fashion.",
   "Pull-ups":
     'A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands and pulls up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso. The term chin-up, traditionally referring to a pull-up with the chin brought over the top of a bar, was used in the 1980s to refer to a pronated, or overhand, grip, with a supinated, or underhand, grip being called a "reverse-grip" chin-up. In later decades, this usage has inverted, with some using "chin-up" to refer to a pull-up done with a supinated hand position, while "pull-up" refers specifically to the exercise done with a pronated hand position. Pull-ups use many different muscles of the upper body, including the latissimus dorsi and the biceps brachii.',
+};
+
+export const Image = {
+  Burpees: require("./../assets/Exercises/burpees.png"),
+  "American Swing": require("./../assets/Exercises/american-swing.jpg"),
+  "Box Jump": require("./../assets/Exercises/box-jump.jpg"),
+  Squat: require("./../assets/Exercises/squat.jpg"),
+  "Push-ups": require("./../assets/Exercises/push-up.jpg"),
+  "Sit-ups": require("./../assets/Exercises/sit-up.png"),
+  "Dumbell Snatch": require("./../assets/Exercises/dumbell-snatch.jpg"),
+  Plank: require("./../assets/Exercises/plank.jpg"),
+  "Side Plank Left": require("./../assets/Exercises/side-plank.png"),
+  Hollow: require("./../assets/Exercises/hollow.jpg"),
+  "Side Plank Right": require("./../assets/Exercises/side-plank.png"),
+  Run: require("./../assets/Exercises/run.png"),
+  "Pull-ups": require("./../assets/Exercises/pull-up.jpg"),
 };

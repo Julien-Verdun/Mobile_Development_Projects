@@ -12,7 +12,8 @@ class Login extends React.Component {
       login: "",
       password: "",
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.signUp = this.signUp.bind(this);
   }
 
   handleChangeLogin(text) {
@@ -53,8 +54,7 @@ class Login extends React.Component {
     }
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  signIn() {
     this.props.navigation.navigate("Home");
     // if (this.isAuth()) {
     //   this.props.navigation.navigate("Home");
@@ -63,9 +63,9 @@ class Login extends React.Component {
     // }
   }
 
-  componentDidMount(prevProps, prevState) {}
-
-  componentDidUpdate(prevProps, prevState) {}
+  signUp() {
+    this.props.navigation.navigate("Home");
+  }
 
   render() {
     return (
@@ -81,17 +81,25 @@ class Login extends React.Component {
           style={this.loginStyle.passwordInput}
           ref={this.passwordInput}
           onChangeText={(text) => this.handleChangePassword(text)}
-          onSubmitEditing={this.handleSubmit}
+          onSubmitEditing={this.signIn}
           secureTextEntry={true}
           placeholder="Password"
         />
         <Button
           title="Sign In"
           styles={{
-            button: this.loginStyle.primaryButton,
+            button: this.loginStyle.signInButton,
             title: this.loginStyle.buttonWhiteText,
           }}
-          onPress={this.handleSubmit}
+          onPress={this.signIn}
+        />
+        <Button
+          title="Sign Up"
+          styles={{
+            button: this.loginStyle.signUpButton,
+            title: this.loginStyle.buttonWhiteText,
+          }}
+          onPress={this.signUp}
         />
       </View>
     );

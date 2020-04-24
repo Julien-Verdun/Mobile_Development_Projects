@@ -13,6 +13,7 @@ class ModalBestime extends React.Component {
       bestTimePanel: undefined,
       modalVisible: this.props.modalVisible,
     };
+    // this.bestTimeInput = React.createRef();
     this.handleBestTime = this.handleBestTime.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,6 +26,7 @@ class ModalBestime extends React.Component {
 
   handleChange(text) {
     this.bestTime = text;
+    // this.bestTimeInput.current = text;
   }
 
   checkFormatBestTime() {

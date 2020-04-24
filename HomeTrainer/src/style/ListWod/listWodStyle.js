@@ -5,13 +5,21 @@ export function getStyle() {
 const listWodStyle = {
   globalView: {
     flex: 1,
-    margin: 10,
-    padding: 0,
+    margin: 30,
+    marginTop: 10,
+    marginBottom: 10,
     flexDirection: "column",
     justifyContent: "space-evenly",
-    alignItems: "center",
+    alignItems: "stretch",
   },
-  title: { marginTop: 10, marginBottom: 10, fontSize: 18, fontWeight: "bold" },
+  title: {
+    marginTop: 10,
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: 10,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
   listWod: {
     flex: 3,
   },

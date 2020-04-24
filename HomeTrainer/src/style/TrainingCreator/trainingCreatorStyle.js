@@ -41,10 +41,11 @@ const trainingCreatorStyle = {
   listTraining: {
     flex: 2,
     flexDirection: "column",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
-  listTrainingTitle: { flex: 1, fontWeight: "bold", fontSize: 16 },
+  listTrainingTitle: { flex: 0.2, fontWeight: "bold", fontSize: 18 },
+  listTrainingPrecision: { flex: 0.3, fontStyle: "italic", fontSize: 15 },
   listExercises: { flex: 1 },
   buttonWhiteText: {
     fontSize: 16,
@@ -60,7 +61,7 @@ const trainingCreatorStyle = {
   addExerciseButton: {
     height: 40,
     margin: 10,
-    backgroundColor: "#aae8ff",
+    backgroundColor: "#bbe9ff",
     borderWidth: 2,
     borderRadius: 10,
   },

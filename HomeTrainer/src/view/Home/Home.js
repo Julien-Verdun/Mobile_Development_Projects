@@ -9,16 +9,6 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.homeStyle = buildStyleSheet(getStyle());
-    this.state = {};
-  }
-
-  componentDidMount(prevProps, prevState) {
-    // chose à faire au chargement de la page
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    //chose à faire à la modification du state
-    // faire attention a bien comparé les elements du state que l'on souhaite
   }
 
   render() {
@@ -49,6 +39,16 @@ class Home extends React.Component {
               title: this.homeStyle.buttonWhiteText,
             }}
             onPress={() => this.props.navigation.navigate("About")}
+          />
+          <Button
+            title="Exercise Informations"
+            styles={{
+              button: this.homeStyle.primaryButton,
+              title: this.homeStyle.buttonWhiteText,
+            }}
+            onPress={() =>
+              this.props.navigation.navigate("ExerciseInformations")
+            }
           />
           <Button
             title="Delete data"

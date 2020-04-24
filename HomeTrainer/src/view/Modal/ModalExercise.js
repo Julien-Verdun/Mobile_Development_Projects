@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Modal, Text, Alert, ScrollView } from "react-native";
+import { View, Modal, Text, Image, ScrollView } from "react-native";
 import { getStyle } from "../../style/Modal/modalExerciseStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
-import { getDescription } from "./../../../training/Description.js";
+import { getDescription, getImage } from "./../../../training/Description.js";
 
 class ModalExercise extends React.Component {
   constructor(props) {
@@ -21,8 +21,8 @@ class ModalExercise extends React.Component {
   }
 
   render() {
-    let exerciseDescription = getDescription(this.props.exerciseName);
-    // component permettant de renseigner le meilleur score (form)
+    let exerciseDescription = getDescription(this.props.exerciseName),
+      exerciseImagePath = getImage(this.props.exerciseName);
     return (
       <Modal
         animationType="slide"
@@ -44,6 +44,12 @@ class ModalExercise extends React.Component {
               </Text>
             </ScrollView>
 
+            <Image
+              style={this.modalExerciseStyle.imageExercise}
+              source={exerciseImagePath}
+              resizeMethod={"resize"}
+              resizeMode={"center"}
+            />
             <Button
               title="Cancel"
               styles={{

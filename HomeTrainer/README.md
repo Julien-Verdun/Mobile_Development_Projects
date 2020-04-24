@@ -46,17 +46,11 @@ and the informations, separated with the sign "\*;\*", are stored as follow : ty
 
 ## TO-DO
 
-Faire une page avec la liste des exercices et leur description et une barre de recherche pour y accéder
-
-Wod Monitoring
-
--faire un component d'erreur pour prévenir des erreurs de saisie et autres, mettre un props warning ou alert pour la couleur
-
-- mettre un boutton a la fin du wod pour permettre d'enregistrer son temps
+Training Creator
+Stylisé la liste des exercises ajoutés
 
 MEILLEUR TEMPS
-
-- permettre a l'utilisateur d'avoir un historique de ses performances et d'observer sont évolutions (un graphique par exemple) -> renseigner la date quand il enregistre son temps
+permettre a l'utilisateur d'avoir un historique de ses performances et d'observer sont évolutions (un graphique par exemple) -> renseigner la date quand il enregistre son temps
 
 AJOUT D'UN NOUVEAU WOD
 Styliser l'appli
@@ -64,6 +58,11 @@ Styliser l'appli
 PRESENTATION DE LA LISTE DES WODS
 Styliser l'appli
 
-BUG :
+CLOCK :
+styliser l'horloge et la liste des temps enregistrés
 
-- le compteur continue de tourner quand l'appli est en fond de tache mais pas les objets sur l'ecran (left time et training)
+AMELIORATIONS :
+Mettre un ActivityIndicator pour montrer le chargement lorsqu'il y en a un
+Faire fonctionner le son meme en dehors de l'application (la faire tourner en tache de fond)
+MEmoriser un ecran quand on reviens en arrière
+Mettre des images dans les descriptions des exercices pour les illustrer
