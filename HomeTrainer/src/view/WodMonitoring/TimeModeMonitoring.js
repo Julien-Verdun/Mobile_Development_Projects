@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { getStyle } from "../../style/WodMonitoring/timeModeMonitoringStyle.js";
 import {
   buildStyleSheet,
@@ -9,6 +9,7 @@ import {
 } from "../../utils/functions.js";
 import Button from "../Other/Button.js";
 import { Audio } from "expo-av";
+import { getImage } from "./../../../training/Description.js";
 
 /*
 Ce component est la page permettant de suivre un WOD choisi ou créé 
@@ -206,20 +207,30 @@ class WodMonitoring extends React.Component {
         <Text style={this.timeModeMonitoringStyle.type}>{params.type}</Text>
 
         <Text style={this.timeModeMonitoringStyle.round}>
-          Round : {this.state.round}
+          Round : {this.state.round} / {params.numberRounds}
         </Text>
 
         <Text style={this.timeModeMonitoringStyle.time}>
           {this.state.displayTime}
         </Text>
 
-        <Text style={this.timeModeMonitoringStyle.leftTime}>
-          {this.state.trainingLeftTime}
-        </Text>
         {this.state.endWodPanel}
-        <Text style={this.timeModeMonitoringStyle.training}>
-          {params.listTrainings[this.state.indexTraining]}
-        </Text>
+
+        <View style={this.timeModeMonitoringStyle.exerciseInfo}>
+          <Text style={this.timeModeMonitoringStyle.training}>
+            {params.listTrainings[this.state.indexTraining]}
+          </Text>
+          <Text style={this.timeModeMonitoringStyle.leftTime}>
+            {this.state.trainingLeftTime}
+          </Text>
+        </View>
+
+        <Image
+          style={this.timeModeMonitoringStyle.imageExercise}
+          source={getImage(params.listTrainings[this.state.indexTraining])}
+          resizeMethod={"resize"}
+          resizeMode={"stretch"}
+        />
 
         <View style={this.timeModeMonitoringStyle.buttons}>
           <Button

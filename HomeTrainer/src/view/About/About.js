@@ -7,10 +7,7 @@ class About extends React.Component {
   constructor(props) {
     super(props);
     this.aboutStyle = buildStyleSheet(getStyle());
-    this.state = {};
   }
-
-  componentDidMount(prevProps, prevState) {}
 
   render() {
     return (

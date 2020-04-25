@@ -72,7 +72,7 @@ const modalNewTrainingStyle = {
     marginTop: 5,
     marginLeft: 5,
   },
-  newTrainingText: { flex: 1, color: "red" },
+  newTrainingText: { flex: 1, fontSize: 15, fontStyle: "italic" },
   newTrainingButton: {
     height: 40,
     backgroundColor: "#007bff",

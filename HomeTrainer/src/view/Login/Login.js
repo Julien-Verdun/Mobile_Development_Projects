@@ -3,6 +3,8 @@ import { View, Text, TextInput } from "react-native";
 import { getStyle } from "../../style/Login/loginStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
 import Button from "../Other/Button.js";
+import { SearchBar } from "react-native-elements";
+// import Icon from "react-native-vector-icons/FontAwesome";
 
 class Login extends React.Component {
   constructor(props) {
@@ -55,35 +57,39 @@ class Login extends React.Component {
   }
 
   signIn() {
-    this.props.navigation.navigate("Home");
+    this.props.navigation.navigate("ListTrainingBottomTabNavigation");
     // if (this.isAuth()) {
-    //   this.props.navigation.navigate("Home");
+    //   this.props.navigation.navigate("ListTrainingBottomTabNavigation");
     // } else {
     //   console.log("Impossbile to sign in");
     // }
   }
 
   signUp() {
-    this.props.navigation.navigate("Home");
+    this.props.navigation.navigate("ListTrainingBottomTabNavigation");
   }
 
   render() {
     return (
       <View style={this.loginStyle.globalView}>
-        <TextInput
-          style={this.loginStyle.loginInput}
-          ref={this.loginInput}
+        <SearchBar
+          searchIcon={false}
+          placeholder="Login..."
           onChangeText={(text) => this.handleChangeLogin(text)}
-          placeholder="Login"
-          keyboardType="email-address"
+          value={this.state.login}
+          containerStyle={this.loginStyle.containerExerciseInputName}
+          inputContainerStyle={this.loginStyle.inputContainerExerciseInputName}
+          inputStyle={this.loginStyle.inputExerciseInputName}
         />
-        <TextInput
-          style={this.loginStyle.passwordInput}
-          ref={this.passwordInput}
+
+        <SearchBar
+          searchIcon={false}
+          placeholder="Password..."
           onChangeText={(text) => this.handleChangePassword(text)}
-          onSubmitEditing={this.signIn}
-          secureTextEntry={true}
-          placeholder="Password"
+          value={this.state.password}
+          containerStyle={this.loginStyle.containerExerciseInputName}
+          inputContainerStyle={this.loginStyle.inputContainerExerciseInputName}
+          inputStyle={this.loginStyle.inputExerciseInputName}
         />
         <Button
           title="Sign In"
@@ -101,6 +107,13 @@ class Login extends React.Component {
           }}
           onPress={this.signUp}
         />
+        {/* <Icon.Button
+          name="facebook"
+          backgroundColor="#3b5998"
+          // onPress={this.loginWithFacebook}
+        >
+          Login with Facebook
+        </Icon.Button> */}
       </View>
     );
   }

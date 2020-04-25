@@ -10,6 +10,20 @@ const loginStyle = {
     justifyContent: "flex-start",
     alignItems: "stretch",
   },
+  containerExerciseInputName: {
+    backgroundColor: "transparent",
+    borderBottomColor: "transparent",
+    borderTopColor: "transparent",
+  },
+  inputContainerExerciseInputName: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  inputExerciseInputName: {
+    backgroundColor: "white",
+  },
+
   loginInput: {
     height: 40,
     borderRadius: 10,

@@ -1,8 +1,8 @@
 import * as React from "react";
-import Navigation from "./src/navigation/Navigation.js";
+import DrawerNavigator from "./src/navigation/Navigation.js";
 
 function App() {
-  return <Navigation />;
+  return <DrawerNavigator />;
 }
 
 export default App;

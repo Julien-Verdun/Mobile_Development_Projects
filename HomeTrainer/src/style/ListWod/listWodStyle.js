@@ -23,15 +23,4 @@ const listWodStyle = {
   listWod: {
     flex: 3,
   },
-  buttonWhiteText: {
-    fontSize: 16,
-    color: "#FFF",
-  },
-  primaryButton: {
-    height: 40,
-    margin: 10,
-    backgroundColor: "#ffe800",
-    borderWidth: 2,
-    borderRadius: 10,
-  },
 };

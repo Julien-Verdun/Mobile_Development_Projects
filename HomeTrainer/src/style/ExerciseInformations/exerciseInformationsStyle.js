@@ -16,6 +16,7 @@ const exerciseInformationsStyle = {
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center",
+    backgroundColor: "#ffffff",
     borderColor: "#000000",
     borderRadius: 5,
     borderWidth: 1,
@@ -29,13 +30,18 @@ const exerciseInformationsStyle = {
     fontWeight: "bold",
   },
   descriptionExercise: { flex: 0.5, fontSize: 15 },
-  exerciseInputName: {
-    height: 40,
-    borderColor: "#000066",
-    borderRadius: 5,
+  containerExerciseInputName: {
+    backgroundColor: "transparent",
+    borderBottomColor: "transparent",
+    borderTopColor: "transparent",
+  },
+  inputContainerExerciseInputName: {
+    backgroundColor: "white",
     borderWidth: 1,
-    margin: 10,
-    paddingLeft: 10,
+    borderRadius: 5,
+  },
+  inputExerciseInputName: {
+    backgroundColor: "white",
   },
   imageExercise: {
     height: 250,

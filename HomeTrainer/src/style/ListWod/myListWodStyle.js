@@ -1,38 +1,36 @@
 export function getStyle() {
-  return homeStyle;
+  return myListWodStyle;
 }
 
-const homeStyle = {
+const myListWodStyle = {
   globalView: {
     flex: 1,
+    margin: 30,
+    marginTop: 10,
+    marginBottom: 10,
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "stretch",
-    margin: 15,
   },
   title: {
-    flex: 0.2,
+    marginTop: 10,
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: 30,
+    marginBottom: 10,
+    fontSize: 18,
     fontWeight: "bold",
-    fontSize: 30,
   },
-  buttons: {
-    flex: 1,
-    margin: 10,
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    alignItems: "stretch",
+  listWod: {
+    flex: 3,
   },
   buttonWhiteText: {
     fontSize: 16,
     color: "#FFF",
   },
   primaryButton: {
-    height: 40,
-    backgroundColor: "#0078bf",
+    height: 60,
+    backgroundColor: "#ffe800",
+    borderWidth: 2,
     borderRadius: 10,
-    margin: 10,
   },
 };

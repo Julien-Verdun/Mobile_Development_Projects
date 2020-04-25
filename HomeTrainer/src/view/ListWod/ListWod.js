@@ -4,7 +4,6 @@ import { getStyle } from "../../style/ListWod/listWodStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
 import { getTraining } from "../../../training/Training.js";
 import WodPanel from "./WodPanel.js";
-import Button from "./../Other/Button.js";
 
 class ListWod extends React.Component {
   constructor(props) {
@@ -16,9 +15,7 @@ class ListWod extends React.Component {
   }
 
   componentDidMount() {
-    getTraining().then((trainings) => {
-      this.setState({ trainings });
-    });
+    this.setState({ trainings: getTraining() });
   }
 
   render() {
@@ -42,16 +39,8 @@ class ListWod extends React.Component {
     );
     return (
       <View style={this.listWodStyle.globalView}>
-        <Text style={this.listWodStyle.title}>Choisis ton WOD !</Text>
+        <Text style={this.listWodStyle.title}>Workout of the Day !</Text>
         {listWod}
-        <Button
-          title="Create my training"
-          styles={{
-            button: this.listWodStyle.primaryButton,
-            title: this.listWodStyle.buttonWhiteText,
-          }}
-          onPress={() => this.props.navigation.navigate("TrainingCreator")}
-        />
       </View>
     );
   }

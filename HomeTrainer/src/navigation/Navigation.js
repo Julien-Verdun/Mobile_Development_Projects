@@ -1,158 +1,78 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "./../view/Home/Home.js";
-import About from "./../view/About/About.js";
-import Login from "./../view/Login/Login.js";
-import Clock from "./../view/Clock/Clock.js";
-import ListWod from "./../view/ListWod/ListWod.js";
-import ExerciseInformations from "./../view/ExerciseInformations/ExerciseInformations.js";
-import WodDetails from "./../view/ListWod/WodDetails.js";
-import TrainingCreator from "./../view/TrainingCreator/TrainingCreator.js";
-import TimeModeMonitoring from "./../view/WodMonitoring/TimeModeMonitoring.js";
-import RepModeMonitoring from "./../view/WodMonitoring/RepModeMonitoring.js";
-import NavigationBar from "./NavigationBar.js";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Icon } from "react-native-elements";
 
-class Navigation extends React.Component {
+import InformationsNavigation from "./subNavigation/InformationsNavigation.js";
+import AboutNavigation from "./subNavigation/AboutNavigation.js";
+import ClockNavigation from "./subNavigation/ClockNavigation.js";
+import TrainingNavigation from "./subNavigation/TrainingNavigation.js";
+import SettingsNavigation from "./subNavigation/SettingsNavigation.js";
+
+class DrawerNavigator extends React.Component {
   render() {
-    const Stack = createStackNavigator();
+    const Drawer = createDrawerNavigator();
     return (
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"Se connecter"}
-                  navigation={navigation}
-                />
+        <Drawer.Navigator
+          initialRouteName={"TrainingNavigation"}
+          // drawerContent={(props) => <SideBarMenu {...props} />}
+        >
+          <Drawer.Screen
+            name="TrainingNavigation"
+            component={TrainingNavigation}
+            options={{
+              drawerLabel: "Training",
+              drawerIcon: ({}) => (
+                <Icon name={"rowing"} size={25} color="#808080" />
               ),
-            })}
+            }}
           />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"Accueil"}
-                  navigation={navigation}
-                />
-              ),
-            })}
-          />
-          <Stack.Screen
-            name="About"
-            component={About}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"A propos"}
-                  navigation={navigation}
-                />
-              ),
-            })}
-          />
-          <Stack.Screen
+          <Drawer.Screen
             name="Clock"
-            component={Clock}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"Horloge"}
-                  navigation={navigation}
-                />
+            component={ClockNavigation}
+            options={{
+              drawerLabel: "Clock",
+              drawerIcon: ({}) => (
+                <Icon name={"alarm"} size={25} color="#808080" />
               ),
-            })}
+            }}
           />
-          <Stack.Screen
-            name="TimeModeMonitoring"
-            component={TimeModeMonitoring}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"Work"}
-                  navigation={navigation}
-                />
+          <Drawer.Screen
+            name="Informations"
+            component={InformationsNavigation}
+            options={{
+              drawerLabel: "Informations",
+              drawerIcon: ({}) => (
+                <Icon name={"help"} size={25} color="#808080" />
               ),
-            })}
+            }}
           />
-          <Stack.Screen
-            name="RepModeMonitoring"
-            component={RepModeMonitoring}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"Work"}
-                  navigation={navigation}
-                />
+          <Drawer.Screen
+            name="About"
+            component={AboutNavigation}
+            options={{
+              drawerLabel: "About",
+              drawerIcon: ({}) => (
+                <Icon name={"info"} size={25} color="#808080" />
               ),
-            })}
+            }}
           />
-          <Stack.Screen
-            name="ExerciseInformations"
-            component={ExerciseInformations}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"Exercises"}
-                  navigation={navigation}
-                />
+          <Drawer.Screen
+            name="Settings"
+            component={SettingsNavigation}
+            options={{
+              drawerLabel: "Settings",
+              drawerIcon: ({}) => (
+                <Icon name={"settings"} size={25} color="#808080" />
               ),
-            })}
+            }}
           />
-          <Stack.Screen
-            name="ListWod"
-            component={ListWod}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"WOD"}
-                  navigation={navigation}
-                />
-              ),
-            })}
-          />
-          <Stack.Screen
-            name="WodDetails"
-            component={WodDetails}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"WOD Details"}
-                  navigation={navigation}
-                />
-              ),
-            })}
-          />
-          <Stack.Screen
-            name="TrainingCreator"
-            component={TrainingCreator}
-            options={({ navigation }) => ({
-              headerTitle: (props) => (
-                <NavigationBar
-                  {...props}
-                  title={"Create your training"}
-                  navigation={navigation}
-                />
-              ),
-            })}
-          />
-        </Stack.Navigator>
+        </Drawer.Navigator>
       </NavigationContainer>
     );
   }
 }
 
-export default Navigation;
+export default DrawerNavigator;

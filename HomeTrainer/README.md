@@ -46,23 +46,40 @@ and the informations, separated with the sign "\*;\*", are stored as follow : ty
 
 ## TO-DO
 
-Training Creator
-Stylisé la liste des exercises ajoutés
+FOR TIME WOD
+Best Time -> stocker le temps pour chaque WOD
+Donner un identifiant unique à chaque wod et l'utiliser pour stocker le meilleur temps et le charger au demarage
+
+Training
+Completer les descriptions des exos manquants et ajouter les images
 
 MEILLEUR TEMPS
 permettre a l'utilisateur d'avoir un historique de ses performances et d'observer sont évolutions (un graphique par exemple) -> renseigner la date quand il enregistre son temps
 
-AJOUT D'UN NOUVEAU WOD
-Styliser l'appli
-
-PRESENTATION DE LA LISTE DES WODS
-Styliser l'appli
+HISTORIQUE UTILISATEUR
+Faire une page de statistique pour l'utilisateur, pour qu'il puisse suivre ses temps et son évolution -> mettre des graphiques par exemple
+Mettre un contribution graph (heatmap) en premire vue pour montrer l'activité globale du joueur (a chaque fois qu'il a fais une activité)
+Mettre ensuite par exercise un graphique par entrainement qui indique l'evolution des temps du joueur (temps necessaire en fonction de la date par exemple Bezier Line Chart)
 
 CLOCK :
 styliser l'horloge et la liste des temps enregistrés
+Faire une clock par type de WOD, qui permet de paramtrer, par exemple TABATA -> 20sec 10sec, AMRAP -> sonnerie a la fin, classique -> définition de sonnerie à intervalle régulier avec temps de récup
+
+SETTINGS
+Mettre un menu "paramètres" pour pouvoir choisir la langue de l'application (stocker chaque text de l'appli dans un dossier text au niveau de style et view avec la meme arborescence, et y stocker la version francaise et anglaise)
 
 AMELIORATIONS :
 Mettre un ActivityIndicator pour montrer le chargement lorsqu'il y en a un
 Faire fonctionner le son meme en dehors de l'application (la faire tourner en tache de fond)
-MEmoriser un ecran quand on reviens en arrière
-Mettre des images dans les descriptions des exercices pour les illustrer
+Memoriser un ecran quand on reviens en arrière
+
+Mettre un système de notation des wod (utiliser pour cela Rating de react-native-elements)
+
+Utiliser react-native-elements pour styliser l'appli
+Utiliser react-native-chart-kit pour les graphiques
+
+Supprimer SideBarMenu et style ?
+
+AUTHENTIFICATION:
+https://reactnavigation.org/docs/auth-flow/
+utiliser redux pour l'implémenter

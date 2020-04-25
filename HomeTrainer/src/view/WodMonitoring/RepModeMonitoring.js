@@ -1,13 +1,13 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { getStyle } from "../../style/WodMonitoring/repModeMonitoringStyle.js";
 import {
   buildStyleSheet,
-  sum,
   timeToSec,
   secToTime,
 } from "../../utils/functions.js";
 import Button from "../Other/Button.js";
+import { getImage } from "./../../../training/Description.js";
 
 /*
 Ce component est la page permettant de suivre un WOD choisi ou créé 
@@ -109,6 +109,7 @@ class WodMonitoring extends React.Component {
         // if it is the end of the training
         if (this.state.round === params.numberRounds - 1) {
           isEndWod = true;
+          nextRound = params.numberRounds;
           endWodPanel = (
             <Text style={this.repModeMonitoringStyle.endWod}>
               End of the training
@@ -162,20 +163,30 @@ class WodMonitoring extends React.Component {
       >
         <Text style={this.repModeMonitoringStyle.type}>{params.type}</Text>
         <Text style={this.repModeMonitoringStyle.round}>
-          Round : {this.state.round}
+          Round : {this.state.round} / {params.numberRounds}
         </Text>
 
         <Text style={this.repModeMonitoringStyle.time}>
           {this.state.displayTime}
         </Text>
 
-        <Text style={this.repModeMonitoringStyle.numberRep}>
-          {this.state.trainingRepNumber}
-        </Text>
+        <View style={this.repModeMonitoringStyle.exerciseInfo}>
+          <Text style={this.repModeMonitoringStyle.training}>
+            {params.listTrainings[this.state.indexTraining]}
+          </Text>
+          <Text style={this.repModeMonitoringStyle.numberRep}>
+            {this.state.trainingRepNumber}
+          </Text>
+        </View>
+
         {this.state.endWodPanel}
-        <Text style={this.repModeMonitoringStyle.training}>
-          {params.listTrainings[this.state.indexTraining]}
-        </Text>
+
+        <Image
+          style={this.repModeMonitoringStyle.imageExercise}
+          source={getImage(params.listTrainings[this.state.indexTraining])}
+          resizeMethod={"resize"}
+          resizeMode={"stretch"}
+        />
 
         <View style={this.repModeMonitoringStyle.buttonsChange}>
           <Button

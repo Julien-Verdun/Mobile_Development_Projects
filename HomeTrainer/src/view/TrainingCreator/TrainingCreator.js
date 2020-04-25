@@ -165,8 +165,12 @@ class TrainingCreator extends React.Component {
             <FlatList
               data={this.state.listTrainings}
               renderItem={({ item, index }) => (
-                <Text>
-                  {parseInt(this.state.listReps[index] * 60) + " : " + item}{" "}
+                <Text style={this.trainingCreatorStyle.exerciseItem}>
+                  {(this.state.type === "Classic"
+                    ? parseInt(this.state.listReps[index] * 60) + " sec"
+                    : this.state.listReps[index] + " rep") +
+                    " : " +
+                    item}{" "}
                 </Text>
               )}
               keyExtractor={(item) =>

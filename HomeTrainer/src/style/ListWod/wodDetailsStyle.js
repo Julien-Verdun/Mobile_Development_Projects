@@ -15,16 +15,6 @@ const wodDetailsStyle = {
     fontSize: 18,
     fontWeight: "bold",
   },
-  buttonWhiteText: {
-    fontSize: 16,
-    color: "#FFF",
-  },
-  primaryButton: {
-    height: 60,
-    backgroundColor: "#ffe800",
-    borderWidth: 2,
-    borderRadius: 10,
-  },
   bestTimeButton: {
     height: 40,
     backgroundColor: "#007bff",

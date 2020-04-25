@@ -10,6 +10,7 @@ import {
 import { getStyle } from "./../../style/ExerciseInformations/exerciseInformationsStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
 import { Description, getImage } from "./../../../training/Description.js";
+import { SearchBar } from "react-native-elements";
 
 class ExerciseInformations extends React.Component {
   /*
@@ -46,13 +47,20 @@ class ExerciseInformations extends React.Component {
   render() {
     return (
       <View style={this.exerciseInformationsStyle.globalView}>
-        <TextInput
-          style={this.exerciseInformationsStyle.exerciseInputName}
-          ref={this.exerciseInputName}
-          onChangeText={(text) => this.handleChange(text)}
-          onSubmitEditing={this.handleSubmit}
+        <SearchBar
+          lightTheme
           placeholder="Exercise name..."
-        ></TextInput>
+          onChangeText={(text) => this.handleChange(text)}
+          value={this.state.nameExercise}
+          icon={{ type: "font-awesome", name: "search" }}
+          containerStyle={
+            this.exerciseInformationsStyle.containerExerciseInputName
+          }
+          inputContainerStyle={
+            this.exerciseInformationsStyle.inputContainerExerciseInputName
+          }
+          inputStyle={this.exerciseInformationsStyle.inputExerciseInputName}
+        />
 
         <SafeAreaView style={this.exerciseInformationsStyle.listExercises}>
           <FlatList

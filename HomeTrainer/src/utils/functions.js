@@ -37,3 +37,7 @@ export function secToTime(sec) {
 export function isNormalInteger(str) {
   return /^\+?\d+$/.test(str);
 }
+
+export function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
