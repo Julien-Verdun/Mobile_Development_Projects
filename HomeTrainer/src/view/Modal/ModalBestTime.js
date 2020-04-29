@@ -1,32 +1,44 @@
 import React from "react";
-import { View, Modal, Text, Alert, TextInput } from "react-native";
+import { View, Modal, Text, TextInput } from "react-native";
 import { getStyle } from "../../style/Modal/modalBestTimeStyle.js";
-import { buildStyleSheet, isNormalInteger } from "../../utils/functions.js";
+import {
+  buildStyleSheet,
+  isNormalInteger,
+  normaliseTime,
+} from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return { bestTimes: state.bestTimes };
+};
 
 class ModalBestime extends React.Component {
   constructor(props) {
     super(props);
     this.modalBestTimeStyle = buildStyleSheet(getStyle());
-    this.bestTime = undefined;
+    this.bestTime = this.props.bestTimes.bestTimes[this.props.exerciseId];
     this.state = {
       bestTimePanel: undefined,
       modalVisible: this.props.modalVisible,
     };
-    // this.bestTimeInput = React.createRef();
-    this.handleBestTime = this.handleBestTime.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkFormatBestTime = this.checkFormatBestTime.bind(this);
+    this.toggleBestTime = this.toggleBestTime.bind(this);
   }
-
-  handleBestTime(bestTime) {
-    this.bestTime = bestTime;
+  toggleBestTime() {
+    this.props.dispatch({
+      type: "TOGGLE_NEW_BEST_TIME",
+      value: {
+        exerciseId: this.props.exerciseId,
+        bestTime: this.bestTime,
+      },
+    });
   }
 
   handleChange(text) {
     this.bestTime = text;
-    // this.bestTimeInput.current = text;
   }
 
   checkFormatBestTime() {
@@ -46,8 +58,9 @@ class ModalBestime extends React.Component {
   handleSubmit() {
     //verification du format du temps renseigné
     if (this.checkFormatBestTime()) {
-      this.props.onSubmitBestTime(this.bestTime);
+      this.bestTime = normaliseTime(this.bestTime);
       this.props.onCancelModal(false);
+      this.toggleBestTime();
       this.setState({ modalVisible: !this.state.modalVisible });
     } else {
       //mauvais format renseigné
@@ -89,7 +102,7 @@ class ModalBestime extends React.Component {
               <View style={this.modalBestTimeStyle.bestTimeView}>
                 <TextInput
                   style={this.modalBestTimeStyle.bestTimeInput}
-                  ref={this.bestTimeInput}
+                  defaultValue={this.bestTime}
                   onChangeText={(text) => this.handleChange(text)}
                   onSubmitEditing={this.handleSubmit}
                   placeholder="hh:mm:ss"
@@ -125,4 +138,4 @@ class ModalBestime extends React.Component {
   }
 }
 
-export default ModalBestime;
+export default connect(mapStateToProps)(ModalBestime);

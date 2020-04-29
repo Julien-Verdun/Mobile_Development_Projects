@@ -19,16 +19,14 @@ class WodPanel extends React.Component {
     } else {
       this.backgroundColorPanel = "#4f1600";
     }
-    this.state = {};
   }
-
-  componentDidMount(prevProps, prevState) {}
 
   render() {
     return (
       <TouchableOpacity
         onPress={() =>
           this.props.navigation.navigate("WodDetails", {
+            exerciseId: this.props.exerciseId,
             type: this.props.type,
             listTrainings: this.props.listTrainings,
             numberRounds: this.props.numberRounds,

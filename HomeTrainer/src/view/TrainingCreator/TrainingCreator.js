@@ -10,9 +10,10 @@ import {
 import { getStyle } from "../../style/TrainingCreator/trainingCreatorStyle.js";
 import { buildStyleSheet, isNormalInteger } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
-import { storeData, fetchData } from "./../../utils/dataStorage.js";
+import { storeData, fetchData } from "../../../DataStorage/dataStorage.js";
 import ModalNewTraining from "./../Modal/ModalNewTraining.js";
 import Error from "./../Error/Error.js";
+import { storeTraining } from "./../../../DataStorage/trainingStorage.js";
 
 class TrainingCreator extends React.Component {
   constructor(props) {
@@ -68,14 +69,11 @@ class TrainingCreator extends React.Component {
         this.state.listTrainings.toString() +
         "*;*" +
         this.state.listReps.toString();
-      console.log("Creation de l'entrainement : ", trainingToString);
-      fetchData("@MySuperStore:trainings").then((historicTrainings) => {
-        storeData(
-          "@MySuperStore:trainings",
-          historicTrainings + "*-*" + trainingToString
-        ).then(console.log("Entrainement registered"));
-      });
-      this.props.navigation.navigate("ListWod");
+      storeTraining(trainingToString).then(
+        console.log("Creation de l'entrainement : ", trainingToString)
+      );
+
+      this.props.navigation.navigate("ListTrainingBottomTabNavigation");
     }
   }
 

@@ -3,18 +3,47 @@ export function getStyle() {
 }
 
 const sideBarMenuStyle = {
-  sideMenuContainer: {
-    width: "100%",
-    height: "100%",
+  container: {
     backgroundColor: "#fff",
-    alignItems: "center",
-    paddingTop: 20,
+    paddingTop: 40,
+    flex: 1,
   },
-  sideMenuProfileIcon: {
-    resizeMode: "center",
-    width: 150,
-    height: 150,
+  profilContainer: {
+    alignItems: "center",
+  },
+  listItem: {
+    height: 60,
+    flexDirection: "row",
+  },
+  listRoutes: {
+    flex: 1,
+    paddingLeft: 20,
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "flex-start",
+  },
+  title: {
+    fontSize: 18,
+    marginLeft: 20,
+  },
+  header: {
+    width: "100%",
+    height: 60,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  profileImg: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     marginTop: 20,
-    borderRadius: 150 / 2,
+  },
+  sidebarDivider: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "lightgray",
+    marginVertical: 10,
   },
 };

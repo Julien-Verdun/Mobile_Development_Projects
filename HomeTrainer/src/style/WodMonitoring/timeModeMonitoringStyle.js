@@ -41,14 +41,17 @@ const timeModeMonitoringStyle = {
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   leftTime: {
-    flex: 0.2,
+    flex: 0.3,
     fontWeight: "bold",
     fontSize: 40,
+    textAlign: "right",
   },
   training: {
-    flex: 0.5,
+    flex: 1,
     fontSize: 30,
   },
   endWod: {

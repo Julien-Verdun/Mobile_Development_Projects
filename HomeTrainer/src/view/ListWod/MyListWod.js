@@ -10,7 +10,6 @@ class MyListWod extends React.Component {
   constructor(props) {
     super(props);
     this.myListWodStyle = buildStyleSheet(getStyle());
-    this.numberTraining = getTraining().length;
     this.state = {
       myTrainings: [],
     };
@@ -30,6 +29,7 @@ class MyListWod extends React.Component {
           renderItem={({ item }) => (
             <WodPanel
               navigation={this.props.navigation}
+              exerciseId={item.exerciseId}
               type={item.type}
               numberRounds={item.numberRounds}
               listTrainings={item.listTrainings}
@@ -37,11 +37,7 @@ class MyListWod extends React.Component {
               timeCap={item.timeCap}
             ></WodPanel>
           )}
-          keyExtractor={(item) =>
-            (
-              this.state.myTrainings.indexOf(item) + this.lengthTraining
-            ).toString()
-          }
+          keyExtractor={this.state.myTrainings.exerciseId}
         />
       </SafeAreaView>
     );

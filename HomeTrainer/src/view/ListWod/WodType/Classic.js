@@ -31,6 +31,7 @@ class Classic extends React.Component {
                 ></Exercise>
               )}
               keyExtractor={(item) =>
+                this.props.exerciseId +
                 this.props.listTrainings.indexOf(item).toString()
               }
             />

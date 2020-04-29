@@ -14,7 +14,7 @@ Ce component est la page permettant de suivre un WOD choisi ou créé
 et de suivre sa progression en temps réel
 */
 
-class WodMonitoring extends React.Component {
+class RepModeMonitoring extends React.Component {
   constructor(props) {
     super(props);
     this.repModeMonitoringStyle = buildStyleSheet(getStyle());
@@ -269,4 +269,4 @@ class WodMonitoring extends React.Component {
   }
 }
 
-export default WodMonitoring;
+export default RepModeMonitoring;

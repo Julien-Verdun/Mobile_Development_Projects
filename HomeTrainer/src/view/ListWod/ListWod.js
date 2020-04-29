@@ -26,6 +26,7 @@ class ListWod extends React.Component {
           renderItem={({ item }) => (
             <WodPanel
               navigation={this.props.navigation}
+              exerciseId={item.exerciseId}
               type={item.type}
               numberRounds={item.numberRounds}
               listTrainings={item.listTrainings}
@@ -33,7 +34,7 @@ class ListWod extends React.Component {
               timeCap={item.timeCap}
             ></WodPanel>
           )}
-          keyExtractor={(item) => this.state.trainings.indexOf(item).toString()}
+          keyExtractor={this.state.trainings.exerciseId}
         />
       </SafeAreaView>
     );

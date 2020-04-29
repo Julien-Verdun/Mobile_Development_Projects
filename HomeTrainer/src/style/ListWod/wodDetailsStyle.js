@@ -11,7 +11,7 @@ const wodDetailsStyle = {
     alignItems: "center",
   },
   type: {
-    flex: 0.3,
+    flex: 0.1,
     fontSize: 18,
     fontWeight: "bold",
   },

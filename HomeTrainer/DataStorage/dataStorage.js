@@ -79,3 +79,14 @@ export async function removeData(keys) {
     return null;
   }
 }
+
+/*
+Delete informations stored with key
+*/
+export async function removeAllData() {
+  getAllKeys().then((keys) => {
+    removeData(keys).then(() => {
+      console.log("All data has been deleted");
+    });
+  });
+}

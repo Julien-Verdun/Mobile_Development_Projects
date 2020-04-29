@@ -31,6 +31,9 @@ class Error extends React.Component {
           {
             backgroundColor: backgroundColor,
             borderColor: borderColor,
+            height: Object.keys(this.props).includes("height")
+              ? this.props.height
+              : 40,
           },
         ]}
       >

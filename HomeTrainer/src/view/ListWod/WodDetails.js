@@ -4,41 +4,30 @@ import { getStyle } from "../../style/ListWod/wodDetailsStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
 import ModalBestTime from "./../Modal/ModalBestTime.js";
+import { connect } from "react-redux";
 
 import ForTime from "./WodType/ForTime.js";
 import Amrap from "./WodType/Amrap.js";
 import Emom from "./WodType/Emom.js";
 import Classic from "./WodType/Classic.js";
 
-import { storeData, fetchData } from "./../../utils/dataStorage.js";
+const mapStateToProps = (state) => {
+  return { bestTimes: state.bestTimes };
+};
 
 class WodDetails extends React.Component {
   constructor(props) {
     super(props);
     this.wodDetailsStyle = buildStyleSheet(getStyle());
+    this.bestTime = null;
     this.state = {
       modalVisible: false,
-      bestTime: null,
     };
-    this.handleBestTime = this.handleBestTime.bind(this);
     this.handleModalVsible = this.handleModalVsible.bind(this);
   }
 
   handleModalVsible(modalVisible) {
     this.setState({ modalVisible });
-  }
-
-  handleBestTime(bestTime) {
-    this.setState({ bestTime });
-    storeData("@MySuperStore:bestTime", bestTime).then(
-      console.log("Best time registered")
-    );
-  }
-
-  componentDidMount() {
-    fetchData("@MySuperStore:bestTime").then((bestTime) => {
-      this.setState({ bestTime });
-    });
   }
 
   render() {
@@ -72,6 +61,7 @@ class WodDetails extends React.Component {
       wodPanel = (
         <ForTime
           navigation={this.props.navigation}
+          exerciseId={params.exerciseId}
           type={params.type}
           numberRounds={params.numberRounds}
           listTrainings={params.listTrainings}
@@ -83,6 +73,7 @@ class WodDetails extends React.Component {
       wodPanel = (
         <Amrap
           navigation={this.props.navigation}
+          exerciseId={params.exerciseId}
           type={params.type}
           numberRounds={params.numberRounds}
           listTrainings={params.listTrainings}
@@ -94,6 +85,7 @@ class WodDetails extends React.Component {
       wodPanel = (
         <Emom
           navigation={this.props.navigation}
+          exerciseId={params.exerciseId}
           type={params.type}
           numberRounds={params.numberRounds}
           listTrainings={params.listTrainings}
@@ -105,6 +97,7 @@ class WodDetails extends React.Component {
       wodPanel = (
         <Classic
           navigation={this.props.navigation}
+          exerciseId={params.exerciseId}
           type={params.type}
           numberRounds={params.numberRounds}
           listTrainings={params.listTrainings}
@@ -122,8 +115,8 @@ class WodDetails extends React.Component {
       // composant contenant le modal affiché pour renseigner le score
       modalBestTime = (
         <ModalBestTime
+          exerciseId={params.exerciseId}
           modalVisible={this.state.modalVisible}
-          onSubmitBestTime={this.handleBestTime}
           onCancelModal={this.handleModalVsible}
         ></ModalBestTime>
       );
@@ -131,9 +124,11 @@ class WodDetails extends React.Component {
       bestTimeForm = (
         <View style={this.wodDetailsStyle.bestTime}>
           <Text style={this.wodDetailsStyle.bestTimeLabel}>
-            {this.state.bestTime !== null
-              ? "Best time : " + this.state.bestTime
-              : ""}
+            {this.props.bestTimes.bestTimes[params.exerciseId] !== null &&
+            this.props.bestTimes.bestTimes[params.exerciseId] !== undefined
+              ? "Best time : " +
+                this.props.bestTimes.bestTimes[params.exerciseId]
+              : "No stored best time"}
           </Text>
           <Button
             title="Add my score"
@@ -161,4 +156,4 @@ class WodDetails extends React.Component {
   }
 }
 
-export default WodDetails;
+export default connect(mapStateToProps)(WodDetails);

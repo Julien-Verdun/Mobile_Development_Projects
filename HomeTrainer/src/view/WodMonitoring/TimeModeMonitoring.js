@@ -16,12 +16,12 @@ Ce component est la page permettant de suivre un WOD choisi ou créé
 et de suivre sa progression en temps réel
 */
 
-class WodMonitoring extends React.Component {
+class TimeModeMonitoring extends React.Component {
   constructor(props) {
     super(props);
     this.timeModeMonitoringStyle = buildStyleSheet(getStyle());
     this.timer = undefined;
-    this.ring = "./../../../assets/Sound/ring.mp3";
+    this.ring = require("./../../../assets/Sound/ring.mp3");
     this.sound = undefined;
     this.backgroundColorChgt = "#ffffff00";
     this.state = {
@@ -49,7 +49,7 @@ class WodMonitoring extends React.Component {
     if (this.sound === undefined) {
       this.sound = new Audio.Sound();
       try {
-        await this.sound.loadAsync(require("./../../../assets/Sound/ring.mp3"));
+        await this.sound.loadAsync(this.ring);
       } catch (error) {
         console.log(error);
       }
@@ -281,4 +281,4 @@ class WodMonitoring extends React.Component {
   }
 }
 
-export default WodMonitoring;
+export default TimeModeMonitoring;

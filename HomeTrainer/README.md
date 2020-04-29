@@ -46,10 +46,6 @@ and the informations, separated with the sign "\*;\*", are stored as follow : ty
 
 ## TO-DO
 
-FOR TIME WOD
-Best Time -> stocker le temps pour chaque WOD
-Donner un identifiant unique à chaque wod et l'utiliser pour stocker le meilleur temps et le charger au demarage
-
 Training
 Completer les descriptions des exos manquants et ajouter les images
 
@@ -79,7 +75,3 @@ Utiliser react-native-elements pour styliser l'appli
 Utiliser react-native-chart-kit pour les graphiques
 
 Supprimer SideBarMenu et style ?
-
-AUTHENTIFICATION:
-https://reactnavigation.org/docs/auth-flow/
-utiliser redux pour l'implémenter

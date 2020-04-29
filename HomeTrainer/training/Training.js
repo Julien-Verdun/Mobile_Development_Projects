@@ -1,10 +1,10 @@
-import { fetchData } from "./../src/utils/dataStorage.js";
+import { getStoredTraining } from "../DataStorage/trainingStorage.js";
 import { shuffle } from "./../src/utils/functions.js";
 
 export async function getAllTraining() {
   let data = Training;
-  await fetchData("@MySuperStore:trainings").then((result) => {
-    data = data.concat(processStoredTraining(result));
+  await getStoredTraining().then((result) => {
+    data = data.concat(result);
   });
   return shuffle(data);
 }
@@ -15,8 +15,8 @@ export function getTraining() {
 
 export async function getMyTraining() {
   let data;
-  await fetchData("@MySuperStore:trainings").then((result) => {
-    data = processStoredTraining(result);
+  await getStoredTraining().then((result) => {
+    data = result;
   });
   return shuffle(data);
 }
@@ -24,8 +24,8 @@ export async function getMyTraining() {
 export async function getExerciseNames() {
   let data = Training,
     exerciseNames = [];
-  await fetchData("@MySuperStore:trainings").then((result) => {
-    data = data.concat(processStoredTraining(result));
+  await getStoredTraining().then((result) => {
+    data = data.concat(result);
   });
   data.forEach((wod) => {
     wod.listTrainings.forEach((exercise) => {
@@ -37,35 +37,9 @@ export async function getExerciseNames() {
   return exerciseNames;
 }
 
-function processStoredTraining(data) {
-  //data : "For Time;4;Squat,Pushup;20,300"
-  let training = [];
-  if (data !== null) {
-    let wod;
-    data.split("*-*").forEach((datum) => {
-      if (datum !== "null") {
-        wod = datum.split("*;*");
-        if (wod.length === 4) {
-          training.push({
-            type: wod[0],
-            numberRounds: parseInt(wod[1]),
-            listTrainings: wod[2].split(","),
-            listReps: wod[3].split(",").map((elt) => {
-              return parseFloat(elt);
-            }),
-            timeCap: null,
-          });
-        } else {
-          console.log("Error in data processing");
-        }
-      }
-    });
-  }
-  return training;
-}
-
 const Training = [
   {
+    exerciseId: "tra1",
     type: "For Time",
     numberRounds: 3,
     listTrainings: ["Squat", "Push-ups", "Sit-ups"],
@@ -73,6 +47,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra2",
     type: "AMRAP",
     numberRounds: null,
     listTrainings: ["Burpees", "American Swing", "Box Jump"],
@@ -80,6 +55,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra3",
     type: "AMRAP",
     numberRounds: null,
     listTrainings: ["Burpees", "Jumping Jacks"],
@@ -87,6 +63,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra4",
     type: "EMOM",
     numberRounds: 20,
     listTrainings: ["Dumbell Snatch"],
@@ -94,6 +71,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra5",
     type: "Classic",
     numberRounds: 3,
     listTrainings: ["Plank", "Side Plank Left", "Hollow", "Side Plank Right"],
@@ -101,6 +79,7 @@ const Training = [
     timeCap: null,
   },
   {
+    exerciseId: "tra6",
     type: "For Time",
     numberRounds: 10,
     listTrainings: ["Run", "Pull-ups", "Push-ups", "Squats", "Run"],
@@ -108,6 +87,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra7",
     type: "For Time",
     numberRounds: 5,
     listTrainings: ["Squat", "Push-ups", "Burpees", "Jumping Lunges"],
@@ -115,6 +95,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra8",
     type: "For Time",
     numberRounds: 1,
     listTrainings: [
@@ -127,6 +108,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra9",
     type: "For Time",
     numberRounds: 1,
     listTrainings: [
@@ -143,6 +125,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra10",
     type: "For Time",
     numberRounds: 1,
     listTrainings: [
@@ -158,6 +141,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra11",
     type: "For Time",
     numberRounds: 1,
     listTrainings: [
@@ -172,6 +156,7 @@ const Training = [
     timeCap: 20,
   },
   {
+    exerciseId: "tra12",
     type: "EMOM",
     numberRounds: 30,
     listTrainings: ["Burpees", "Russian Swing"],

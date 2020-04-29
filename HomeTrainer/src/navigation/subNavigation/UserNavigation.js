@@ -1,20 +1,21 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import Clock from "./../../view/Clock/Clock.js";
+import UserData from "./../../view/User/UserData.js";
 import NavigationBar from "./../NavigationBar.js";
-class ClockNavigation extends React.Component {
+
+class UserNavigation extends React.Component {
   render() {
     const Stack = createStackNavigator();
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Clock"
-          component={Clock}
+          name="UserData"
+          component={UserData}
           options={({ navigation }) => ({
             headerTitle: (props) => (
               <NavigationBar
                 {...props}
-                title={"Horloge"}
+                title={"UserData"}
                 navigation={navigation}
               />
             ),
@@ -25,4 +26,4 @@ class ClockNavigation extends React.Component {
   }
 }
 
-export default ClockNavigation;
+export default UserNavigation;

@@ -34,11 +34,6 @@ const repModeMonitoringStyle = {
     marginRight: "auto",
     fontSize: 30,
   },
-  numberRep: {
-    flex: 0.2,
-    fontWeight: "bold",
-    fontSize: 40,
-  },
 
   exerciseInfo: {
     flex: 1,
@@ -47,10 +42,18 @@ const repModeMonitoringStyle = {
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   training: {
-    flex: 0.5,
+    flex: 1,
     fontStyle: "italic",
+    fontSize: 30,
+  },
+  numberRep: {
+    flex: 0.3,
+    textAlign: "right",
+    fontWeight: "bold",
     fontSize: 30,
   },
   endWod: {

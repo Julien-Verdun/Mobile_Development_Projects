@@ -1,8 +1,8 @@
 export function getStyle() {
-  return loginStyle;
+  return signInStyle;
 }
 
-const loginStyle = {
+const signInStyle = {
   globalView: {
     flex: 1,
     margin: 30,
@@ -10,37 +10,18 @@ const loginStyle = {
     justifyContent: "flex-start",
     alignItems: "stretch",
   },
-  containerExerciseInputName: {
+  containerInput: {
     backgroundColor: "transparent",
     borderBottomColor: "transparent",
     borderTopColor: "transparent",
   },
-  inputContainerExerciseInputName: {
+  inputContainerInput: {
     backgroundColor: "white",
     borderWidth: 1,
     borderRadius: 10,
   },
-  inputExerciseInputName: {
+  inputInput: {
     backgroundColor: "white",
-  },
-
-  loginInput: {
-    height: 40,
-    borderRadius: 10,
-    borderColor: "#000000",
-    borderWidth: 1,
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 10,
-  },
-  passwordInput: {
-    height: 40,
-    borderRadius: 10,
-    borderColor: "#000000",
-    borderWidth: 1,
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 10,
   },
   buttonWhiteText: {
     fontSize: 16,
@@ -58,5 +39,13 @@ const loginStyle = {
     backgroundColor: "#ff1a1a",
     borderRadius: 10,
     marginTop: 10,
+    marginBottom: 10,
+  },
+  byPassButton: {
+    height: 40,
+    backgroundColor: "#1a1aff",
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 10,
   },
 };

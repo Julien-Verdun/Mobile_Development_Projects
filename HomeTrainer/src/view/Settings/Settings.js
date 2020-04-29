@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text } from "react-native";
 import { getStyle } from "../../style/Settings/settingsStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
-import { getAllKeys, removeData, fetchData } from "../../utils/dataStorage.js";
+import { removeAllData } from "../../../DataStorage/dataStorage.js";
 import Button from "../Other/Button.js";
 
-class Home extends React.Component {
+class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.settingsStyle = buildStyleSheet(getStyle());
@@ -23,15 +23,7 @@ class Home extends React.Component {
               title: this.settingsStyle.buttonWhiteText,
             }}
             onPress={() => {
-              getAllKeys().then((keys) => {
-                console.log(keys);
-                removeData(keys).then(() => {
-                  console.log("Data removed");
-                  fetchData(keys).then((data) => {
-                    console.log(data);
-                  });
-                });
-              });
+              removeAllData();
             }}
           />
         </View>
@@ -40,4 +32,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default Settings;

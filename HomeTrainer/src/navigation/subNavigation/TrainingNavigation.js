@@ -2,7 +2,6 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import NavigationBar from "./../NavigationBar.js";
 
-import Login from "./../../view/Login/Login.js";
 import WodDetails from "./../../view/ListWod/WodDetails.js";
 import TrainingCreator from "./../../view/TrainingCreator/TrainingCreator.js";
 import TimeModeMonitoring from "./../../view/WodMonitoring/TimeModeMonitoring.js";
@@ -15,15 +14,11 @@ class TrainingNavigation extends React.Component {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Login"
-          component={Login}
+          name="ListTrainingBottomTabNavigation"
+          component={ListTrainingBottomTabNavigation}
           options={({ navigation }) => ({
             headerTitle: (props) => (
-              <NavigationBar
-                {...props}
-                title={"Se connecter"}
-                navigation={navigation}
-              />
+              <NavigationBar {...props} title={"WOD"} navigation={navigation} />
             ),
           })}
         />
@@ -53,15 +48,7 @@ class TrainingNavigation extends React.Component {
             ),
           })}
         />
-        <Stack.Screen
-          name="ListTrainingBottomTabNavigation"
-          component={ListTrainingBottomTabNavigation}
-          options={({ navigation }) => ({
-            headerTitle: (props) => (
-              <NavigationBar {...props} title={"WOD"} navigation={navigation} />
-            ),
-          })}
-        />
+
         <Stack.Screen
           name="WodDetails"
           component={WodDetails}
