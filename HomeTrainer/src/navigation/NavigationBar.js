@@ -18,7 +18,7 @@ class NavigationBar extends React.Component {
       >
         <Image
           style={this.navigationBarStyle.logo}
-          source={require("../../assets/logoApp.png")}
+          source={require("../../assets/homeTrainerLogoApp.png")}
         />
         <Text style={this.navigationBarStyle.title}>{this.props.title}</Text>
       </TouchableOpacity>

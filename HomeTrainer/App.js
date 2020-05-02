@@ -29,7 +29,7 @@ class App extends React.Component {
     let listCredentials = {
       "": "",
       login: "admin",
-      "verdun.julien@yahoo.fr": "motdepasse",
+      "verdun.julien@yahoo.fr": "admin",
     };
     if (
       Object.keys(listCredentials).includes(login) &&

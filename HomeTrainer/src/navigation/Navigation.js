@@ -14,11 +14,17 @@ import SideBarMenu from "./SideBarMenu.js";
 class DrawerNavigator extends React.Component {
   constructor(props) {
     super(props);
-    this.onSignOut = this.onSignOut.bind(this);
+    this.SignOut = this.SignOut.bind(this);
   }
 
-  onSignOut() {
+  // SignOut() {
+  //     this.onSignOut();
+  //     return null;
+  //   }
+
+  SignOut() {
     this.props.onSignOut();
+    return null;
   }
 
   render() {
@@ -93,7 +99,7 @@ class DrawerNavigator extends React.Component {
 
           <Drawer.Screen
             name="SignOut"
-            component={() => SignOut(this.props)}
+            component={this.SignOut} //() => SignOut(this.props)}
             // component={() => {
             //   this.props.onSignOut();
             //   return null;
@@ -111,9 +117,9 @@ class DrawerNavigator extends React.Component {
   }
 }
 
-function SignOut(props) {
-  props.onSignOut();
-  return null;
-}
+// function SignOut(props) {
+//   props.onSignOut();
+//   return null;
+// }
 
 export default DrawerNavigator;

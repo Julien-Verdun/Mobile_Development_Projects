@@ -28,7 +28,6 @@ faire un reducer pour avoir la liste des temps pour un exo données, puis l'util
 */
 
 function toggleTime(state = initialState, action) {
-  console.log("toggleTime", action);
   let nextState;
   switch (action.type) {
     case "TOGGLE_INTERVAL_TIME":

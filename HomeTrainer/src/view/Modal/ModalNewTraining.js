@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Modal,
-  Text,
-  Alert,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { View, Modal, Text, TextInput, TouchableOpacity } from "react-native";
 import { getStyle } from "../../style/Modal/modalNewTrainingStyle.js";
 import { buildStyleSheet, isNormalInteger } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
@@ -18,7 +11,6 @@ class ModalNewTraining extends React.Component {
   constructor(props) {
     super(props);
     this.modalNewTrainingStyle = buildStyleSheet(getStyle());
-    // this.training = undefined;
     this.rep = undefined;
     this.state = {
       training: "",
@@ -94,7 +86,7 @@ class ModalNewTraining extends React.Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.modalVisible !== this.props.modalVisible) {
       this.setState({ modalVisible: this.props.modalVisible });
     }
@@ -144,9 +136,9 @@ class ModalNewTraining extends React.Component {
                 defaultValue={this.state.training}
                 onChangeText={(text) => this.handleChangeTraining(text, false)}
                 hideResults={
-                  this.state.training.length < 2 || this.state.hideCompletion
+                  this.state.training.length < 1 || this.state.hideCompletion
                 }
-                renderItem={({ item, i }) => (
+                renderItem={({ item }) => (
                   <TouchableOpacity
                     onPress={() => {
                       this.handleChangeTraining(item, true);

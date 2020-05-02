@@ -6,20 +6,31 @@ import {
   Picker,
   SafeAreaView,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { getStyle } from "../../style/TrainingCreator/trainingCreatorStyle.js";
 import { buildStyleSheet, isNormalInteger } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
-import { storeData, fetchData } from "../../../DataStorage/dataStorage.js";
 import ModalNewTraining from "./../Modal/ModalNewTraining.js";
 import Error from "./../Error/Error.js";
-import { storeTraining } from "./../../../DataStorage/trainingStorage.js";
+import { connect } from "react-redux";
+import { Icon } from "react-native-elements";
+
+import {
+  storeTraining,
+  getNewExerciseId,
+  trainingToStr,
+} from "./../../../DataStorage/trainingStorage.js";
+
+const mapStateToProps = (state) => {
+  return { myTrainings: state.myTrainings };
+};
 
 class TrainingCreator extends React.Component {
   constructor(props) {
     super(props);
     this.trainingCreatorStyle = buildStyleSheet(getStyle());
-    this.round = 0;
+    this.numberRounds = 0;
     this.state = {
       type: "Classic",
       listTrainings: [],
@@ -32,8 +43,27 @@ class TrainingCreator extends React.Component {
     this.createTheTraining = this.createTheTraining.bind(this);
     this.handleChangeRound = this.handleChangeRound.bind(this);
     this.addExercise = this.addExercise.bind(this);
-    this.modalNewTraining;
+    this.toggleTraining = this.toggleTraining.bind(this);
     this.handleModalVsible = this.handleModalVsible.bind(this);
+  }
+
+  toggleTraining() {
+    getNewExerciseId().then((prefixId) => {
+      let newTraining = {
+        exerciseId: prefixId,
+        type: this.state.type,
+        numberRounds: this.numberRounds,
+        listTrainings: this.state.listTrainings,
+        listReps: this.state.listReps,
+      };
+      let trainingStr = trainingToStr(newTraining);
+      storeTraining(trainingStr);
+
+      this.props.dispatch({
+        type: "TOGGLE_NEW_TRAINING",
+        value: newTraining,
+      });
+    });
   }
 
   handleModalVsible(modalVisible) {
@@ -43,7 +73,7 @@ class TrainingCreator extends React.Component {
   checkTraining() {
     if (
       !this.state.type.includes(";") &&
-      this.round > 0 &&
+      this.numberRounds > 0 &&
       this.state.listTrainings.length > 0
     ) {
       this.setState({
@@ -61,25 +91,14 @@ class TrainingCreator extends React.Component {
   createTheTraining() {
     //verifier que les champs sont bien remplis
     if (this.checkTraining()) {
-      let trainingToString =
-        this.state.type +
-        "*;*" +
-        this.round +
-        "*;*" +
-        this.state.listTrainings.toString() +
-        "*;*" +
-        this.state.listReps.toString();
-      storeTraining(trainingToString).then(
-        console.log("Creation de l'entrainement : ", trainingToString)
-      );
-
+      this.toggleTraining();
       this.props.navigation.navigate("ListTrainingBottomTabNavigation");
     }
   }
 
   handleChangeRound(round) {
     if (isNormalInteger(round)) {
-      this.round = round;
+      this.numberRounds = parseInt(round);
       this.setState({
         errorTextRound: "",
       });
@@ -130,7 +149,9 @@ class TrainingCreator extends React.Component {
           <Picker
             selectedValue={this.state.type}
             style={this.trainingCreatorStyle.pickerTypeChoice}
-            onValueChange={(itemValue) => this.setState({ type: itemValue })}
+            onValueChange={(itemValue) =>
+              this.setState({ type: itemValue, listReps: [], listTraining: [] })
+            }
           >
             <Picker.Item label="Classic" value="Classic" />
             <Picker.Item label="For Time" value="For Time" />
@@ -144,7 +165,6 @@ class TrainingCreator extends React.Component {
           </Text>
           <TextInput
             style={this.trainingCreatorStyle.roundInput}
-            ref={this.bestTimeInput}
             onChangeText={(text) => this.handleChangeRound(text)}
             placeholder="0"
             keyboardType="numeric"
@@ -163,13 +183,30 @@ class TrainingCreator extends React.Component {
             <FlatList
               data={this.state.listTrainings}
               renderItem={({ item, index }) => (
-                <Text style={this.trainingCreatorStyle.exerciseItem}>
-                  {(this.state.type === "Classic"
-                    ? parseInt(this.state.listReps[index] * 60) + " sec"
-                    : this.state.listReps[index] + " rep") +
-                    " : " +
-                    item}{" "}
-                </Text>
+                <View style={this.trainingCreatorStyle.exerciseView}>
+                  <Text style={this.trainingCreatorStyle.exerciseItem}>
+                    {(this.state.type === "Classic"
+                      ? parseInt(this.state.listReps[index] * 60) + " sec"
+                      : this.state.listReps[index] + " rep") +
+                      " : " +
+                      item}{" "}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({
+                        listTrainings: this.state.listTrainings.filter(
+                          (elt, ind) => ind !== index
+                        ),
+                        listReps: this.state.listReps.filter(
+                          (elt, ind) => ind !== index
+                        ),
+                      });
+                    }}
+                    style={this.trainingCreatorStyle.exerciseRemoveItem}
+                  >
+                    <Icon name={"delete"} size={20} color="#000" />
+                  </TouchableOpacity>
+                </View>
               )}
               keyExtractor={(item) =>
                 this.state.listTrainings.indexOf(item).toString()
@@ -186,7 +223,14 @@ class TrainingCreator extends React.Component {
           onPress={() => {
             this.setState({ modalVisible: true });
           }}
-        />
+        >
+          <View style={this.trainingCreatorStyle.addButton}>
+            <Text style={this.trainingCreatorStyle.addButtonText}>
+              Add an exercise
+            </Text>
+            <Icon name={"add-circle"} size={20} color="#fff" />
+          </View>
+        </Button>
         <Button
           title="Create the training"
           styles={{
@@ -200,4 +244,4 @@ class TrainingCreator extends React.Component {
   }
 }
 
-export default TrainingCreator;
+export default connect(mapStateToProps)(TrainingCreator);

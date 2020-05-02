@@ -51,7 +51,6 @@ class WodDetails extends React.Component {
               numberRounds: params.numberRounds,
               listTrainings: params.listTrainings,
               listReps: params.listReps,
-              timeCap: params.timeCap,
             }
           );
         }}

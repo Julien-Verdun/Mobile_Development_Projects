@@ -2,26 +2,33 @@ import React from "react";
 import { View, Text, SafeAreaView, FlatList } from "react-native";
 import { getStyle } from "../../style/ListWod/myListWodStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
-import { getMyTraining, getTraining } from "../../../training/Training.js";
 import WodPanel from "./WodPanel.js";
 import Button from "./../Other/Button.js";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return { myTrainings: state.myTrainings };
+};
 
 class MyListWod extends React.Component {
   constructor(props) {
     super(props);
     this.myListWodStyle = buildStyleSheet(getStyle());
     this.state = {
-      myTrainings: [],
+      myTrainings: this.props.myTrainings.myTrainings,
     };
   }
 
-  componentDidMount() {
-    getMyTraining().then((myTrainings) => {
-      this.setState({ myTrainings });
-    });
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.myTrainings.myTrainings !== this.props.myTrainings.myTrainings
+    ) {
+      this.setState({ myTrainings: this.props.myTrainings.myTrainings });
+    }
   }
 
   render() {
+    // console.log("RENDER MYLISTWOD", this.props);
     let listWod = (
       <SafeAreaView style={this.myListWodStyle.listWod}>
         <FlatList
@@ -31,13 +38,14 @@ class MyListWod extends React.Component {
               navigation={this.props.navigation}
               exerciseId={item.exerciseId}
               type={item.type}
+              myTraining={true}
               numberRounds={item.numberRounds}
               listTrainings={item.listTrainings}
               listReps={item.listReps}
               timeCap={item.timeCap}
             ></WodPanel>
           )}
-          keyExtractor={this.state.myTrainings.exerciseId}
+          keyExtractor={(item) => item.exerciseId}
         />
       </SafeAreaView>
     );
@@ -58,4 +66,4 @@ class MyListWod extends React.Component {
   }
 }
 
-export default MyListWod;
+export default connect(mapStateToProps)(MyListWod);

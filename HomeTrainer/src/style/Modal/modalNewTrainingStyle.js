@@ -52,7 +52,8 @@ const modalNewTrainingStyle = {
     alignItems: "center",
   },
   newTrainingInputContainer: {
-    flex: 0.5,
+    height: 80,
+    marginBottom: 60,
   },
   newTrainingInput: {
     height: 40,
@@ -64,11 +65,11 @@ const modalNewTrainingStyle = {
     marginBottom: 15,
   },
   newTrainingListContainer: {
-    flex: 1,
+    height: 60,
     borderColor: "#000000",
   },
   newTrainingTouchableOpacity: {
-    flex: 1,
+    height: 20,
     marginTop: 5,
     marginLeft: 5,
   },

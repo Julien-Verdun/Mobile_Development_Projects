@@ -49,10 +49,12 @@ export async function replaceBestTime(exerciseId, bestTime) {
   */
 function processStoredBestTimes(data) {
   let bestTimes = {};
-  data.split("*-*").forEach((time) => {
-    if (time !== "null" && time !== "") {
-      bestTimes[time.split(",")[0]] = time.split(",")[1];
-    }
-  });
+  if (data !== null && data.includes("*-*")) {
+    data.split("*-*").forEach((time) => {
+      if (time !== "null" && time !== "") {
+        bestTimes[time.split(",")[0]] = time.split(",")[1];
+      }
+    });
+  }
   return bestTimes;
 }

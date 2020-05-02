@@ -54,7 +54,28 @@ const trainingCreatorStyle = {
   listTrainingTitle: { flex: 0.2, fontWeight: "bold", fontSize: 18 },
   listTrainingPrecision: { flex: 0.3, fontStyle: "italic", fontSize: 15 },
   listExercises: { flex: 1 },
-  exerciseItem: { flex: 1, fontSize: 16 },
+
+  //exercises
+  exerciseView: {
+    // flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  // exerciseItem: { flex: 1, fontSize: 20, fontWeight: "bold" },
+  // exerciseRemoveItem: { flex: 1 },
+
+  addButton: {
+    height: 40,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  addButtonText: {
+    marginRight: 10,
+    fontSize: 16,
+    color: "#FFF",
+  },
   buttonWhiteText: {
     fontSize: 16,
     color: "#FFF",
@@ -69,7 +90,7 @@ const trainingCreatorStyle = {
   addExerciseButton: {
     height: 40,
     margin: 10,
-    backgroundColor: "#bbe9ff",
+    backgroundColor: "#dd1a1a",
     borderWidth: 2,
     borderRadius: 10,
   },

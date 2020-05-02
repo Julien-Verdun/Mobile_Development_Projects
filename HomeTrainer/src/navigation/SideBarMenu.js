@@ -10,6 +10,11 @@ import {
 import { getStyle } from "./../style/Navigation/sideBarMenuStyle.js";
 import { buildStyleSheet } from "./../utils/functions.js";
 import { Icon } from "react-native-elements";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return { user: state.user };
+};
 
 class Item extends React.Component {
   constructor(props) {
@@ -35,10 +40,10 @@ class SideBarMenu extends React.Component {
   constructor(props) {
     super(props);
     this.sideBarMenuStyle = buildStyleSheet(getStyle());
+
     this.state = {
-      mail: "verdun.julien@yahoo.fr",
-      name: "Julien Verdun",
-      profile: require("./../../assets/profileImage/profile.png"),
+      image: this.props.user.user.imagePath,
+      profile: require("./../../assets/profileImage/profile_image.jpg"),
     };
     this.routes = [
       // {
@@ -79,6 +84,12 @@ class SideBarMenu extends React.Component {
     ];
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.user.user !== this.props.user.user) {
+      this.setState({ image: this.props.user.user.imagePath });
+    }
+  }
+
   render() {
     return (
       <View style={this.sideBarMenuStyle.container}>
@@ -87,16 +98,34 @@ class SideBarMenu extends React.Component {
             onPress={() => this.props.navigation.navigate("UserNavigation")}
           >
             <Image
-              source={this.state.profile}
+              source={
+                this.state.image === null || this.state.image === undefined
+                  ? this.state.profile
+                  : { uri: this.state.image }
+              }
               style={this.sideBarMenuStyle.profileImg}
+            />
+            <Icon
+              name={"edit"}
+              containerStyle={{
+                position: "absolute",
+                bottom: 40 * (1 - Math.sqrt(2) / 2) - 8,
+                right: 40 * (1 - Math.sqrt(2) / 2) - 8,
+                backgroundColor: "#fff",
+                borderRadius: 8,
+              }}
+              size={16}
+              color="#000"
             />
           </TouchableOpacity>
 
           <Text style={{ fontWeight: "bold", fontSize: 16, marginTop: 10 }}>
-            {this.state.name}
+            {this.props.user.user.userfirstname +
+              " " +
+              this.props.user.user.username}
           </Text>
           <Text style={{ color: "gray", marginBottom: 10 }}>
-            {this.state.mail}
+            {this.props.user.user.login}
           </Text>
         </View>
         <View style={this.sideBarMenuStyle.sidebarDivider}></View>
@@ -116,4 +145,4 @@ class SideBarMenu extends React.Component {
   }
 }
 
-export default SideBarMenu;
+export default connect(mapStateToProps)(SideBarMenu);

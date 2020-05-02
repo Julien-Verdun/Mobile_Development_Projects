@@ -14,7 +14,7 @@ class WodDetails extends React.Component {
     return (
       <View style={this.amrapStyle.globalView}>
         <Text style={this.amrapStyle.timeCap}>
-          {this.props.timeCap} minutes of :
+          {this.props.numberRounds} minutes of :
         </Text>
         <SafeAreaView style={this.amrapStyle.wodView}>
           <FlatList

@@ -13,6 +13,19 @@ export function sum(list) {
   });
 }
 
+/*
+Remove elt from array, elt is an object and array a list of object
+*/
+export function removeElt(array, elt) {
+  let newArray = [];
+  array.forEach((arrayElt) => {
+    if (arrayElt.exerciseId !== elt.exerciseId) {
+      newArray.push(arrayElt);
+    }
+  });
+  return newArray;
+}
+
 export function normaliseTime(time) {
   let timeList = time.toString().split(":");
   if (timeList.length === 3) {
@@ -82,4 +95,13 @@ export function isNormalInteger(str) {
 
 export function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
+}
+
+export function getArrayObjEltByKey(array, key, value) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i][key] === value) {
+      return array[i];
+    }
+  }
+  return null;
 }

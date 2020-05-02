@@ -9,9 +9,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/imageCM.png",
+    "icon": "./assets/homeTrainerLogo512.png",
     "splash": {
-      "image": "./assets/logoApp.png",
+      "image": "./assets/homeTrainerLogoApp.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

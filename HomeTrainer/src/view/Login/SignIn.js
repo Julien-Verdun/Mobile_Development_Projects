@@ -30,7 +30,7 @@ class SignIn extends React.Component {
       return true;
     } else {
       console.log("Wrong login");
-      this.setState({ textErrorLogin: "-Wrong login" });
+      this.setState({ textErrorLogin: "- Wrong login" });
       return false;
     }
   }
@@ -136,13 +136,6 @@ class SignIn extends React.Component {
           }}
           onPress={this.passConnection}
         />
-        {/* <Icon.Button
-          name="facebook"
-          backgroundColor="#3b5998"
-          // onPress={this.loginWithFacebook}
-        >
-          Login with Facebook
-        </Icon.Button> */}
       </View>
     );
   }

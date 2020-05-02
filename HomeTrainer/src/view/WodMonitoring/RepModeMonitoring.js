@@ -90,11 +90,15 @@ class RepModeMonitoring extends React.Component {
   }
 
   previousTraining() {
-    this.changeTraining(false);
+    if (!this.state.isEndWod) {
+      this.changeTraining(false);
+    }
   }
 
   nextTraining() {
-    this.changeTraining(true);
+    if (!this.state.isEndWod) {
+      this.changeTraining(true);
+    }
   }
 
   changeTraining(sensChange) {
@@ -163,7 +167,9 @@ class RepModeMonitoring extends React.Component {
       >
         <Text style={this.repModeMonitoringStyle.type}>{params.type}</Text>
         <Text style={this.repModeMonitoringStyle.round}>
-          Round : {this.state.round} / {params.numberRounds}
+          Round :{" "}
+          {this.state.round +
+            (params.type === "For Time" ? " / " + params.numberRounds : "")}
         </Text>
 
         <Text style={this.repModeMonitoringStyle.time}>

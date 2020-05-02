@@ -44,23 +44,20 @@ const Training = [
     numberRounds: 3,
     listTrainings: ["Squat", "Push-ups", "Sit-ups"],
     listReps: [10, 10, 10],
-    timeCap: 20,
   },
   {
     exerciseId: "tra2",
     type: "AMRAP",
-    numberRounds: null,
+    numberRounds: 20,
     listTrainings: ["Burpees", "American Swing", "Box Jump"],
     listReps: [10, 20, 10],
-    timeCap: 20,
   },
   {
     exerciseId: "tra3",
     type: "AMRAP",
-    numberRounds: null,
+    numberRounds: 15,
     listTrainings: ["Burpees", "Jumping Jacks"],
     listReps: [10, 25],
-    timeCap: 20,
   },
   {
     exerciseId: "tra4",
@@ -68,7 +65,6 @@ const Training = [
     numberRounds: 20,
     listTrainings: ["Dumbell Snatch"],
     listReps: [10],
-    timeCap: 20,
   },
   {
     exerciseId: "tra5",
@@ -76,7 +72,6 @@ const Training = [
     numberRounds: 3,
     listTrainings: ["Plank", "Side Plank Left", "Hollow", "Side Plank Right"],
     listReps: [0.5, 0.5, 0.5, 0.5],
-    timeCap: null,
   },
   {
     exerciseId: "tra6",
@@ -84,7 +79,6 @@ const Training = [
     numberRounds: 10,
     listTrainings: ["Run", "Pull-ups", "Push-ups", "Squats", "Run"],
     listReps: ["1 mile", 100, 200, 300, "1 mile"],
-    timeCap: 20,
   },
   {
     exerciseId: "tra7",
@@ -92,7 +86,6 @@ const Training = [
     numberRounds: 5,
     listTrainings: ["Squat", "Push-ups", "Burpees", "Jumping Lunges"],
     listReps: [20, 10, 10, 10],
-    timeCap: 20,
   },
   {
     exerciseId: "tra8",
@@ -105,7 +98,6 @@ const Training = [
       "Forearm Push-ups",
     ],
     listReps: [50, 50, 50, 50],
-    timeCap: 20,
   },
   {
     exerciseId: "tra9",
@@ -113,16 +105,15 @@ const Training = [
     numberRounds: 1,
     listTrainings: [
       "Pull-ups",
-      "Star Jumps",
+      "Jumping Jacks",
       "Push-ups",
-      "Star Jumps",
-      "Leg Lift",
-      "Star Jumps",
+      "Jumping Jacks",
+      "Squats",
+      "Jumping Jacks",
       "Jumping Lunges",
-      "Star Jumps",
+      "Jumping Jacks",
     ],
     listReps: [50, 10, 50, 10, 50, 10, 50, 10],
-    timeCap: 20,
   },
   {
     exerciseId: "tra10",
@@ -130,7 +121,7 @@ const Training = [
     numberRounds: 1,
     listTrainings: [
       "Sit-ups",
-      "Double Unders",
+      "Double-Unders",
       "Toes To Bar",
       "Lunges",
       "Sit-ups",
@@ -138,7 +129,6 @@ const Training = [
       "Toes To Bar",
     ],
     listReps: [50, 50, 50, 50, 50, 50, 50],
-    timeCap: 20,
   },
   {
     exerciseId: "tra11",
@@ -153,7 +143,6 @@ const Training = [
       "Run",
     ],
     listReps: [50, 400, 50, 400, 50, 400],
-    timeCap: 20,
   },
   {
     exerciseId: "tra12",
@@ -161,6 +150,5 @@ const Training = [
     numberRounds: 30,
     listTrainings: ["Burpees", "Russian Swing"],
     listReps: [10, 20],
-    timeCap: 30,
   },
 ];

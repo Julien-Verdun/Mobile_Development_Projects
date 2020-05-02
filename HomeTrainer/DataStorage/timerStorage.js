@@ -15,6 +15,7 @@ Read and process the current best time for every exercise.
 export async function getStoredIntervalTimer() {
   let data;
   await fetchData(intervalTimerStoreKey).then((intervalTime) => {
+    console.log("intervalTime : ", intervalTime);
     data = processStoredIntervalTimer(intervalTime);
   });
   return data;
@@ -30,23 +31,24 @@ export async function replaceIntervalTimer(trainingTime, restTime, totalTime) {
 const amrapTimerStoreKey = "@MySuperStore:amraptimer";
 
 function processStoredIntervalTimer(data) {
-  let intervalTime = {};
-  let dataProcess = data
-    .split("*-*")
-    .filter((time) => time !== "null" && time !== "");
-  if (dataProcess.length != 3) {
-    intervalTime = {
+  let dataProcess = data;
+  if (data !== null && data.includes("*-*")) {
+    dataProcess = data
+      .split("*-*")
+      .filter((time) => time !== "null" && time !== "");
+  }
+  if (dataProcess === null || dataProcess.length != 3) {
+    return {
       trainingTime: 20,
       restTime: 10,
       totalTime: 240,
     };
   } else {
-    intervalTime = {
+    return {
       trainingTime: dataProcess[0],
       restTime: dataProcess[1],
       totalTime: dataProcess[2],
     };
-    return intervalTime;
   }
 }
 
@@ -66,15 +68,13 @@ export async function replaceAmrapTimer(totalTime) {
 }
 
 function processStoredAmrapTimer(data) {
-  let amrapTime;
   if (data !== "") {
-    amrapTime = {
+    return {
       totalTime: 360,
     };
   } else {
-    amrapTime = {
+    return {
       totalTime: data,
     };
   }
-  return amrapTime;
 }

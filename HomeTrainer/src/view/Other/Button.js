@@ -7,17 +7,6 @@ class Button extends React.Component {
   constructor(props) {
     super(props);
     this.buttonStyle = buildStyleSheet(getStyle());
-    this.state = {};
-  }
-
-  componentDidMount(prevProps, prevState) {
-    // chose à faire au chargement de la page
-    // this.setState({ buttonStyle: buildStyleSheet(getStyle()) });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    //chose à faire à la modification du state
-    // faire attention a bien comparé les elements du state que l'on souhaite
   }
 
   getContent() {

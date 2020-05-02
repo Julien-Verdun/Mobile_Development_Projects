@@ -1,4 +1,5 @@
 import { fetchData, storeData } from "./dataStorage.js";
+import { removeElt } from "./../src/utils/functions.js";
 
 const trainingStoreKey = "@MySuperStore:trainings";
 
@@ -10,23 +11,69 @@ export async function getStoredTraining() {
   return data;
 }
 
+export async function getNewExerciseId() {
+  let maxId,
+    prefixId = "mytra";
+  await fetchData(trainingStoreKey).then((historicTrainings) => {
+    let trainingsProcessed = processStoredTraining(historicTrainings);
+    maxId =
+      trainingsProcessed !== null
+        ? Math.max(
+            trainingsProcessed.map((training) => {
+              console.log("getNewExerciseId : ", training);
+              if (training !== null) {
+                parseInt(
+                  training.exerciseId.slice(
+                    prefixId.length,
+                    training.exerciseId.length
+                  )
+                );
+              }
+            })
+          )
+        : 0;
+  });
+  return prefixId + (maxId + 1).toString();
+}
+
 export async function storeTraining(trainingStr) {
-  let prefixId = "mytra";
   fetchData(trainingStoreKey).then((historicTrainings) => {
-    let maxId = Math.max(
-      processStoredTraining(historicTrainings).map((training) =>
-        parseInt(training.slice(prefixId.length, training.length).exerciseId)
+    storeData(trainingStoreKey, historicTrainings + "*-*" + trainingStr).then(
+      console.log(
+        "Entrainement registered : ",
+        historicTrainings + "*-*" + trainingStr
       )
     );
-    storeData(
-      trainingStoreKey,
-      historicTrainings +
-        "*-*" +
-        prefixId +
-        (maxId + 1).toString() +
-        "*;*" +
-        trainingStr
-    ).then(console.log("Entrainement registered"));
+  });
+}
+
+export function trainingToStr(trainingObj) {
+  let trainingStr = "";
+  let trainingObjArray;
+  if (!Array.isArray(trainingObj)) {
+    trainingObjArray = [trainingObj];
+  } else {
+    trainingObjArray = trainingObj;
+  }
+  trainingObjArray.forEach((traObj) => {
+    Object.keys(traObj).forEach((key) => {
+      trainingStr += traObj[key] + "*;*";
+    });
+    trainingStr = trainingStr.slice(0, trainingStr.length - 3);
+    trainingStr += "*-*";
+  });
+  trainingStr = trainingStr.slice(0, trainingStr.length - 3);
+  return trainingStr;
+}
+
+export async function removeTraining(trainingObj) {
+  fetchData(trainingStoreKey).then((result) => {
+    let newStoredtraining = trainingToStr(
+      removeElt(processStoredTraining(result), trainingObj)
+    );
+    storeData(trainingStoreKey, newStoredtraining).then(
+      console.log("Entrainement removed : ", newStoredtraining)
+    );
   });
 }
 
@@ -36,8 +83,9 @@ export function processStoredTraining(data) {
   if (data !== null) {
     let wod;
     data.split("*-*").forEach((datum) => {
-      if (datum !== "null") {
+      if (datum !== "null" && datum.includes("*;*")) {
         wod = datum.split("*;*");
+        console.log("wod :", wod);
         if (wod.length === 5) {
           training.push({
             exerciseId: wod[0],
@@ -47,7 +95,6 @@ export function processStoredTraining(data) {
             listReps: wod[4].split(",").map((elt) => {
               return parseFloat(elt);
             }),
-            timeCap: null,
           });
         } else {
           console.log("Error in data processing");

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import { getStyle } from "../../style/About/aboutStyle.js";
+// import { getText } from "../../text/About/aboutText.js";
 import { buildStyleSheet } from "../../utils/functions.js";
 
 class About extends React.Component {
@@ -17,7 +18,7 @@ class About extends React.Component {
         </Text>
         <Image
           style={this.aboutStyle.logo}
-          source={require("../../../assets/logoApp.png")}
+          source={require("../../../assets/homeTrainerLogo512.png")}
         />
         <View style={this.aboutStyle.textView}>
           <Text style={this.aboutStyle.mainText}>

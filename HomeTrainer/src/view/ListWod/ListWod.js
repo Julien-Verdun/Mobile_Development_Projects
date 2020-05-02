@@ -28,13 +28,13 @@ class ListWod extends React.Component {
               navigation={this.props.navigation}
               exerciseId={item.exerciseId}
               type={item.type}
+              myTraining={false}
               numberRounds={item.numberRounds}
               listTrainings={item.listTrainings}
               listReps={item.listReps}
-              timeCap={item.timeCap}
             ></WodPanel>
           )}
-          keyExtractor={this.state.trainings.exerciseId}
+          keyExtractor={(item) => item.exerciseId}
         />
       </SafeAreaView>
     );

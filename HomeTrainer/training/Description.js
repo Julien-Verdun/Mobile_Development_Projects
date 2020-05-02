@@ -2,38 +2,64 @@
 This file includes the Description variable, which is an object where keys are the exercise'names and values the exercise's descriptions.
 */
 
+/*
+This function returns whether or not the array includes the given elt, and it is case insensitive.
+If the elt is in the array or at list a patrt of the elt, the function returns the key to access the elt, 
+at least the most probable one.
+*/
+function objIncludes(objElt, exerciseName) {
+  let lwElt = exerciseName.toLowerCase();
+  let listObjElt = Object.keys(objElt).map((elt) => {
+    return elt.toLowerCase();
+  });
+  // si le nom de l'exercise est directement dans les cles
+  if (listObjElt.includes(lwElt)) {
+    return Object.keys(objElt)[listObjElt.indexOf(lwElt)];
+  }
+  // si le nom de l'exercise avec un s en moins est dans les cles
+  else if (
+    lwElt[lwElt.length - 1] === "s" &&
+    listObjElt.includes(lwElt.slice(0, lwElt.length - 1))
+  ) {
+    return Object.keys(objElt)[
+      listObjElt.indexOf(lwElt.slice(0, lwElt.length - 1))
+    ];
+  }
+  // sinon on cherche celui qui s'en rapproche le plus (contient un bout du nom de l'exercise)
+  else {
+    if (lwElt.includes(" ")) {
+      let splitName = lwElt.split(" ");
+      for (var i = 0; i < splitName.length; i++) {
+        for (var j = 0; j < listObjElt.length; j++) {
+          if (
+            listObjElt[j] === splitName[i] ||
+            (splitName[i][splitName[i].length - 1] === "s" &&
+              listObjElt[j] === splitName[i].slice(0, splitName[i].length - 1))
+          ) {
+            return Object.keys(objElt)[j];
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
+
 // this function returns the description of the given exercise exerciseName
 // or a defined text if no description is available
 export function getDescription(exerciseName) {
-  if (
-    Object.keys(Description).includes(exerciseName) &&
-    Description[exerciseName] !== ""
-  ) {
-    return Description[exerciseName];
-  } else if (
-    exerciseName[exerciseName.length - 1] === "s" &&
-    Object.keys(Description).includes(
-      exerciseName.slice(0, exerciseName.length - 1)
-    ) &&
-    Description[exerciseName.slice(0, exerciseName.length - 1)] !== ""
-  ) {
-    return Description[exerciseName.slice(0, exerciseName.length - 1)];
+  let arrayElt = objIncludes(Description, exerciseName);
+  if (arrayElt !== null) {
+    return Description[arrayElt];
   } else {
     return "No description available for this exercise, you can check on the internet :)";
   }
 }
 
 export function getImage(exerciseName) {
-  if (Object.keys(Image).includes(exerciseName) && Image[exerciseName] !== "") {
-    return Image[exerciseName];
-  } else if (
-    exerciseName[exerciseName.length - 1] === "s" &&
-    Object.keys(Image).includes(
-      exerciseName.slice(0, exerciseName.length - 1)
-    ) &&
-    Image[exerciseName.slice(0, exerciseName.length - 1)] !== ""
-  ) {
-    return Image[exerciseName.slice(0, exerciseName.length - 1)];
+  let arrayElt = objIncludes(Image, exerciseName);
+  if (arrayElt !== null) {
+    return Image[arrayElt];
   } else {
     return require("./../assets/Exercises/nothing.png");
   }
@@ -65,6 +91,25 @@ export const Description = {
     "Running is a method of terrestrial locomotion allowing humans and other animals to move rapidly on foot. Running is a type of gait characterized by an aerial phase in which all feet are above the ground (though there are exceptions). This is in contrast to walking, where one foot is always in contact with the ground, the legs are kept mostly straight and the center of gravity vaults over the stance leg or legs in an inverted pendulum fashion.",
   "Pull-up":
     'A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands and pulls up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso. The term chin-up, traditionally referring to a pull-up with the chin brought over the top of a bar, was used in the 1980s to refer to a pronated, or overhand, grip, with a supinated, or underhand, grip being called a "reverse-grip" chin-up. In later decades, this usage has inverted, with some using "chin-up" to refer to a pull-up done with a supinated hand position, while "pull-up" refers specifically to the exercise done with a pronated hand position. Pull-ups use many different muscles of the upper body, including the latissimus dorsi and the biceps brachii.',
+  "Jumping Jack":
+    "A jumping jack (Canada, US and Ireland) or star jump (UK and other Commonwealth nations), also called side-straddle hop in the US military, is a physical jumping exercise performed by jumping to a position with the legs spread wide and the hands going overhead, sometimes in a clap, and then returning to a position with the feet together and the arms at the sides.",
+  "Jumping Lunges":
+    "Being able to perform the jumping lunge exercise successfully depends on how strict you can keep your form, how smooth you can make the transition, and how gently you can land. Here are the steps to do the jumping lunge exercise properly, safely, and effectively. Before starting, make sure you have a space large enough to perform the move. Also consider moving benches and other equipment out of the way. \nStand with feet shoulder-width apart, with your core engaged. \nTake a big step forward with your right leg. Keep your arms by your side. \nShift your weight forward with this leg, so your heel touches the floor first. Then lower your body until the forward leg is parallel to the floor. This is the bottom position. \nJump up, quickly switching the position of your feet while mid-air so your right leg moves back behind you and your left leg comes forward. To help you move explosively, propel your arms into the air while you jump. \nGently land back on the floor in a basic lunge position with the opposite leg forward. \nRepeat this movement pattern, switching legs on each jump, for the desired amount of time or repetitions. Beginners should aim for 5 to 10 reps on each leg or 30 seconds total. As this gets easier, work your way up to 60 seconds of continuous jumping lunges",
+
+  "Diamond Push-up":
+    "The diamond push-up is a compound exercise that works your chest, core, back, shoulders, triceps – even the quads and glutes. They’re performed by placing your feet and hands on the floor (with opposite hands touching) with your back straight and using your chest and arm muscles to descend and ascend the weight of your body off the floor.",
+
+  "Double-Under": "A high basic jump, turning the rope twice under the feet.",
+  "Toes To Bar":
+    "The toes to bar exercise is a CrossFit movement that combines abdominal training with agility. It focuses largely on building abdominal and overall core strength. By implementing the toes to bar exercise into your CrossFit WOD (workout of the day), you will effectively improve your endurance, stamina, and develop the strength of your core while really targeting your lower abdominal muscles extremely well.",
+  Lunge:
+    "A lunge can refer to any position of the human body where one leg is positioned forward with knee bent and foot flat on the ground while the other leg is positioned behind. It is used by athletes in cross-training for sports, by weight-trainers as a fitness exercise, and by practitioners of yoga as part of an asana regimen.\nIn contrast to the Split squat exercise, during the lunge the rear leg is also activated.",
+  Dip:
+    "A dip is an upper-body strength exercise. Narrow, shoulder-width dips primarily train the triceps, with major synergists being the anterior deltoid, the pectoralis muscles (sternal, clavicular, and minor), and the rhomboid muscles of the back (in that order).[1] Wide arm training places additional emphasis on the pectoral muscles, similar in respect to the way a wide grip bench press would focus more on the pectorals and less on the triceps.",
+  "Handstand Push-up":
+    'The handstand push-up (press-up) - also called the vertical push-up (press-up) or the inverted push-up (press-up) also called "commandos"- is a type of push-up exercise where the body is positioned in a handstand. For a true handstand, the exercise is performed free-standing, held in the air. To prepare the strength until one has built adequate balance, the feet are often placed against a wall, held by a partner, or secured in some other way from falling. Handstand pushups require significant strength, as well as balance and control if performed free-standing.',
+  "Russian Swing":
+    "The kettlebell swing (AKA Russian swing, double-arm swing, or conventional kettlebell swing) is a basic ballistic exercise used to train the posterior chain in a manner similar to broad jumping. The kettlebell is swung from just below the groin to somewhere between the upper abdomen and shoulders, with arms straight or slightly bent, the degree of flexion depends on the trajectory of the kettlebell. The key to a good kettlebell swing is effectively thrusting the hips, not bending too much at the knees and sending the weight forwards, as opposed to squatting the weight up, or lifting up with the arms. Some knee flexion (a squat) is commonly employed during the swing, although there is some controversy[citation needed] as to whether a swing can or should be performed with just a hip hinge instead. This exercise requires an intense contraction of the gluteal, abdominal and latissimus muscles.",
 };
 
 export const Image = {
@@ -81,4 +126,13 @@ export const Image = {
   "Side Plank Right": require("./../assets/Exercises/side-plank.png"),
   Run: require("./../assets/Exercises/run.png"),
   "Pull-up": require("./../assets/Exercises/pull-up.jpg"),
+  "Jumping Jack": require("./../assets/Exercises/jumping-jack.jpg"),
+  "Jumping Lunges": require("./../assets/Exercises/jumping-lunges.png"),
+  "Diamond Push-up": require("./../assets/Exercises/diamond-push-up.png"),
+  "Double-Under": require("./../assets/Exercises/double-under.png"),
+  "Toes To Bar": require("./../assets/Exercises/toes-to-bar.jpg"),
+  Lunge: require("./../assets/Exercises/lunges.jpg"),
+  Dip: require("./../assets/Exercises/dips.jpg"),
+  "Handstand Push-up": require("./../assets/Exercises/hspu.png"),
+  "Russian Swing": require("./../assets/Exercises/russian-swing.png"),
 };
