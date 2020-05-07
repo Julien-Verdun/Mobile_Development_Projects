@@ -16,9 +16,6 @@ class WodDetails extends React.Component {
         <Text style={this.forTimeStyle.numberRounds}>
           Number Round : {this.props.numberRounds}
         </Text>
-        <Text style={this.forTimeStyle.timeCap}>
-          Time Cap : {this.props.timeCap}
-        </Text>
 
         <SafeAreaView style={this.forTimeStyle.wodView}>
           <FlatList
@@ -30,9 +27,8 @@ class WodDetails extends React.Component {
                 exerciceName={item}
               ></Exercise>
             )}
-            keyExtractor={(item) =>
-              this.props.exerciseId +
-              this.props.listTrainings.indexOf(item).toString()
+            keyExtractor={(item, index) =>
+              this.props.exerciseId + index.toString()
             }
           />
         </SafeAreaView>

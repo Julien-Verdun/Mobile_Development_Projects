@@ -2,34 +2,39 @@ import React from "react";
 import { View, Text, Switch } from "react-native";
 import { getStyle } from "../../style/Settings/settingsStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
-import { removeAllData, removeData } from "../../../DataStorage/dataStorage.js";
 import Button from "../Other/Button.js";
 import { AirbnbRating } from "react-native-elements";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return { myTrainings: state.myTrainings, historic: state.historic };
+};
 
 class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.settingsStyle = buildStyleSheet(getStyle());
-    this.state = { langageSwitchValue: true };
-    this.toggleSwitch = this.toggleSwitch.bind(this);
+    this.toggleTraining = this.toggleTraining.bind(this);
+    this.toggleHistoric = this.toggleHistoric.bind(this);
   }
 
-  toggleSwitch() {
-    this.setState({ langageSwitchValue: !this.state.langageSwitchValue });
+  toggleTraining() {
+    this.props.dispatch({
+      type: "RESET_TRAINING",
+    });
   }
+
+  toggleHistoric() {
+    this.props.dispatch({
+      type: "RESET_HISTORIC",
+    });
+  }
+
   render() {
     return (
       <View style={this.settingsStyle.globalView}>
         <Text style={this.settingsStyle.title}>Settings ! </Text>
-        <Text>Choose language </Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={this.state.langageSwitchValue ? "#f5dd4b" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={this.toggleSwitch}
-          value={this.state.langageSwitchValue}
-        />
-        <Text>{this.state.langageSwitchValue ? "Français" : "English"}</Text>
+
         <Text>Rate the app </Text>
         <AirbnbRating
           count={7}
@@ -47,47 +52,30 @@ class Settings extends React.Component {
         />
 
         <View style={this.settingsStyle.buttons}>
-          <Button
+          {/* <Button
             title="Delete time data"
             styles={{
               button: this.settingsStyle.primaryButton,
               title: this.settingsStyle.buttonWhiteText,
             }}
-            onPress={() => {
-              removeData("@MySuperStore:intervaltimer");
-            }}
-          />
+            onPress={() => {}}
+          /> */}
           <Button
             title="Delete training data"
             styles={{
               button: this.settingsStyle.primaryButton,
               title: this.settingsStyle.buttonWhiteText,
             }}
-            onPress={() => {
-              removeData("@MySuperStore:trainings");
-            }}
+            onPress={this.toggleTraining}
           />
 
           <Button
-            title="Delete user data"
+            title="Delete historic data"
             styles={{
               button: this.settingsStyle.primaryButton,
               title: this.settingsStyle.buttonWhiteText,
             }}
-            onPress={() => {
-              removeData("@MySuperStore:user");
-            }}
-          />
-
-          <Button
-            title="Delete data"
-            styles={{
-              button: this.settingsStyle.primaryButton,
-              title: this.settingsStyle.buttonWhiteText,
-            }}
-            onPress={() => {
-              removeAllData();
-            }}
+            onPress={this.toggleTraining}
           />
         </View>
       </View>
@@ -95,4 +83,4 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+export default connect(mapStateToProps)(Settings);

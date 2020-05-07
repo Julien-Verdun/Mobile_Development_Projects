@@ -1,40 +1,7 @@
-import { getStoredTraining } from "../DataStorage/trainingStorage.js";
 import { shuffle } from "./../src/utils/functions.js";
-
-export async function getAllTraining() {
-  let data = Training;
-  await getStoredTraining().then((result) => {
-    data = data.concat(result);
-  });
-  return shuffle(data);
-}
 
 export function getTraining() {
   return shuffle(Training);
-}
-
-export async function getMyTraining() {
-  let data;
-  await getStoredTraining().then((result) => {
-    data = result;
-  });
-  return shuffle(data);
-}
-
-export async function getExerciseNames() {
-  let data = Training,
-    exerciseNames = [];
-  await getStoredTraining().then((result) => {
-    data = data.concat(result);
-  });
-  data.forEach((wod) => {
-    wod.listTrainings.forEach((exercise) => {
-      if (!exerciseNames.includes(exercise)) {
-        exerciseNames.push(exercise);
-      }
-    });
-  });
-  return exerciseNames;
 }
 
 const Training = [

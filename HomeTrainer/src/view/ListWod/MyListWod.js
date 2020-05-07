@@ -28,7 +28,6 @@ class MyListWod extends React.Component {
   }
 
   render() {
-    // console.log("RENDER MYLISTWOD", this.props);
     let listWod = (
       <SafeAreaView style={this.myListWodStyle.listWod}>
         <FlatList

@@ -89,6 +89,28 @@ export function secToTime(sec) {
   );
 }
 
+// transform 25/12/2020 into 12/25/2020
+function frenchDateToEnglish(frenchDate) {
+  return (
+    frenchDate.split("/")[1] +
+    "/" +
+    frenchDate.split("/")[0] +
+    "/" +
+    frenchDate.split("/")[2]
+  );
+}
+
+// return the best time of an array of times ["00:20:34","00:19:34",...]
+export function bestTimeArray(timeArray) {
+  let bestTime = timeArray[0];
+  timeArray.forEach((time) => {
+    if (timeToSec(time) < timeToSec(bestTime)) {
+      bestTime = time;
+    }
+  });
+  return bestTime;
+}
+
 export function isNormalInteger(str) {
   return /^\+?\d+$/.test(str);
 }

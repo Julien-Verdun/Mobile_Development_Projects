@@ -7,6 +7,7 @@ import TrainingCreator from "./../../view/TrainingCreator/TrainingCreator.js";
 import TimeModeMonitoring from "./../../view/WodMonitoring/TimeModeMonitoring.js";
 import RepModeMonitoring from "./../../view/WodMonitoring/RepModeMonitoring.js";
 import ListTrainingBottomTabNavigation from "./ListTrainingBottomTabNavigation.js";
+import Evolution from "./../../view/Evolution/Evolution.js";
 
 class TrainingNavigation extends React.Component {
   render() {
@@ -70,6 +71,19 @@ class TrainingNavigation extends React.Component {
               <NavigationBar
                 {...props}
                 title={"Create your training"}
+                navigation={navigation}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Evolution"
+          component={Evolution}
+          options={({ navigation }) => ({
+            headerTitle: (props) => (
+              <NavigationBar
+                {...props}
+                title={"Evolution"}
                 navigation={navigation}
               />
             ),

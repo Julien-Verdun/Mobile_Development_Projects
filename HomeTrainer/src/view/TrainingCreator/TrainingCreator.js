@@ -16,14 +16,8 @@ import Error from "./../Error/Error.js";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
 
-import {
-  storeTraining,
-  getNewExerciseId,
-  trainingToStr,
-} from "./../../../DataStorage/trainingStorage.js";
-
 const mapStateToProps = (state) => {
-  return { myTrainings: state.myTrainings };
+  return { myTrainings: state.myTrainings, historic: state.historic };
 };
 
 class TrainingCreator extends React.Component {
@@ -48,21 +42,41 @@ class TrainingCreator extends React.Component {
   }
 
   toggleTraining() {
-    getNewExerciseId().then((prefixId) => {
-      let newTraining = {
-        exerciseId: prefixId,
-        type: this.state.type,
-        numberRounds: this.numberRounds,
-        listTrainings: this.state.listTrainings,
-        listReps: this.state.listReps,
-      };
-      let trainingStr = trainingToStr(newTraining);
-      storeTraining(trainingStr);
+    // search new index
+    let maxId, newTraining;
+    maxId =
+      this.props.myTrainings.myTrainings !== null
+        ? Math.max(
+            this.props.myTrainings.myTrainings.map((training) => {
+              console.log("getNewExerciseId : ", training);
+              if (training !== null) {
+                parseInt(
+                  training.exerciseId.slice(
+                    prefixId.length,
+                    training.exerciseId.length
+                  )
+                );
+              }
+            })
+          )
+        : 0;
 
-      this.props.dispatch({
-        type: "TOGGLE_NEW_TRAINING",
-        value: newTraining,
-      });
+    newTraining = {
+      exerciseId: "mytra" + (maxId + 1).toString(),
+      type: this.state.type,
+      numberRounds: this.numberRounds,
+      listTrainings: this.state.listTrainings,
+      listReps: this.state.listReps,
+    };
+
+    this.props.dispatch({
+      type: "TOGGLE_NEW_TRAINING",
+      value: newTraining,
+    });
+
+    this.props.dispatch({
+      type: "TOGGLE_NEW_TRAINING_HISTORIC",
+      value: "mytra" + (maxId + 1).toString(),
     });
   }
 

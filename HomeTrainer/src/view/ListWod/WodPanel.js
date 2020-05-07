@@ -3,11 +3,10 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { getStyle } from "../../style/ListWod/wodPanelStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
 import { Icon } from "react-native-elements";
-import { removeTraining } from "./../../../DataStorage/trainingStorage.js";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
-  return { myTrainings: state.myTrainings };
+  return { myTrainings: state.myTrainings, historic: state.historic };
 };
 
 class WodPanel extends React.Component {
@@ -37,12 +36,14 @@ class WodPanel extends React.Component {
       listTrainings: this.props.listTrainings,
       listReps: this.props.listReps,
     };
-    removeTraining(trainingToRemove).then(
-      this.props.dispatch({
-        type: "TOGGLE_REMOVE_TRAINING",
-        value: trainingToRemove,
-      })
-    );
+    this.props.dispatch({
+      type: "TOGGLE_REMOVE_TRAINING",
+      value: trainingToRemove,
+    });
+    this.props.dispatch({
+      type: "TOGGLE_REMOVE_TRAINING_HISTORIC",
+      value: this.props.exerciseId,
+    });
   }
 
   render() {

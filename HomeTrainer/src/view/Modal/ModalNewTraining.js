@@ -4,8 +4,21 @@ import { getStyle } from "../../style/Modal/modalNewTrainingStyle.js";
 import { buildStyleSheet, isNormalInteger } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
 import Error from "./../Error/Error.js";
-import { getExerciseNames } from "../../../training/Training.js";
+import { getTraining } from "../../../training/Training.js";
 import Autocomplete from "react-native-autocomplete-input";
+
+function getExerciseNames() {
+  let data = getTraining(),
+    exerciseNames = [];
+  data.forEach((wod) => {
+    wod.listTrainings.forEach((exercise) => {
+      if (!exerciseNames.includes(exercise)) {
+        exerciseNames.push(exercise);
+      }
+    });
+  });
+  return exerciseNames;
+}
 
 class ModalNewTraining extends React.Component {
   constructor(props) {
@@ -81,9 +94,9 @@ class ModalNewTraining extends React.Component {
   }
 
   componentDidMount() {
-    getExerciseNames().then((exerciseNames) => {
-      this.exerciseNames = exerciseNames;
-    });
+    // getExerciseNames().then((exerciseNames) => {
+    this.exerciseNames = getExerciseNames();
+    // });
   }
 
   componentDidUpdate(prevProps) {

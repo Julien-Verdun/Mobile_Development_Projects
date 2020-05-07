@@ -15,6 +15,32 @@ const wodDetailsStyle = {
     fontSize: 18,
     fontWeight: "bold",
   },
+  buttonWhiteText: {
+    fontSize: 16,
+    color: "#FFF",
+  },
+  primaryButton: {
+    height: 40,
+    backgroundColor: "#ffe800",
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+
+  evolutionButton: {
+    height: 40,
+    backgroundColor: "#ffe800",
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+
+  bestTime: {
+    flex: 0.3,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10,
+  },
   bestTimeButton: {
     height: 40,
     backgroundColor: "#007bff",
@@ -23,27 +49,20 @@ const wodDetailsStyle = {
     marginLeft: 5,
     marginRight: 5,
   },
-  buttonWhiteText: {
-    fontSize: 16,
-    color: "#FFF",
-  },
-  primaryButton: {
-    height: 60,
-    backgroundColor: "#ffe800",
-    borderWidth: 2,
-    borderRadius: 10,
-  },
-
-  bestTime: {
-    flex: 0.3,
-    marginTop: 10,
-    marginBottom: 20,
-  },
 
   bestTimeLabel: {
     flex: 1,
     paddingLeft: 10,
     fontSize: 15,
+  },
+
+  evolutionButton: {
+    height: 40,
+    backgroundColor: "#1aff1a",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginLeft: 5,
+    marginRight: 5,
   },
 
   textStyle: {

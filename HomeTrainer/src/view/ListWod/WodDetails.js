@@ -1,10 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { getStyle } from "../../style/ListWod/wodDetailsStyle.js";
-import { buildStyleSheet } from "../../utils/functions.js";
+import { buildStyleSheet, bestTimeArray } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
 import ModalBestTime from "./../Modal/ModalBestTime.js";
 import { connect } from "react-redux";
+import { Icon } from "react-native-elements";
 
 import ForTime from "./WodType/ForTime.js";
 import Amrap from "./WodType/Amrap.js";
@@ -12,15 +13,25 @@ import Emom from "./WodType/Emom.js";
 import Classic from "./WodType/Classic.js";
 
 const mapStateToProps = (state) => {
-  return { bestTimes: state.bestTimes };
+  return { historic: state.historic };
 };
 
 class WodDetails extends React.Component {
   constructor(props) {
     super(props);
     this.wodDetailsStyle = buildStyleSheet(getStyle());
-    this.bestTime = null;
     this.state = {
+      bestTime:
+        this.props.historic.historic[this.props.route.params.exerciseId]
+          .length !== 0
+          ? "Best time : " +
+            bestTimeArray(
+              this.props.historic.historic[
+                this.props.route.params.exerciseId
+              ].map((elt) => elt.split(";")[1])
+            )
+          : //prendre le temps max
+            "No stored best time",
       modalVisible: false,
     };
     this.handleModalVsible = this.handleModalVsible.bind(this);
@@ -28,6 +39,24 @@ class WodDetails extends React.Component {
 
   handleModalVsible(modalVisible) {
     this.setState({ modalVisible });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.historic.historic !== prevProps.historic.historic) {
+      this.setState({
+        bestTime:
+          this.props.historic.historic[this.props.route.params.exerciseId]
+            .length !== 0
+            ? "Best time : " +
+              bestTimeArray(
+                this.props.historic.historic[
+                  this.props.route.params.exerciseId
+                ].map((elt) => elt.split(";")[1])
+              )
+            : //prendre le temps max
+              "No stored best time",
+      });
+    }
   }
 
   render() {
@@ -56,6 +85,7 @@ class WodDetails extends React.Component {
         }}
       />
     );
+
     if (params.type == "For Time") {
       wodPanel = (
         <ForTime
@@ -65,7 +95,6 @@ class WodDetails extends React.Component {
           numberRounds={params.numberRounds}
           listTrainings={params.listTrainings}
           listReps={params.listReps}
-          timeCap={params.timeCap}
         />
       );
     } else if (params.type == "AMRAP") {
@@ -77,7 +106,6 @@ class WodDetails extends React.Component {
           numberRounds={params.numberRounds}
           listTrainings={params.listTrainings}
           listReps={params.listReps}
-          timeCap={params.timeCap}
         />
       );
     } else if (params.type == "EMOM") {
@@ -89,7 +117,6 @@ class WodDetails extends React.Component {
           numberRounds={params.numberRounds}
           listTrainings={params.listTrainings}
           listReps={params.listReps}
-          timeCap={params.timeCap}
         />
       );
     } else if (params.type == "Classic") {
@@ -101,7 +128,6 @@ class WodDetails extends React.Component {
           numberRounds={params.numberRounds}
           listTrainings={params.listTrainings}
           listReps={params.listReps}
-          timeCap={params.timeCap}
         />
       );
     } else {
@@ -109,7 +135,8 @@ class WodDetails extends React.Component {
       buttonPanel = null;
     }
     let modalBestTime = null,
-      bestTimeForm = null;
+      bestTimeForm = null,
+      buttonEvolution = null;
     if (params.type === "For Time") {
       // composant contenant le modal affiché pour renseigner le score
       modalBestTime = (
@@ -123,12 +150,9 @@ class WodDetails extends React.Component {
       bestTimeForm = (
         <View style={this.wodDetailsStyle.bestTime}>
           <Text style={this.wodDetailsStyle.bestTimeLabel}>
-            {this.props.bestTimes.bestTimes[params.exerciseId] !== null &&
-            this.props.bestTimes.bestTimes[params.exerciseId] !== undefined
-              ? "Best time : " +
-                this.props.bestTimes.bestTimes[params.exerciseId]
-              : "No stored best time"}
+            {this.state.bestTime}
           </Text>
+
           <Button
             title="Add my score"
             styles={{
@@ -139,6 +163,32 @@ class WodDetails extends React.Component {
               this.setState({ modalVisible: true });
             }}
           />
+
+          <Button
+            title="Evolution"
+            styles={{
+              button: this.wodDetailsStyle.evolutionButton,
+              title: this.wodDetailsStyle.buttonWhiteText,
+            }}
+            onPress={() => {
+              console.log(
+                "CLIQUE : ",
+                this.props.historic.historic[params.exerciseId]
+              );
+              // if (this.props.historic.historic[params.exerciseId].length > 0) {
+              this.props.navigation.navigate("Evolution", {
+                type: params.type,
+                exerciseId: params.exerciseId,
+                numberRounds: params.numberRounds,
+                listTrainings: params.listTrainings,
+                listReps: params.listReps,
+                historic: this.props.historic.historic[params.exerciseId],
+              });
+              // }
+            }}
+          >
+            <Icon name={"timeline"} size={30} color={"#000"} />
+          </Button>
         </View>
       );
     }

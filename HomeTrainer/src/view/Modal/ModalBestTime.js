@@ -5,34 +5,53 @@ import {
   buildStyleSheet,
   isNormalInteger,
   normaliseTime,
+  bestTimeArray,
 } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
-  return { bestTimes: state.bestTimes };
+  return { historic: state.historic };
 };
 
 class ModalBestime extends React.Component {
   constructor(props) {
     super(props);
     this.modalBestTimeStyle = buildStyleSheet(getStyle());
-    this.bestTime = this.props.bestTimes.bestTimes[this.props.exerciseId];
-    this.state = {
-      bestTimePanel: undefined,
-      modalVisible: this.props.modalVisible,
-    };
+    (this.bestTime =
+      this.props.historic.historic[this.props.exerciseId].length !== 0
+        ? bestTimeArray(
+            this.props.historic.historic[this.props.exerciseId].map(
+              (elt) => elt.split(";")[1]
+            )
+          )
+        : ""),
+      (this.state = {
+        bestTimePanel: undefined,
+        modalVisible: this.props.modalVisible,
+      });
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkFormatBestTime = this.checkFormatBestTime.bind(this);
-    this.toggleBestTime = this.toggleBestTime.bind(this);
+    this.toggleHistoric = this.toggleHistoric.bind(this);
   }
-  toggleBestTime() {
+
+  toggleHistoric() {
+    let date = new Date();
     this.props.dispatch({
-      type: "TOGGLE_NEW_BEST_TIME",
+      type: "TOGGLE_ADD_TIME",
       value: {
         exerciseId: this.props.exerciseId,
-        bestTime: this.bestTime,
+        newTime:
+          (date.getDate().toString().length === 1 ? "0" : "") +
+          date.getDate() +
+          "/" +
+          (date.getMonth().toString().length === 1 ? "0" : "") +
+          date.getMonth() +
+          "/" +
+          date.getFullYear() +
+          ";" +
+          this.bestTime,
       },
     });
   }
@@ -60,7 +79,7 @@ class ModalBestime extends React.Component {
     if (this.checkFormatBestTime()) {
       this.bestTime = normaliseTime(this.bestTime);
       this.props.onCancelModal(false);
-      this.toggleBestTime();
+      this.toggleHistoric();
       this.setState({ modalVisible: !this.state.modalVisible });
     } else {
       //mauvais format renseigné
