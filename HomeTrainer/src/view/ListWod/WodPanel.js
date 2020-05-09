@@ -32,9 +32,10 @@ class WodPanel extends React.Component {
     let trainingToRemove = {
       exerciseId: this.props.exerciseId,
       type: this.props.type,
-      numberRounds: this.props.numberRounds,
-      listTrainings: this.props.listTrainings,
-      listReps: this.props.listReps,
+      areDifficulties: this.props.areDifficulties,
+      numberRounds: this.props.training.numberRounds,
+      listTrainings: this.props.training.listTrainings,
+      listReps: this.props.training.listReps,
     };
     this.props.dispatch({
       type: "TOGGLE_REMOVE_TRAINING",
@@ -61,9 +62,8 @@ class WodPanel extends React.Component {
           this.props.navigation.navigate("WodDetails", {
             exerciseId: this.props.exerciseId,
             type: this.props.type,
-            listTrainings: this.props.listTrainings,
-            numberRounds: this.props.numberRounds,
-            listReps: this.props.listReps,
+            areDifficulties: this.props.areDifficulties,
+            training: this.props.training,
           })
         }
         style={[
@@ -74,7 +74,9 @@ class WodPanel extends React.Component {
         <View style={this.wodPanelStyle.trainingPart}>
           <Text style={this.wodPanelStyle.type}>{this.props.type}</Text>
           <Text style={this.wodPanelStyle.listTrainings}>
-            {this.props.listTrainings.join("\n")}
+            {this.props.areDifficulties
+              ? this.props.training.easy.listTrainings.join("\n")
+              : this.props.training.listTrainings.join("\n")}
           </Text>
         </View>
         {deleteIcon}

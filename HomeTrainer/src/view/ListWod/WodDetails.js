@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import { getStyle } from "../../style/ListWod/wodDetailsStyle.js";
 import { buildStyleSheet, bestTimeArray } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
@@ -21,6 +21,7 @@ class WodDetails extends React.Component {
     super(props);
     this.wodDetailsStyle = buildStyleSheet(getStyle());
     this.state = {
+      difficulty: "medium",
       bestTime:
         this.props.historic.historic[this.props.route.params.exerciseId]
           .length !== 0
@@ -35,10 +36,15 @@ class WodDetails extends React.Component {
       modalVisible: false,
     };
     this.handleModalVsible = this.handleModalVsible.bind(this);
+    this.changeDifficulty = this.changeDifficulty.bind(this);
   }
 
   handleModalVsible(modalVisible) {
     this.setState({ modalVisible });
+  }
+
+  changeDifficulty(difficulty) {
+    this.setState({ difficulty });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -60,9 +66,65 @@ class WodDetails extends React.Component {
   }
 
   render() {
-    let params = this.props.route.params;
+    let params = this.props.route.params,
+      trainingPath = params.areDifficulties
+        ? params.training[this.state.difficulty]
+        : params.training;
     // faire un render par type et uniquement renvoyer le bon component
-    let wodPanel;
+    let wodPanel, difficultyPanel;
+    let colorChosen = "#007bffaa",
+      colorOther = "#fff";
+    if (params.areDifficulties) {
+      difficultyPanel = (
+        <View style={this.wodDetailsStyle.difficultyContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.changeDifficulty("easy");
+            }}
+            style={[
+              this.wodDetailsStyle.difficultyTO,
+              {
+                backgroundColor:
+                  this.state.difficulty === "easy" ? colorChosen : colorOther,
+              },
+            ]}
+          >
+            <Text style={this.wodDetailsStyle.difficultyText}>Easy</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.changeDifficulty("medium");
+            }}
+            style={[
+              this.wodDetailsStyle.difficultyTO,
+              {
+                backgroundColor:
+                  this.state.difficulty === "medium" ? colorChosen : colorOther,
+              },
+            ]}
+          >
+            <Text style={this.wodDetailsStyle.difficultyText}>Medium</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.changeDifficulty("hard");
+            }}
+            style={[
+              this.wodDetailsStyle.difficultyTO,
+              {
+                backgroundColor:
+                  this.state.difficulty === "hard" ? colorChosen : colorOther,
+              },
+            ]}
+          >
+            <Text style={this.wodDetailsStyle.difficultyText}>Hard</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      difficultyPanel = null;
+    }
+
     let buttonPanel = (
       <Button
         title="Start the WOD"
@@ -77,9 +139,9 @@ class WodDetails extends React.Component {
               : "RepModeMonitoring",
             {
               type: params.type,
-              numberRounds: params.numberRounds,
-              listTrainings: params.listTrainings,
-              listReps: params.listReps,
+              numberRounds: trainingPath.numberRounds,
+              listTrainings: trainingPath.listTrainings,
+              listReps: trainingPath.listReps,
             }
           );
         }}
@@ -92,9 +154,10 @@ class WodDetails extends React.Component {
           navigation={this.props.navigation}
           exerciseId={params.exerciseId}
           type={params.type}
-          numberRounds={params.numberRounds}
-          listTrainings={params.listTrainings}
-          listReps={params.listReps}
+          areDifficulties={params.areDifficulties}
+          numberRounds={trainingPath.numberRounds}
+          listTrainings={trainingPath.listTrainings}
+          listReps={trainingPath.listReps}
         />
       );
     } else if (params.type == "AMRAP") {
@@ -103,9 +166,10 @@ class WodDetails extends React.Component {
           navigation={this.props.navigation}
           exerciseId={params.exerciseId}
           type={params.type}
-          numberRounds={params.numberRounds}
-          listTrainings={params.listTrainings}
-          listReps={params.listReps}
+          areDifficulties={params.areDifficulties}
+          numberRounds={trainingPath.numberRounds}
+          listTrainings={trainingPath.listTrainings}
+          listReps={trainingPath.listReps}
         />
       );
     } else if (params.type == "EMOM") {
@@ -114,9 +178,10 @@ class WodDetails extends React.Component {
           navigation={this.props.navigation}
           exerciseId={params.exerciseId}
           type={params.type}
-          numberRounds={params.numberRounds}
-          listTrainings={params.listTrainings}
-          listReps={params.listReps}
+          areDifficulties={params.areDifficulties}
+          numberRounds={trainingPath.numberRounds}
+          listTrainings={trainingPath.listTrainings}
+          listReps={trainingPath.listReps}
         />
       );
     } else if (params.type == "Classic") {
@@ -125,9 +190,10 @@ class WodDetails extends React.Component {
           navigation={this.props.navigation}
           exerciseId={params.exerciseId}
           type={params.type}
-          numberRounds={params.numberRounds}
-          listTrainings={params.listTrainings}
-          listReps={params.listReps}
+          areDifficulties={params.areDifficulties}
+          numberRounds={trainingPath.numberRounds}
+          listTrainings={trainingPath.listTrainings}
+          listReps={trainingPath.listReps}
         />
       );
     } else {
@@ -144,6 +210,7 @@ class WodDetails extends React.Component {
           exerciseId={params.exerciseId}
           modalVisible={this.state.modalVisible}
           onCancelModal={this.handleModalVsible}
+          difficulty={params.areDifficulties ? this.state.difficulty : null}
         ></ModalBestTime>
       );
       //component contenant le meilleur temps et le bouton pour meilleure temps
@@ -178,10 +245,11 @@ class WodDetails extends React.Component {
               // if (this.props.historic.historic[params.exerciseId].length > 0) {
               this.props.navigation.navigate("Evolution", {
                 type: params.type,
+                areDifficulties: params.areDifficulties,
                 exerciseId: params.exerciseId,
-                numberRounds: params.numberRounds,
-                listTrainings: params.listTrainings,
-                listReps: params.listReps,
+                numberRounds: trainingPath.numberRounds,
+                listTrainings: trainingPath.listTrainings,
+                listReps: trainingPath.listReps,
                 historic: this.props.historic.historic[params.exerciseId],
               });
               // }
@@ -197,6 +265,7 @@ class WodDetails extends React.Component {
       <View style={this.wodDetailsStyle.globalView}>
         {modalBestTime}
         <Text style={this.wodDetailsStyle.type}>{params.type}</Text>
+        {difficultyPanel}
         {wodPanel}
         {bestTimeForm}
         {buttonPanel}

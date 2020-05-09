@@ -1,17 +1,28 @@
 import React from "react";
-import { View, Modal, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Modal,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  SafeAreaView,
+  FlatList,
+} from "react-native";
 import { getStyle } from "../../style/Modal/modalNewTrainingStyle.js";
 import { buildStyleSheet, isNormalInteger } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
 import Error from "./../Error/Error.js";
 import { getTraining } from "../../../training/Training.js";
-import Autocomplete from "react-native-autocomplete-input";
+// import Autocomplete from "react-native-autocomplete-input";
 
 function getExerciseNames() {
   let data = getTraining(),
     exerciseNames = [];
   data.forEach((wod) => {
-    wod.listTrainings.forEach((exercise) => {
+    let listTrainings = wod.areDifficulties
+      ? wod.training["easy"].listTrainings
+      : wod.training.listTrainings;
+    listTrainings.forEach((exercise) => {
       if (!exerciseNames.includes(exercise)) {
         exerciseNames.push(exercise);
       }
@@ -41,8 +52,10 @@ class ModalNewTraining extends React.Component {
   }
 
   handleChangeTraining(training, hideCompletion) {
+    console.log(training);
     this.setState({ training, hideCompletion });
   }
+
   handleChangeRep(text) {
     this.rep = text;
   }
@@ -94,9 +107,7 @@ class ModalNewTraining extends React.Component {
   }
 
   componentDidMount() {
-    // getExerciseNames().then((exerciseNames) => {
     this.exerciseNames = getExerciseNames();
-    // });
   }
 
   componentDidUpdate(prevProps) {
@@ -118,6 +129,37 @@ class ModalNewTraining extends React.Component {
           }
         ></Error>
       ) : null;
+
+    let autocompletion =
+      !this.state.hideCompletion && this.state.training.length > 0 ? (
+        <SafeAreaView style={this.modalNewTrainingStyle.autocompleteList}>
+          <FlatList
+            data={this.exerciseNames.filter((exercise) =>
+              exercise.includes(this.state.training)
+            )}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  this.handleChangeTraining(item, true);
+                }}
+                style={this.modalNewTrainingStyle.newTrainingTouchableOpacity}
+              >
+                <Text style={this.modalNewTrainingStyle.newTrainingText}>
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item}
+          />
+        </SafeAreaView>
+      ) : null;
+
+    console.log(
+      this.exerciseNames.filter((exercise) =>
+        exercise.includes(this.state.training)
+      ),
+      autocompletion
+    );
     return (
       <Modal
         animationType="slide"
@@ -136,40 +178,8 @@ class ModalNewTraining extends React.Component {
             <View style={this.modalNewTrainingStyle.newTrainingForm}>
               {errorPanel}
 
-              <Autocomplete
-                data={this.exerciseNames.filter((exercise) =>
-                  exercise.includes(this.state.training)
-                )}
-                containerStyle={
-                  this.modalNewTrainingStyle.newTrainingInputContainer
-                }
-                listContainerStyle={
-                  this.modalNewTrainingStyle.newTrainingListContainer
-                }
-                defaultValue={this.state.training}
-                onChangeText={(text) => this.handleChangeTraining(text, false)}
-                hideResults={
-                  this.state.training.length < 1 || this.state.hideCompletion
-                }
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.handleChangeTraining(item, true);
-                    }}
-                    style={
-                      this.modalNewTrainingStyle.newTrainingTouchableOpacity
-                    }
-                  >
-                    <Text style={this.modalNewTrainingStyle.newTrainingText}>
-                      {item}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
-
               <TextInput
-                style={this.modalNewTrainingStyle.newTrainingInput}
-                ref={this.newTrainingInput}
+                style={this.modalNewTrainingStyle.newRepInput}
                 onChangeText={(text) => this.handleChangeRep(text)}
                 onSubmitEditing={this.handleSubmit}
                 placeholder={
@@ -177,6 +187,20 @@ class ModalNewTraining extends React.Component {
                 }
                 keyboardType="number-pad"
               ></TextInput>
+              <View>
+                <TextInput
+                  style={this.modalNewTrainingStyle.newTrainingInput}
+                  value={this.state.training}
+                  onChangeText={(text) =>
+                    this.handleChangeTraining(text, false)
+                  }
+                  onSubmitEditing={this.handleSubmit}
+                  placeholder={"Exercise"}
+                  keyboardType="number-pad"
+                ></TextInput>
+                {autocompletion}
+              </View>
+
               <View style={this.modalNewTrainingStyle.newTrainingView}>
                 <Button
                   title="Cancel"

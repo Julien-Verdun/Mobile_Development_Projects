@@ -90,7 +90,7 @@ export function secToTime(sec) {
 }
 
 // transform 25/12/2020 into 12/25/2020
-function frenchDateToEnglish(frenchDate) {
+export function frenchDateToEnglish(frenchDate) {
   return (
     frenchDate.split("/")[1] +
     "/" +
@@ -98,6 +98,42 @@ function frenchDateToEnglish(frenchDate) {
     "/" +
     frenchDate.split("/")[2]
   );
+}
+
+// return the youngest date of a date array
+// date must be like this : dd/mm/yyyy
+export function youngestDate(dateArray) {
+  let youngestDate = null;
+  if (Array.isArray(dateArray) && dateArray.length > 0) {
+    youngestDate = dateArray[0];
+    dateArray.forEach((date) => {
+      if (
+        new Date(frenchDateToEnglish(youngestDate)) >
+        new Date(frenchDateToEnglish(date))
+      ) {
+        youngestDate = date;
+      }
+    });
+  }
+  return youngestDate;
+}
+
+// return the oldest date of a date array
+// date must be like this : dd/mm/yyyy
+export function oldestDate(dateArray) {
+  let oldestDate = null;
+  if (Array.isArray(dateArray) && dateArray.length > 0) {
+    oldestDate = dateArray[0];
+    dateArray.forEach((date) => {
+      if (
+        new Date(frenchDateToEnglish(oldestDate)) <
+        new Date(frenchDateToEnglish(date))
+      ) {
+        oldestDate = date;
+      }
+    });
+  }
+  return oldestDate;
 }
 
 // return the best time of an array of times ["00:20:34","00:19:34",...]

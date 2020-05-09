@@ -108,13 +108,12 @@ class IntervalTimer extends React.Component {
       this.state.storeTime + parseInt((currentTime - this.state.time) / 1000) <
       this.state.totalTime
     ) {
-      // change currentState from training to rest when it is time, ring the bell, and change background color
+      // change currentState from training to rest when it is time, and change background color
       if (
         this.state.storeTime +
           parseInt((currentTime - this.state.time) / 1000) >=
         this.state.nextSumPassedRound
       ) {
-        this.playSound().then(console.log("Sound played !"));
         this.changeColorBackground(
           this.state.currentState === "training" ? "rest" : "training"
         );
@@ -128,6 +127,14 @@ class IntervalTimer extends React.Component {
             this.state.currentState === "training" ? "rest" : "training",
         });
       }
+      // play the sound one second before state change
+      else if (
+        this.state.storeTime +
+          parseInt((currentTime - this.state.time) / 1000) >=
+        this.state.nextSumPassedRound - 1
+      ) {
+        this.playSound();
+      }
     }
     // else we stop
     else {
@@ -136,7 +143,7 @@ class IntervalTimer extends React.Component {
         backgroundColorChgt: backgroundColorTraining,
         currentState: "End of the training",
       });
-      this.playSound().then(console.log("Sound played !"));
+      this.playSound();
     }
   }
 

@@ -10,14 +10,6 @@ const userDataStyle = {
     alignItems: "stretch",
     margin: 15,
   },
-  lineChartText: {
-    flex: 0.1,
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: 10,
-    fontWeight: "bold",
-    fontSize: 20,
-  },
   lineChart: {
     flex: 1,
     margin: 10,

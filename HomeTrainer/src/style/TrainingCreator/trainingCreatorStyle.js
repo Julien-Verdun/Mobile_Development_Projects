@@ -26,6 +26,13 @@ const trainingCreatorStyle = {
     fontSize: 16,
     color: "#FFF",
   },
+  pickerContainer: {
+    flex: 1,
+    height: 60,
+    borderRadius: 5,
+    borderColor: "#000e",
+    borderWidth: 1,
+  },
   pickerTypeChoice: {
     flex: 1,
   },
@@ -37,11 +44,12 @@ const trainingCreatorStyle = {
   },
   textRoundChoice: { flex: 1, fontSize: 16 },
   roundInput: {
-    flex: 0.5,
-    borderColor: "#000000",
+    width: 50,
+    borderColor: "#000e",
     borderRadius: 5,
     borderWidth: 1,
-    paddingLeft: 10,
+    paddingLeft: 20,
+    marginRight: 30,
   },
 
   //training list
@@ -57,13 +65,10 @@ const trainingCreatorStyle = {
 
   //exercises
   exerciseView: {
-    // flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
   },
-  // exerciseItem: { flex: 1, fontSize: 20, fontWeight: "bold" },
-  // exerciseRemoveItem: { flex: 1 },
 
   addButton: {
     height: 40,

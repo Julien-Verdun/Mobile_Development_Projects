@@ -110,6 +110,10 @@ export const Description = {
     'The handstand push-up (press-up) - also called the vertical push-up (press-up) or the inverted push-up (press-up) also called "commandos"- is a type of push-up exercise where the body is positioned in a handstand. For a true handstand, the exercise is performed free-standing, held in the air. To prepare the strength until one has built adequate balance, the feet are often placed against a wall, held by a partner, or secured in some other way from falling. Handstand pushups require significant strength, as well as balance and control if performed free-standing.',
   "Russian Swing":
     "The kettlebell swing (AKA Russian swing, double-arm swing, or conventional kettlebell swing) is a basic ballistic exercise used to train the posterior chain in a manner similar to broad jumping. The kettlebell is swung from just below the groin to somewhere between the upper abdomen and shoulders, with arms straight or slightly bent, the degree of flexion depends on the trajectory of the kettlebell. The key to a good kettlebell swing is effectively thrusting the hips, not bending too much at the knees and sending the weight forwards, as opposed to squatting the weight up, or lifting up with the arms. Some knee flexion (a squat) is commonly employed during the swing, although there is some controversy[citation needed] as to whether a swing can or should be performed with just a hip hinge instead. This exercise requires an intense contraction of the gluteal, abdominal and latissimus muscles.",
+  "V-up":
+    "The V-Ups exercise is a total core working movement. It is also known as the Jackknife or Pike Crunch exercise. The V-ups exercise is a more advanced form of most ab workouts. This challenges your core, abs, back, and flexibility. \nLie faceup on the floor with your legs and arms straight. \nHold your arms straight above the top of your head.\nIn one movement, simultaneously lift your torso and legs as if you’re trying to touch your toes. Your torso and thighs should form a letter 'V' \n Lower your body back to the starting position.",
+  "Mountain Climber":
+    "A mountain climber is a bodyweight exercise that is useful for burning calories, building stamina and strengthening the core. Not only do mountain climbers make use of all of the body’s major muscle groups, they’re simple and expedient enough to be done almost anywhere. When performed at a rapid pace, they’re also effective as a form of cardiovascular training. The primary actions involved in mountain climbers are supporting the body in plank position while flexing the knees to work the core.\nGet into plank position.\nPull one knee up and in toward your midsection.\nRepeat the action with your other knee.\nContinue alternating the movement with both knees.",
 };
 
 export const Image = {
@@ -135,4 +139,6 @@ export const Image = {
   Dip: require("./../assets/Exercises/dips.jpg"),
   "Handstand Push-up": require("./../assets/Exercises/hspu.png"),
   "Russian Swing": require("./../assets/Exercises/russian-swing.png"),
+  "V-up": require("./../assets/Exercises/v-up.jpg"),
+  "Mountain Climber": require("./../assets/Exercises/mountain-climber.jpg"),
 };

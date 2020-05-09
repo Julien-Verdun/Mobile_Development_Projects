@@ -19,12 +19,14 @@ class Settings extends React.Component {
   }
 
   toggleTraining() {
+    console.log("RESET_TRAINING");
     this.props.dispatch({
       type: "RESET_TRAINING",
     });
   }
 
   toggleHistoric() {
+    console.log("RESET_HISTORIC");
     this.props.dispatch({
       type: "RESET_HISTORIC",
     });
@@ -75,7 +77,7 @@ class Settings extends React.Component {
               button: this.settingsStyle.primaryButton,
               title: this.settingsStyle.buttonWhiteText,
             }}
-            onPress={this.toggleTraining}
+            onPress={this.toggleHistoric}
           />
         </View>
       </View>

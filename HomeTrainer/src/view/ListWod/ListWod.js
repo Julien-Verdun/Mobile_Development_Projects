@@ -28,10 +28,9 @@ class ListWod extends React.Component {
               navigation={this.props.navigation}
               exerciseId={item.exerciseId}
               type={item.type}
+              areDifficulties={item.areDifficulties}
               myTraining={false}
-              numberRounds={item.numberRounds}
-              listTrainings={item.listTrainings}
-              listReps={item.listReps}
+              training={item.training}
             ></WodPanel>
           )}
           keyExtractor={(item) => item.exerciseId}
@@ -41,6 +40,7 @@ class ListWod extends React.Component {
     return (
       <View style={this.listWodStyle.globalView}>
         <Text style={this.listWodStyle.title}>Workout of the Day !</Text>
+
         {listWod}
       </View>
     );

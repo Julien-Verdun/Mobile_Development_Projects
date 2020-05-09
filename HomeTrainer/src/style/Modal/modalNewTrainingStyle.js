@@ -51,11 +51,7 @@ const modalNewTrainingStyle = {
     justifyContent: "space-evenly",
     alignItems: "center",
   },
-  newTrainingInputContainer: {
-    height: 80,
-    marginBottom: 60,
-  },
-  newTrainingInput: {
+  newRepInput: {
     height: 40,
     borderColor: "#000000",
     borderWidth: 1,
@@ -64,14 +60,19 @@ const modalNewTrainingStyle = {
     marginTop: 15,
     marginBottom: 15,
   },
-  newTrainingListContainer: {
+  newTrainingInput: {
+    height: 40,
+    borderColor: "#000000",
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 15,
+  },
+  autocompleteList: {
     height: 60,
     borderColor: "#000000",
-  },
-  newTrainingTouchableOpacity: {
-    height: 20,
-    marginTop: 5,
-    marginLeft: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   newTrainingText: { flex: 1, fontSize: 15, fontStyle: "italic" },
   newTrainingButton: {

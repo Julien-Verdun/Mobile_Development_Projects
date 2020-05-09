@@ -160,18 +160,24 @@ class TrainingCreator extends React.Component {
           <Text style={this.trainingCreatorStyle.textTypeChoice}>
             Training type
           </Text>
-          <Picker
-            selectedValue={this.state.type}
-            style={this.trainingCreatorStyle.pickerTypeChoice}
-            onValueChange={(itemValue) =>
-              this.setState({ type: itemValue, listReps: [], listTraining: [] })
-            }
-          >
-            <Picker.Item label="Classic" value="Classic" />
-            <Picker.Item label="For Time" value="For Time" />
-            <Picker.Item label="AMRAP" value="AMRAP" />
-            <Picker.Item label="EMOM" value="EMOM" />
-          </Picker>
+          <View style={this.trainingCreatorStyle.pickerContainer}>
+            <Picker
+              selectedValue={this.state.type}
+              style={this.trainingCreatorStyle.pickerTypeChoice}
+              onValueChange={(itemValue) =>
+                this.setState({
+                  type: itemValue,
+                  listReps: [],
+                  listTraining: [],
+                })
+              }
+            >
+              <Picker.Item label="Classic" value="Classic" />
+              <Picker.Item label="For Time" value="For Time" />
+              <Picker.Item label="AMRAP" value="AMRAP" />
+              <Picker.Item label="EMOM" value="EMOM" />
+            </Picker>
+          </View>
         </View>
         <View style={this.trainingCreatorStyle.roundChoice}>
           <Text style={this.trainingCreatorStyle.textRoundChoice}>

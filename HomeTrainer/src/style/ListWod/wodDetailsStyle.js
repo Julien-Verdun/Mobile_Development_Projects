@@ -74,4 +74,28 @@ const wodDetailsStyle = {
     marginBottom: 15,
     textAlign: "center",
   },
+
+  difficultyContainer: {
+    height: 40,
+    borderRadius: 5,
+    borderColor: "#444",
+    borderWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  difficultyTO: {
+    flex: 1,
+    borderRadius: 5,
+    borderColor: "#eee",
+    borderWidth: 1,
+    backgroundColor: "#007bffaa",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  difficultyText: {
+    flex: 1,
+    paddingTop: 5,
+    fontSize: 15,
+  },
 };

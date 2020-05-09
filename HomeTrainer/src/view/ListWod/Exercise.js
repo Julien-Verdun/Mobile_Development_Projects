@@ -36,7 +36,9 @@ class Exercise extends React.Component {
           <Text style={this.exerciseStyle.numberRep}>
             {this.props.type === "Classic"
               ? parseInt(60 * this.props.numberRep) + " secs : "
-              : this.props.numberRep + " reps : "}
+              : this.props.numberRep.toString().match(/^[0-9]+$/) != null
+              ? this.props.numberRep + " reps"
+              : this.props.numberRep}
           </Text>
 
           <Text style={this.exerciseStyle.exerciceName}>

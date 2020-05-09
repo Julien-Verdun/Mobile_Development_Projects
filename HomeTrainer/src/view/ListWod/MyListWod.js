@@ -38,10 +38,11 @@ class MyListWod extends React.Component {
               exerciseId={item.exerciseId}
               type={item.type}
               myTraining={true}
-              numberRounds={item.numberRounds}
-              listTrainings={item.listTrainings}
-              listReps={item.listReps}
-              timeCap={item.timeCap}
+              training={{
+                numberRounds: item.numberRounds,
+                listTrainings: item.listTrainings,
+                listReps: item.listReps,
+              }}
             ></WodPanel>
           )}
           keyExtractor={(item) => item.exerciseId}

@@ -156,7 +156,7 @@ class TimeModeMonitoring extends React.Component {
           ? 0
           : (this.state.indexTraining += 1);
       // et on ring
-      this.playSound().then(console.log("Sound played !"));
+      this.playSound();
       // si debut d'un nouveau round
       if (nextIndexTraining === 0) {
         let nextRound,

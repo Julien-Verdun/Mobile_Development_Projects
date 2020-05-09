@@ -114,7 +114,10 @@ class ModalBestime extends React.Component {
         <View style={this.modalBestTimeStyle.centeredView}>
           <View style={this.modalBestTimeStyle.modalView}>
             <Text style={this.modalBestTimeStyle.modalText}>
-              Best time (format hh:mm:ss)
+              Today performance (hh:mm:ss){" "}
+              {this.state.difficulty !== null
+                ? "(" + this.state.difficulty + ")"
+                : ""}
             </Text>
 
             <View style={this.modalBestTimeStyle.bestTimeForm}>
