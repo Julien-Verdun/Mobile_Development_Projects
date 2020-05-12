@@ -14,6 +14,10 @@ export function getTrainingTypeDescription(trainingType) {
   return "No description available for this exercise, you can check on the internet :)";
 }
 
+export function getAllTrainingTypeLocalDescriptions() {
+  return TrainingTypeDescription;
+}
+
 export const TrainingTypeDescription = {
   AMRAP:
     "AMRAP is simple: It stands for As Many Rounds (or Reps) as Possible. In circuit training, an AMRAP workout means you need to try to complete the circuit as many times as possible in the time you’re given.",

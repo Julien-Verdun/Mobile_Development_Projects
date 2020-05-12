@@ -30,4 +30,13 @@ const trainingInformationsStyle = {
     fontWeight: "bold",
   },
   descriptionTypeTraining: { flex: 0.5, fontSize: 15 },
+  loadingContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 100,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 };

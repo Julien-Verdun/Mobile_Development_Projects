@@ -1,11 +1,14 @@
 import React from "react";
-import { View, Text, SafeAreaView, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import { getStyle } from "../../style/ExerciseInformations/trainingInformationsStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
-import {
-  TrainingTypeDescription,
-  getTrainingTypeDescription,
-} from "./../../../training/TrainingTypeDescription.js";
+import { getAllTrainingTypesDescription } from "./../../../API/homeTrainerApi.js";
 
 class TrainingInformations extends React.Component {
   /*
@@ -16,15 +19,30 @@ class TrainingInformations extends React.Component {
   constructor(props) {
     super(props);
     this.trainingInformationsStyle = buildStyleSheet(getStyle());
-    this.trainingTypeDescription = TrainingTypeDescription;
+    this.state = {
+      trainingTypeDescription: [],
+      isLoading: true,
+    };
+  }
+
+  componentDidMount() {
+    getAllTrainingTypesDescription().then((trainingTypeDescription) => {
+      this.setState({ trainingTypeDescription, isLoading: false });
+    });
   }
 
   render() {
+    let activityIndicator = this.state.isLoading ? (
+      <View style={this.trainingInformationsStyle.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    ) : null;
     return (
       <View style={this.trainingInformationsStyle.globalView}>
+        {activityIndicator}
         <SafeAreaView style={this.trainingInformationsStyle.listTypeTrainings}>
           <FlatList
-            data={Object.keys(this.trainingTypeDescription)}
+            data={Object.keys(this.state.trainingTypeDescription)}
             renderItem={({ item }) => (
               <View style={this.trainingInformationsStyle.typeTrainingPanel}>
                 <Text style={this.trainingInformationsStyle.titleTypeTraining}>
@@ -33,12 +51,14 @@ class TrainingInformations extends React.Component {
                 <Text
                   style={this.trainingInformationsStyle.descriptionTypeTraining}
                 >
-                  {getTrainingTypeDescription(item)}
+                  {this.state.trainingTypeDescription[item]}
                 </Text>
               </View>
             )}
             keyExtractor={(item) =>
-              Object.keys(this.trainingTypeDescription).indexOf(item).toString()
+              Object.keys(this.state.trainingTypeDescription)
+                .indexOf(item)
+                .toString()
             }
           />
         </SafeAreaView>

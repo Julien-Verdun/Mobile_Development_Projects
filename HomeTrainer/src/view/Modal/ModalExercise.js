@@ -1,9 +1,19 @@
 import React from "react";
-import { View, Modal, Text, Image, ScrollView } from "react-native";
+import {
+  View,
+  Modal,
+  Text,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { getStyle } from "../../style/Modal/modalExerciseStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
 import Button from "./../Other/Button.js";
-import { getDescription, getImage } from "./../../../training/Description.js";
+import {
+  getImagePath,
+  getExerciseDescription,
+} from "./../../../API/homeTrainerApi.js";
 
 class ModalExercise extends React.Component {
   constructor(props) {
@@ -11,18 +21,38 @@ class ModalExercise extends React.Component {
     this.modalExerciseStyle = buildStyleSheet(getStyle());
     this.state = {
       modalVisible: this.props.modalVisible,
+      isLoading: true,
+      exerciseDescription: null,
+      exerciseImagePath: null,
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidMount() {
+    getExerciseDescription(this.props.exerciseName).then(
+      (exerciseDescription) => {
+        getImagePath(this.props.exerciseName).then((exerciseImagePath) => {
+          this.setState({
+            exerciseDescription,
+            exerciseImagePath,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  }
+
+  componentDidUpdate(prevProps) {
     if (prevProps.modalVisible !== this.props.modalVisible) {
       this.setState({ modalVisible: this.props.modalVisible });
     }
   }
 
   render() {
-    let exerciseDescription = getDescription(this.props.exerciseName),
-      exerciseImagePath = getImage(this.props.exerciseName);
+    let activityIndicator = this.state.isLoading ? (
+      <View style={this.modalExerciseStyle.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    ) : null;
     return (
       <Modal
         animationType="slide"
@@ -38,15 +68,16 @@ class ModalExercise extends React.Component {
             <Text style={this.modalExerciseStyle.modalExerciseName}>
               {this.props.exerciseName}
             </Text>
+
             <ScrollView style={this.modalExerciseStyle.scrollDescription}>
               <Text style={this.modalExerciseStyle.modalDescription}>
-                {exerciseDescription}
+                {this.state.exerciseDescription}
               </Text>
             </ScrollView>
-
+            {activityIndicator}
             <Image
               style={this.modalExerciseStyle.imageExercise}
-              source={exerciseImagePath}
+              source={this.state.exerciseImagePath}
               resizeMethod={"resize"}
               resizeMode={"center"}
             />

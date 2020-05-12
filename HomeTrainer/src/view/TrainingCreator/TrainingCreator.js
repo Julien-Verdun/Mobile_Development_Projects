@@ -45,21 +45,18 @@ class TrainingCreator extends React.Component {
     // search new index
     let maxId, newTraining;
     maxId =
-      this.props.myTrainings.myTrainings !== null
+      this.props.myTrainings.myTrainings !== null &&
+      this.props.myTrainings.myTrainings.length > 0
         ? Math.max(
             this.props.myTrainings.myTrainings.map((training) => {
-              console.log("getNewExerciseId : ", training);
               if (training !== null) {
                 parseInt(
-                  training.exerciseId.slice(
-                    prefixId.length,
-                    training.exerciseId.length
-                  )
+                  training.exerciseId.slice(5, training.exerciseId.length)
                 );
               }
             })
           )
-        : 0;
+        : -1;
 
     newTraining = {
       exerciseId: "mytra" + (maxId + 1).toString(),
@@ -181,7 +178,9 @@ class TrainingCreator extends React.Component {
         </View>
         <View style={this.trainingCreatorStyle.roundChoice}>
           <Text style={this.trainingCreatorStyle.textRoundChoice}>
-            Nummber of rounds
+            {this.state.type === "Classic" || this.state.type === "For Time"
+              ? "Nummber of rounds"
+              : "Total time (in min)"}
           </Text>
           <TextInput
             style={this.trainingCreatorStyle.roundInput}

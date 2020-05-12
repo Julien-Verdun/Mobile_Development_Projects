@@ -52,7 +52,6 @@ class ModalNewTraining extends React.Component {
   }
 
   handleChangeTraining(training, hideCompletion) {
-    console.log(training);
     this.setState({ training, hideCompletion });
   }
 
@@ -154,12 +153,6 @@ class ModalNewTraining extends React.Component {
         </SafeAreaView>
       ) : null;
 
-    console.log(
-      this.exerciseNames.filter((exercise) =>
-        exercise.includes(this.state.training)
-      ),
-      autocompletion
-    );
     return (
       <Modal
         animationType="slide"
@@ -196,7 +189,6 @@ class ModalNewTraining extends React.Component {
                   }
                   onSubmitEditing={this.handleSubmit}
                   placeholder={"Exercise"}
-                  keyboardType="number-pad"
                 ></TextInput>
                 {autocompletion}
               </View>

@@ -9,7 +9,7 @@ import {
 } from "../../utils/functions.js";
 import Button from "../Other/Button.js";
 import { Audio } from "expo-av";
-import { getImage } from "./../../../training/Description.js";
+import { getImagePath } from "./../../../API/homeTrainerApi.js";
 
 /*
 Ce component est la page permettant de suivre un WOD choisi ou créé 
@@ -34,15 +34,17 @@ class TimeModeMonitoring extends React.Component {
       endWodPanel: null,
       round: 0,
       trainingLeftTime: parseInt(this.props.route.params.listReps[0] * 60),
+      imagePath: null,
     };
+    this.changeImage(this.props.route.params.listTrainings[0]);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
     this.reload = this.reload.bind(this);
     this.increaseTime = this.increaseTime.bind(this);
     this.changeTraining = this.changeTraining.bind(this);
     this.changeColorBackground = this.changeColorBackground.bind(this);
-
     this.playSound = this.playSound.bind(this);
+    this.changeImage = this.changeImage.bind(this);
   }
 
   async playSound() {
@@ -61,6 +63,12 @@ class TimeModeMonitoring extends React.Component {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async changeImage(exercise) {
+    getImagePath(exercise).then((imagePath) => {
+      this.setState({ imagePath });
+    });
   }
 
   increaseTime() {
@@ -154,7 +162,11 @@ class TimeModeMonitoring extends React.Component {
       let nextIndexTraining =
         this.state.indexTraining === params.listTrainings.length - 1
           ? 0
-          : (this.state.indexTraining += 1);
+          : this.state.indexTraining + 1;
+
+      //change image
+      this.changeImage(params.listTrainings[nextIndexTraining]);
+
       // et on ring
       this.playSound();
       // si debut d'un nouveau round
@@ -227,7 +239,7 @@ class TimeModeMonitoring extends React.Component {
 
         <Image
           style={this.timeModeMonitoringStyle.imageExercise}
-          source={getImage(params.listTrainings[this.state.indexTraining])}
+          source={this.state.imagePath}
           resizeMethod={"resize"}
           resizeMode={"stretch"}
         />

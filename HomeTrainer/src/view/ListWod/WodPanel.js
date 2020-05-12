@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+  FlatList,
+} from "react-native";
 import { getStyle } from "../../style/ListWod/wodPanelStyle.js";
 import { buildStyleSheet } from "../../utils/functions.js";
 import { Icon } from "react-native-elements";
@@ -73,11 +79,23 @@ class WodPanel extends React.Component {
       >
         <View style={this.wodPanelStyle.trainingPart}>
           <Text style={this.wodPanelStyle.type}>{this.props.type}</Text>
-          <Text style={this.wodPanelStyle.listTrainings}>
-            {this.props.areDifficulties
-              ? this.props.training.easy.listTrainings.join("\n")
-              : this.props.training.listTrainings.join("\n")}
-          </Text>
+
+          <SafeAreaView style={this.wodPanelStyle.listTrainings}>
+            <FlatList
+              data={
+                this.props.areDifficulties
+                  ? this.props.training.easy.listTrainings
+                  : this.props.training.listTrainings
+              }
+              renderItem={({ item }) => (
+                <Text style={this.wodPanelStyle.listTrainings}>
+                  {" "}
+                  {"\u2022 " + item}
+                </Text>
+              )}
+              keyExtractor={(item, index) => index}
+            />
+          </SafeAreaView>
         </View>
         {deleteIcon}
       </TouchableOpacity>

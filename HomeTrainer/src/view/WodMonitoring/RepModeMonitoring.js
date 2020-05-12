@@ -7,7 +7,7 @@ import {
   secToTime,
 } from "../../utils/functions.js";
 import Button from "../Other/Button.js";
-import { getImage } from "./../../../training/Description.js";
+import { getImagePath } from "./../../../API/homeTrainerApi.js";
 
 /*
 Ce component est la page permettant de suivre un WOD choisi ou créé 
@@ -32,7 +32,10 @@ class RepModeMonitoring extends React.Component {
       endWodPanel: null,
       round: 0,
       trainingRepNumber: this.props.route.params.listReps[0],
+      isNetworkConnection: true,
+      imagePath: null,
     };
+    this.changeImage(this.props.route.params.listTrainings[0]);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
     this.reload = this.reload.bind(this);
@@ -40,6 +43,13 @@ class RepModeMonitoring extends React.Component {
     this.changeTraining = this.changeTraining.bind(this);
     this.previousTraining = this.previousTraining.bind(this);
     this.nextTraining = this.nextTraining.bind(this);
+    this.changeImage = this.changeImage.bind(this);
+  }
+
+  async changeImage(exercise) {
+    getImagePath(exercise).then((imagePath) => {
+      this.setState({ imagePath });
+    });
   }
 
   start() {
@@ -127,6 +137,8 @@ class RepModeMonitoring extends React.Component {
       } else {
         nextIndexTraining += 1;
       }
+      //change image
+      this.changeImage(params.listTrainings[nextIndexTraining]);
     }
     // if previous training
     else {
@@ -189,7 +201,7 @@ class RepModeMonitoring extends React.Component {
 
         <Image
           style={this.repModeMonitoringStyle.imageExercise}
-          source={getImage(params.listTrainings[this.state.indexTraining])}
+          source={this.state.imagePath}
           resizeMethod={"resize"}
           resizeMode={"stretch"}
         />

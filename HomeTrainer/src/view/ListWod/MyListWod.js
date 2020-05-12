@@ -17,6 +17,7 @@ class MyListWod extends React.Component {
     this.state = {
       myTrainings: this.props.myTrainings.myTrainings,
     };
+    console.log(this.state.myTrainings);
   }
 
   componentDidUpdate(prevProps, prevState) {

@@ -56,6 +56,10 @@ export function getDescription(exerciseName) {
   }
 }
 
+export function getAllDescriptions() {
+  return Description;
+}
+
 export function getImage(exerciseName) {
   let arrayElt = objIncludes(Image, exerciseName);
   if (arrayElt !== null) {
@@ -65,10 +69,15 @@ export function getImage(exerciseName) {
   }
 }
 
+export function getAllImages() {
+  return Images;
+}
+
 export const Description = {
   Burpees:
     'The burpee, or squat thrust,[citation needed] is a full body exercise used in strength training and as an aerobic exercise. The basic movement is performed in four steps and known as a "four-count burpee". Begin in a standing position. Move into a squat position with your hands on the ground. Kick your feet back into a plank position, while keeping your arms extended. Immediately return your feet into squat position. Stand up from the squat position.',
-  "American Swing": "",
+  "American Swing":
+    "The kettlebell swing (AKA Russian swing, double-arm swing, or conventional kettlebell swing) is a basic ballistic exercise used to train the posterior chain in a manner similar to broad jumping. The kettlebell is swung from just below the groin to somewhere between the upper abdomen and shoulders, with arms straight or slightly bent, the degree of flexion depends on the trajectory of the kettlebell. The key to a good kettlebell swing is effectively thrusting the hips, not bending too much at the knees and sending the weight forwards, as opposed to squatting the weight up, or lifting up with the arms. Some knee flexion (a squat) is commonly employed during the swing, although there is some controversy[citation needed] as to whether a swing can or should be performed with just a hip hinge instead. This exercise requires an intense contraction of the gluteal, abdominal and latissimus muscles.",
   "Box Jump":
     "Throwing a few jumps into your workout builds speed and strength, and is especially useful for people hitting the gym to improve their performance in sports. Plus, jumping as high or as far as you can is also fun and a great way to break any monotony that has crept into your workouts. The box jump is a plyometric move that strengthens your main lower-body muscles – glutes, quads, calves and hamstrings. Box jumps will help make you faster, more powerful and springier than ever, and if you do them for more than a few seconds, they’ll raise your heart rate and burn calories like nobody’s business.",
   Squat:
