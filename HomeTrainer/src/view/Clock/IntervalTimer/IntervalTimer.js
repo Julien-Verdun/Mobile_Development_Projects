@@ -36,6 +36,7 @@ class IntervalTimer extends React.Component {
     this.intervalTimerStyle = buildStyleSheet(getStyle());
     this.timer = undefined;
     this.sound = undefined;
+    this.isRinging = false;
     this.ring = require("./../../../../assets/Sound/ring.mp3");
     this.state = {
       isStarted: false,
@@ -73,8 +74,13 @@ class IntervalTimer extends React.Component {
       }
     }
     try {
-      console.log(this.sound.getStatusAsync);
-      await this.sound.playFromPositionAsync(0);
+      if (!this.isRinging) {
+        this.isRinging = true;
+        setTimeout(() => {
+          this.isRinging = false;
+        }, this.state.restTime * 200);
+        await this.sound.playFromPositionAsync(0);
+      }
       // Your sound is playing!
     } catch (error) {
       console.log(error);

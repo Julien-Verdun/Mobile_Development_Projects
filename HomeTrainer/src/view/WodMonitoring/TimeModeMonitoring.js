@@ -21,6 +21,7 @@ class TimeModeMonitoring extends React.Component {
     super(props);
     this.timeModeMonitoringStyle = buildStyleSheet(getStyle());
     this.timer = undefined;
+    this.isRinging = false;
     this.ring = require("./../../../assets/Sound/ring.mp3");
     this.sound = undefined;
     this.backgroundColorChgt = "#ffffff00";
@@ -57,8 +58,13 @@ class TimeModeMonitoring extends React.Component {
       }
     }
     try {
-      console.log(this.sound.getStatusAsync);
-      await this.sound.playFromPositionAsync(0);
+      if (!this.isRinging) {
+        this.isRinging = true;
+        setTimeout(() => {
+          this.isRinging = false;
+        }, this.state.restTime * 200);
+        await this.sound.playFromPositionAsync(0);
+      }
       // Your sound is playing!
     } catch (error) {
       console.log(error);

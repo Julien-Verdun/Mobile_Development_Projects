@@ -11,8 +11,8 @@ import { getStyle } from "./../../style/ExerciseInformations/exerciseInformation
 import { buildStyleSheet } from "../../utils/functions.js";
 import { SearchBar } from "react-native-elements";
 import {
-  getAllExerciseDescriptions,
-  getAllImagePath,
+  getAllExerciseDescriptionsPerPage,
+  getAllImagePathPerPage,
 } from "./../../../API/homeTrainerApi.js";
 
 class ExerciseInformations extends React.Component {
@@ -24,14 +24,20 @@ class ExerciseInformations extends React.Component {
   constructor(props) {
     super(props);
     this.exerciseInformationsStyle = buildStyleSheet(getStyle());
+    this.page = 0;
+    this.total_pages = 0;
+    // the content of the input text
+    this.nameExercise = "";
+    this.showLoading = false;
+    // monitor input change
+    this.firstChange = false;
+    this.secondChange = false;
     this.state = {
-      // the content of the input text
-      nameExercise: "",
       allDescription: {},
       // the list of exercise's descriptions displayed
       descriptionList: [],
       allImage: {},
-      isNetworkConnection: true,
+      apiResults: true,
       isLoading: true,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -39,26 +45,83 @@ class ExerciseInformations extends React.Component {
   // when the textinput is changed, this function modifies the variable nameExercise with the new input content
   // and list of descriptions displayed.
   handleChange(nameExercise) {
-    let descriptionList = Object.keys(this.state.allDescription).filter(
-      (exercise) => {
-        return exercise.includes(nameExercise);
-      }
-    );
+    this.showLoading = true;
+    this.nameExercise = nameExercise;
+    this.loadDescription(0);
+  }
 
-    this.setState({ nameExercise, descriptionList });
+  loadDescription(page) {
+    this.setState({ isLoading: true });
+    getAllExerciseDescriptionsPerPage(
+      this.nameExercise !== "" ? this.nameExercise : " ",
+      page
+    ).then((allDescription) => {
+      getAllImagePathPerPage(
+        this.nameExercise !== "" ? this.nameExercise : " ",
+        page
+      ).then((allImage) => {
+        let apiResults;
+        if (allDescription.apiResults && allImage.apiResults) {
+          apiResults = true;
+          this.page = allDescription.page;
+          this.total_pages = allDescription.total_pages;
+          let allDescriptionObj = {},
+            allImageObj = {};
+          allDescription.data.forEach((description, index) => {
+            allDescriptionObj[description.exercise] = description.description;
+            allImageObj[allImage.data[index].exercise] = {
+              uri: allImage.data[index].uri,
+            };
+          });
+          this.showLoading = false;
+          if (page === 0) {
+            this.setState({
+              descriptionList: [...Object.keys(allDescriptionObj)],
+              allDescription: Object.assign({}, allDescriptionObj),
+              allImage: Object.assign({}, allImageObj),
+              apiResults,
+              isLoading: false,
+            });
+          } else {
+            this.setState({
+              descriptionList: this.state.descriptionList.concat(
+                Object.keys(allDescriptionObj)
+              ),
+              allDescription: Object.assign(
+                {},
+                this.state.allDescription,
+                allDescriptionObj
+              ),
+              allImage: Object.assign({}, this.state.allImage, allImageObj),
+              apiResults,
+              isLoading: false,
+            });
+          }
+        } else {
+          this.showLoading = false;
+          apiResults = false;
+          this.setState({
+            descriptionList: [
+              ...Object.keys(allDescription.data).filter(
+                (exercise) =>
+                  this.nameExercise === "" ||
+                  exercise
+                    .toLowerCase()
+                    .includes(this.nameExercise.toLowerCase())
+              ),
+            ],
+            allDescription: Object.assign({}, allDescription.data),
+            allImage: Object.assign({}, allImage.data),
+            apiResults,
+            isLoading: false,
+          });
+        }
+      });
+    });
   }
 
   componentDidMount() {
-    getAllExerciseDescriptions().then((allDescription) => {
-      getAllImagePath().then((allImage) => {
-        this.setState({
-          allDescription,
-          descriptionList: Object.keys(allDescription),
-          allImage: allImage,
-          isLoading: false,
-        });
-      });
-    });
+    this.loadDescription(this.page);
   }
 
   render() {
@@ -73,7 +136,8 @@ class ExerciseInformations extends React.Component {
           lightTheme
           placeholder="Exercise name..."
           onChangeText={(text) => this.handleChange(text)}
-          value={this.state.nameExercise}
+          value={this.nameExercise}
+          showLoading={this.showLoading}
           icon={{ type: "font-awesome", name: "search" }}
           containerStyle={
             this.exerciseInformationsStyle.containerExerciseInputName
@@ -107,9 +171,13 @@ class ExerciseInformations extends React.Component {
                 />
               </View>
             )}
-            keyExtractor={(item) =>
-              this.state.descriptionList.indexOf(item).toString()
-            }
+            keyExtractor={(item) => item}
+            onEndReachedThreshold={0.25}
+            onEndReached={() => {
+              if (this.state.apiResults && this.page < this.total_pages) {
+                this.loadDescription(this.page + 1);
+              }
+            }}
           />
         </SafeAreaView>
       </View>

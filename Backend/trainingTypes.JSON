@@ -1,0 +1,17 @@
+[{
+        "type": "AMRAP",
+        "description": "AMRAP is simple: It stands for As Many Rounds (or Reps) as Possible. In circuit training, an AMRAP workout means you need to try to complete the circuit as many times as possible in the time you’re given."
+    },
+    {
+        "type": "For Time",
+        "description": "You complete a certain amount of work, no matter how long it takes (perhaps subject to a time cap). This differs from AMRAP where you keep working for a certain amount of time, then you are done."
+    },
+    {
+        "type": "EMOM",
+        "description": "Every Minute on the Minute. This is a workout where you do a specific exercise every time a new minute starts. If you finish before the next minute begins, you can rest until the next minute starts. But don’t get too comfortable!"
+    },
+    {
+        "type": "Classic",
+        "description": "The classic training type is used for training with timed exercise."
+    }
+]

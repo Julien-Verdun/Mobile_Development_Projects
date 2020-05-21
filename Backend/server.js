@@ -81,7 +81,7 @@ client.connect(function (err, db) {
           .toArray(function (error, result) {
             if (error) throw error;
             else {
-              total_results = result[0].count;
+              total_results = result.length > 0 ? result[0].count : 0;
               total_pages =
                 parseInt(total_results / numberTrainingPerPage) +
                 (total_results % numberTrainingPerPage !== 0 ? 1 : 0);
@@ -155,6 +155,68 @@ client.connect(function (err, db) {
             }
           });
       })
+      //description collection
+      .get("/descriptions/:exercise/:page", function (req, res) {
+        // query which returns all descriptions of page page that match exercise name
+        let page = parseInt(decodeURI(req.params.page));
+        let exercise = decodeURI(req.params.exercise);
+        console.log("PAGE :", page, exercise);
+        const numberTrainingPerPage = 5;
+        let total_results = 0,
+          total_pages = 0;
+        let mysort = { exerciseId: 1 };
+        dbo
+          .collection(descriptionCollection)
+          .aggregate([
+            { $match: { exercise: { $regex: exercise, $options: "$i" } } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+            { $project: { _id: 0 } },
+          ])
+          .toArray(function (error, result) {
+            if (error) throw error;
+            else {
+              console.log("RESULT : ", result);
+              total_results = result.length > 0 ? result[0].count : 0;
+              total_pages =
+                parseInt(total_results / numberTrainingPerPage) +
+                (total_results % numberTrainingPerPage !== 0 ? 1 : 0);
+
+              if (page < total_pages) {
+                dbo
+                  .collection(descriptionCollection)
+                  .find({ exercise: { $regex: exercise, $options: "$i" } })
+                  .sort(mysort)
+                  .skip(numberTrainingPerPage * page)
+                  .limit(numberTrainingPerPage)
+                  .toArray(function (error, result) {
+                    if (error) throw error;
+                    else {
+                      console.log(
+                        "QUERY RESULT : ",
+                        result.map((obj) => {
+                          return obj.exercise;
+                        })
+                      );
+                      res.send({
+                        total_results: total_results,
+                        total_pages: total_pages,
+                        page: page,
+                        data: result,
+                      });
+                    }
+                  });
+              } else {
+                res.send({
+                  total_results: total_results,
+                  total_pages: total_pages,
+                  page: page,
+                  data: [],
+                });
+              }
+            }
+          });
+      })
+
       .get("/description/:exercise", function (req, res) {
         // query which returns the description of exercise
 
@@ -190,6 +252,68 @@ client.connect(function (err, db) {
             }
           });
       })
+
+      //image collection
+      .get("/images/:exercise/:page", function (req, res) {
+        // query which returns all descriptions of page page that match exercise name
+        let page = parseInt(decodeURI(req.params.page));
+        let exercise = decodeURI(req.params.exercise);
+        console.log("PAGE :", page, exercise);
+        const numberTrainingPerPage = 5;
+        let total_results = 0,
+          total_pages = 0;
+        let mysort = { exerciseId: 1 };
+        dbo
+          .collection(imageCollection)
+          .aggregate([
+            { $match: { exercise: { $regex: exercise, $options: "$i" } } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+            { $project: { _id: 0 } },
+          ])
+          .toArray(function (error, result) {
+            if (error) throw error;
+            else {
+              total_results = result.length > 0 ? result[0].count : 0;
+              total_pages =
+                parseInt(total_results / numberTrainingPerPage) +
+                (total_results % numberTrainingPerPage !== 0 ? 1 : 0);
+
+              if (page < total_pages) {
+                dbo
+                  .collection(imageCollection)
+                  .find({ exercise: { $regex: exercise, $options: "$i" } })
+                  .sort(mysort)
+                  .skip(numberTrainingPerPage * page)
+                  .limit(numberTrainingPerPage)
+                  .toArray(function (error, result) {
+                    if (error) throw error;
+                    else {
+                      console.log(
+                        "IMAGE QUERY RESULT : ",
+                        result.map((obj) => {
+                          return obj.exercise;
+                        })
+                      );
+                      res.send({
+                        total_results: total_results,
+                        total_pages: total_pages,
+                        page: page,
+                        data: result,
+                      });
+                    }
+                  });
+              } else {
+                res.send({
+                  total_results: total_results,
+                  total_pages: total_pages,
+                  page: page,
+                  data: [],
+                });
+              }
+            }
+          });
+      })
+
       .get("/image/:exercise", function (req, res) {
         // query which returns the image uri of exercise
 

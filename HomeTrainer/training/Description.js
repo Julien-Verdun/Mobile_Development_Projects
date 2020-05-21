@@ -70,7 +70,7 @@ export function getImage(exerciseName) {
 }
 
 export function getAllImages() {
-  return Images;
+  return Image;
 }
 
 export const Description = {

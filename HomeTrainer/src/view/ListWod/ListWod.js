@@ -29,8 +29,10 @@ class ListWod extends React.Component {
   loadTraining() {
     this.setState({ isLoading: true });
     getTrainingsPerPage(this.page + 1).then((data) => {
-      this.page = data.page;
-      this.total_pages = data.total_pages;
+      if (data.apiResults) {
+        this.page = data.page;
+        this.total_pages = data.total_pages;
+      }
       this.setState({
         trainings: this.state.trainings.concat(data.data),
         isLoading: false,
@@ -85,7 +87,7 @@ class ListWod extends React.Component {
 
     let errorNetwork = this.state.apiResults ? null : (
       <Error
-        typeError={"Warning"}
+        typeError={"Alert"}
         errorText={"You might have a problem with your internet connection."}
         height={60}
       ></Error>

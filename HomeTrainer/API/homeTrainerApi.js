@@ -15,8 +15,8 @@ import {
 } from "./../training/Description.js";
 import axios from "axios";
 
-const IS_NETWORK = true,
-  IP_SERVEUR = "192.168.1.68",
+const IS_NETWORK = false,
+  IP_SERVEUR = null, //"192.168.1.68",
   PORT_SERVEUR = "8080";
 
 async function objIncludes(exerciseName) {
@@ -106,6 +106,40 @@ export async function getAllExerciseDescriptions() {
   return allDescription;
 }
 
+export async function getAllExerciseDescriptionsPerPage(exerciseName, page) {
+  let allDescription = null;
+  if (IS_NETWORK) {
+    await axios
+      .get(
+        `http://${IP_SERVEUR}:${PORT_SERVEUR}/descriptions/${encodeURI(
+          exerciseName
+        )}/${encodeURI(page)}`
+      )
+      .then((response) => {
+        allDescription = {
+          apiResults: true,
+          total_results: response.data.total_results,
+          total_pages: response.data.total_pages,
+          page: response.data.page,
+          data: response.data.data,
+        };
+      })
+      .catch((error) => {
+        console.log(error);
+        allDescription = {
+          apiResults: false,
+          data: getAllDescriptions(),
+        };
+      });
+  } else {
+    allDescription = {
+      apiResults: false,
+      data: getAllDescriptions(),
+    };
+  }
+  return allDescription;
+}
+
 export async function getExerciseDescription(exerciseName) {
   let description, firstResult;
   if (IS_NETWORK) {
@@ -159,6 +193,40 @@ export async function getAllImagePath() {
     allImage = getAllImages();
   }
 
+  return allImage;
+}
+
+export async function getAllImagePathPerPage(exerciseName, page) {
+  let allImage = null;
+  if (IS_NETWORK) {
+    await axios
+      .get(
+        `http://${IP_SERVEUR}:${PORT_SERVEUR}/images/${encodeURI(
+          exerciseName
+        )}/${encodeURI(page)}`
+      )
+      .then((response) => {
+        allImage = {
+          apiResults: true,
+          total_results: response.data.total_results,
+          total_pages: response.data.total_pages,
+          page: response.data.page,
+          data: response.data.data,
+        };
+      })
+      .catch((error) => {
+        console.log(error);
+        allImage = {
+          apiResults: false,
+          data: getAllImages(),
+        };
+      });
+  } else {
+    allImage = {
+      apiResults: false,
+      data: getAllImages(),
+    };
+  }
   return allImage;
 }
 

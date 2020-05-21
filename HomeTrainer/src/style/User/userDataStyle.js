@@ -7,24 +7,15 @@ const userDataStyle = {
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-evenly",
-    alignItems: "stretch",
+    alignItems: "center",
     margin: 15,
   },
-  lineChart: {
+  textData: {
+    fontSize: 15,
+    margin: 5,
+  },
+  tableView: {
     flex: 1,
-    margin: 10,
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-  buttonWhiteText: {
-    fontSize: 16,
-    color: "#FFF",
-  },
-  primaryButton: {
-    height: 40,
-    backgroundColor: "#0078bf",
-    borderRadius: 10,
-    margin: 10,
+    margin: 20,
   },
 };

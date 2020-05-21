@@ -14,13 +14,13 @@ I then decided to start a mobile application, to help people train at home, and 
 
 You have 2 possibilities to try my application, you can test it both locally and download it on Play Store.
 
-### Play Store
+### Play Store : download the application
 
 The application is available on the **Play Store** for Android phones. Unfortunately, I didn't deploy my application on the App Store, due to the huge price of Apple licence, sorry for IOS users. :smirk:
 
-You will find the application with the name `HomeTrainer`. Make sure to give a grade to the application :star: :star: :star: and leave a comment for me to have a feedback and improve the application.
+You will find the application at this link [HomeTrainer](https://play.google.com/store/apps/details?id=com.JulienVerdun.HomeTrainer). Make sure to give a grade to the application :star: :star: :star: and leave a comment for me to have a feedback and improve the application.
 
-### Locally
+### Locally : try it with Expo
 
 If you don't have an Android phone or want to test it locally on your device, you can follow the below instructions :
 
@@ -80,6 +80,12 @@ I chose React Native because it is an open source and crossplatform mobile-appli
 
 I use **redux** and **redux-persist** to manage data and data storage in my application because it is a convenient and easy way to do so.
 There is no connection to any API or server, the application is totally independant and don't need an internet connection.
+
+The trainings, exercise descriptions and images are stored on a mongodb database\*\*.
+
+A **Node JS** server is running to access the informations from the database.
+
+Currently, the server and the database are only running locally, they are not deployed. It is the next step for my application.
 
 ## Improvement ways
 

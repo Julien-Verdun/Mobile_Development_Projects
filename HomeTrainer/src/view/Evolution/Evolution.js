@@ -19,7 +19,7 @@ class Evolution extends React.Component {
 
   render() {
     let lineChart, dataList, errorNoData;
-    if (this.props.route.params.historic.length > 0) {
+    if (this.props.route.params.historic.length >= 1) {
       lineChart = (
         <LineChart
           data={{
