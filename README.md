@@ -81,15 +81,32 @@ I chose React Native because it is an open source and crossplatform mobile-appli
 I use **redux** and **redux-persist** to manage data and data storage in my application because it is a convenient and easy way to do so.
 There is no connection to any API or server, the application is totally independant and don't need an internet connection.
 
-The trainings, exercise descriptions and images are stored on a mongodb database\*\*.
+The exercise and training data management is explain in the part below.
 
-A **Node JS** server is running to access the informations from the database.
+## Server and database
 
-Currently, the server and the database are only running locally, they are not deployed. It is the next step for my application.
+On the last version of the application, I add the code to run local server and database.
+
+When testing the application locally, the developper have both options :
+
+- only use local data (almost 15 differents trainings with all exercises description)
+- run a local server and database to provide more exercises and trainings.
+
+With the second option, the trainings, exercise descriptions and image uri are stored on a **MongoDB** database.
+You can create the database with the file `Backend/db_builder.js`. You just have to run your local MongoDB database (`mongod`), then in a command line, run the file using NodeJS (command looks like `node db_builder.js`).
+This file create the database and the required collections.
+
+Then you can run the application and the **NodeJS server** in the same time, using the command line `npm start` in the **Backend** directory.
+
+Now, when you load trainings or informations on the application, the application does a request, using the npm package **axios**, to the running server, and the server provide the requested data from the MongoDB database. If the access to server or database are unavailable, the display data are locally stored data.
+
+Add new data is now as simple as fill in the database.
+
+Currently, the server and the database are only running locally, they are not deployed. It is the next step for my application but it is something that required more resources.
 
 ## Improvement ways
 
-- Store all trainings, exercise descriptions and images on a remote server, and access data with an API, to reduce the size of the application.
+- Store all trainings, exercise descriptions and images on a remote database, and access data with a remote server, to reduce the size of the application.
 - Provide a more important range of training choices.
-- Provide for every exercise different level of difficulty.
-- Allow user to select training depending on his equipments.
+- Provide different level of difficulty for every exercise.
+- Allow users to select training depending on their equipments, on the muscle group they want to focus on, and so on.
